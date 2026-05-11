@@ -2,13 +2,13 @@
 package com.mycompany.fitlifegym_persistencia.entidades;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  *
- * @author Julian
+ * @author Luis
  */
 public class Membresia {
-    private Long idMembresia;
     private TipoMembresia tipoMembresia;
     private Double precio;
     private LocalDate vigencia;
@@ -16,32 +16,15 @@ public class Membresia {
     public Membresia() {
     }
 
-    public Membresia(Long idMembresia, TipoMembresia tipoMembresia, Double precio, LocalDate vigencia) {
-        this.idMembresia = idMembresia;
+    public Membresia(TipoMembresia tipoMembresia, Double precio) {
         this.tipoMembresia = tipoMembresia;
         this.precio = precio;
-        this.vigencia = vigencia;
     }
 
     public Membresia(TipoMembresia tipoMembresia, Double precio, LocalDate vigencia) {
         this.tipoMembresia = tipoMembresia;
         this.precio = precio;
         this.vigencia = vigencia;
-    }
-
-    public Membresia(TipoMembresia tipoMembresia, Double precio) {
-        this.tipoMembresia = tipoMembresia;
-        this.precio = precio;
-    }
-    
-    
-
-    public Long getIdMembresia() {
-        return idMembresia;
-    }
-
-    public void setIdMembresia(Long idMembresia) {
-        this.idMembresia = idMembresia;
     }
 
     public TipoMembresia getTipoMembresia() {
@@ -69,7 +52,32 @@ public class Membresia {
     }
 
     @Override
-    public String toString() {
-        return "Membresia{" + "idMembresia=" + idMembresia + ", tipoMembresia=" + tipoMembresia + ", precio=" + precio + ", vigencia=" + vigencia + '}';
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + Objects.hashCode(this.tipoMembresia);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Membresia other = (Membresia) obj;
+        return this.tipoMembresia == other.tipoMembresia;
+    }
+
+    @Override
+    public String toString() {
+        return "Membresia{" + "tipoMembresia=" + tipoMembresia + ", precio=" + precio + ", vigencia=" + vigencia + '}';
+    }
+    
+    
 }
+    

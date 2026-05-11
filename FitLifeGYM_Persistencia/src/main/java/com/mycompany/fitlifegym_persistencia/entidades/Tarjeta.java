@@ -2,7 +2,7 @@ package com.mycompany.fitlifegym_persistencia.entidades;
 
 /**
  *
- * @author Julian
+ * @author Luis
  */
 public class Tarjeta {
     private String numero;

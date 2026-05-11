@@ -2,28 +2,20 @@
 package com.mycompany.fitlifegym_persistencia.entidades;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  *
- * @author Julian
+ * @author Luis
  */
 public class MembresiaComprada {
-    private Long idMembresiaComprada;
     private Membresia membresia;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private Double precioPagado;
     private Estado estado;
 
-    public MembresiaComprada() {}
-
-    public MembresiaComprada(Long idMembresiaComprada, Membresia membresia, LocalDate fechaInicio, LocalDate fechaFin, Double precioPagado, Estado estado) {
-        this.idMembresiaComprada = idMembresiaComprada;
-        this.membresia = membresia;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
-        this.precioPagado = precioPagado;
-        this.estado = estado;
+    public MembresiaComprada() {
     }
 
     public MembresiaComprada(Membresia membresia, LocalDate fechaInicio, LocalDate fechaFin, Double precioPagado, Estado estado) {
@@ -32,14 +24,6 @@ public class MembresiaComprada {
         this.fechaFin = fechaFin;
         this.precioPagado = precioPagado;
         this.estado = estado;
-    }
-
-    public Long getIdMembresiaComprada() {
-        return idMembresiaComprada;
-    }
-
-    public void setIdMembresiaComprada(Long idMembresiaComprada) {
-        this.idMembresiaComprada = idMembresiaComprada;
     }
 
     public Membresia getMembresia() {
@@ -84,6 +68,12 @@ public class MembresiaComprada {
 
     @Override
     public String toString() {
-        return "MembresiaComprada{" + "idMembresiaComprada=" + idMembresiaComprada + ", membresia=" + membresia.getTipoMembresia() + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", precioPagado=" + precioPagado + ", estado=" + estado + '}';
+        return "MembresiaComprada{" + "membresia=" + membresia + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", precioPagado=" + precioPagado + ", estado=" + estado + '}';
     }
+    
+    
+    
+    
+
 }
+    
