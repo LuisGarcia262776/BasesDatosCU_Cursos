@@ -5,56 +5,54 @@
 package com.mycompany.fitlifegym_negocio;
 
 import Adapter.DtosAEntidadesAdapter;
+import com.mycompany.fitlifegym_DAO.IClientesDAO;
+import com.mycompany.fitlifegym_PersistenciaException.PersistenciaException;
 import com.mycompany.fitlifegym_dtos.NuevoClienteDTO;
-import com.mycompany.fitlifegym_persistencia.IClientesDAO;
-import com.mycompany.fitlifegym_persistencia.PersistenciaException;
 import com.mycompany.fitlifegym_persistencia.entidades.Cliente;
-import java.util.ArrayList;
+import com.mycompany.fitlifegym_persistencia_Fachada.IPersistenciaFachada;
 import java.util.List;
 
 /**
  *
- * @author Diego
+ * @author Luis
  */
 public class ClientesBO implements IClientesBO {
-
+    
     private final IClientesDAO clientesDAO;
 
-    public ClientesBO(IClientesDAO clientesDAO) {
-        this.clientesDAO = clientesDAO;
+    public ClientesBO(IPersistenciaFachada fachada) {
+        this.clientesDAO = fachada.obtenerClienteDAO();
     }
 
     @Override
-    public Cliente registrarCliente(NuevoClienteDTO clienteDTO) throws NegocioException{
-        Cliente cliente = DtosAEntidadesAdapter.adaptarClienteDTO(clienteDTO);      
+    public Cliente registrarCliente(NuevoClienteDTO clienteDTO) throws NegocioException {
+        Cliente cliente = DtosAEntidadesAdapter.adaptarClienteDTO(clienteDTO);
         try {
             return clientesDAO.registrarCliente(cliente);
         } catch (PersistenciaException ex) {
-            throw new NegocioException("Error al registrar el cliente",ex);
+            throw new NegocioException("Error al registrar el cliente", ex);
         }
     }
 
     @Override
-    public Cliente buscarClientePorId(Long id) throws NegocioException{
-
-        if(id == null){
+    public Cliente buscarClientePorId(String id) throws NegocioException {
+        if (id == null || id.trim().isEmpty()) {
             throw new NegocioException("Se debe de colocar un ID.");
         }
-        
         try {
             return clientesDAO.consultarClientePorId(id);
         } catch (PersistenciaException ex) {
-            throw new NegocioException("Error al registrar el cliente",ex);
+            throw new NegocioException("Error al consultar el cliente", ex);
         }
     }
 
     @Override
-    public List<Cliente> consultarClientes() throws NegocioException{
+    public List<Cliente> consultarClientes() throws NegocioException {
         try {
             return clientesDAO.consultarClientes();
         } catch (PersistenciaException ex) {
-            throw new NegocioException("Error al registrar el cliente",ex);
+            throw new NegocioException("Error al consultar los clientes", ex);
         }
     }
-
+    
 }

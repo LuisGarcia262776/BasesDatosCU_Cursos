@@ -10,9 +10,9 @@ package com.mycompany.fitlifegym_presentacion;
  */
 public class MainFitLifeFORM extends javax.swing.JFrame {
 
-    private ControlForms control;
+    private ControlNavegacion control;
             
-    public MainFitLifeFORM(ControlForms control) {
+    public MainFitLifeFORM(ControlNavegacion control) {
         this.control = control;
         this.setTitle("Main Fit Life");
         initComponents();

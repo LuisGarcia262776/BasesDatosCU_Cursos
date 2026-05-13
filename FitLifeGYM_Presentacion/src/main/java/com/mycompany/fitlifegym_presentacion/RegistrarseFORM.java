@@ -16,12 +16,12 @@ import javax.swing.JOptionPane;
  */
 public class RegistrarseFORM extends javax.swing.JDialog {
 
-    private ControlForms control;
+    private ControlNavegacion control;
 
     /**
      * Creates new form RegistrarseFORM
      */
-    public RegistrarseFORM(java.awt.Frame parent, boolean modal, ControlForms control) {
+    public RegistrarseFORM(java.awt.Frame parent, boolean modal, ControlNavegacion control) {
         super(parent, modal);
         this.control = control;
         this.setResizable(false);

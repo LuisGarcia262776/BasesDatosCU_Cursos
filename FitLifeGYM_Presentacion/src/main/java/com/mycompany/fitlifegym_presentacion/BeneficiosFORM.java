@@ -19,11 +19,11 @@ import javax.swing.JOptionPane;
  */
 public class BeneficiosFORM extends javax.swing.JFrame {
 
-    private ControlForms control;
+    private ControlNavegacion control;
     private NuevoClienteDTO cliente; 
     private List<Membresia> membresiasDisponibles;
 
-    public BeneficiosFORM(ControlForms control, NuevoClienteDTO cliente) {
+    public BeneficiosFORM(ControlNavegacion control, NuevoClienteDTO cliente) {
         this.control = control;
         this.cliente = cliente; 
         this.setTitle("Beneficios");

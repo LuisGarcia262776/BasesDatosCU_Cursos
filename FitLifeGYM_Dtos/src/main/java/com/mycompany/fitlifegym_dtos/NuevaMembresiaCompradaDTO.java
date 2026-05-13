@@ -8,17 +8,17 @@ import java.time.LocalDate;
 
 /**
  *
- * @author Diego
+ * @author PC GAMER MASTER RACE
  */
 public class NuevaMembresiaCompradaDTO {
-    private Long idMembresiaComprada;
+    private String idMembresiaComprada;
     private NuevaMembresiaDTO membresia;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private Double precioPagado;
     private EstadoDTO estado;
 
-    public NuevaMembresiaCompradaDTO(Long idMembresiaComprada, NuevaMembresiaDTO membresia, LocalDate fechaInicio, LocalDate fechaFin, Double precioPagado, EstadoDTO estado) {
+    public NuevaMembresiaCompradaDTO(String idMembresiaComprada, NuevaMembresiaDTO membresia, LocalDate fechaInicio, LocalDate fechaFin, Double precioPagado, EstadoDTO estado) {
         this.idMembresiaComprada = idMembresiaComprada;
         this.membresia = membresia;
         this.fechaInicio = fechaInicio;
@@ -35,53 +35,30 @@ public class NuevaMembresiaCompradaDTO {
         this.estado = estado;
     }
 
-    public Long getIdMembresiaComprada() {
+    public String getIdMembresiaComprada() {
         return idMembresiaComprada;
-    }
-
-    public void setIdMembresiaComprada(Long idMembresiaComprada) {
-        this.idMembresiaComprada = idMembresiaComprada;
     }
 
     public NuevaMembresiaDTO getMembresia() {
         return membresia;
     }
 
-    public void setMembresia(NuevaMembresiaDTO membresia) {
-        this.membresia = membresia;
-    }
-
     public LocalDate getFechaInicio() {
         return fechaInicio;
-    }
-
-    public void setFechaInicio(LocalDate fechaInicio) {
-        this.fechaInicio = fechaInicio;
     }
 
     public LocalDate getFechaFin() {
         return fechaFin;
     }
 
-    public void setFechaFin(LocalDate fechaFin) {
-        this.fechaFin = fechaFin;
-    }
-
     public Double getPrecioPagado() {
         return precioPagado;
-    }
-
-    public void setPrecioPagado(Double precioPagado) {
-        this.precioPagado = precioPagado;
     }
 
     public EstadoDTO getEstado() {
         return estado;
     }
-
-    public void setEstado(EstadoDTO estado) {
-        this.estado = estado;
-    }
+    
     
     
 }

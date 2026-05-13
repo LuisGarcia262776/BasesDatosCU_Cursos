@@ -17,9 +17,9 @@ public class IniciarSesionFORM extends javax.swing.JDialog {
 
     private static final Logger LOGGER = Logger.getLogger(IniciarSesionFORM.class.getName());
     
-    private ControlForms control;
+    private ControlNavegacion control;
 
-    public IniciarSesionFORM(java.awt.Frame parent, boolean modal, ControlForms control) {
+    public IniciarSesionFORM(java.awt.Frame parent, boolean modal, ControlNavegacion control) {
         super(parent, modal);
         this.control = control;
         this.setResizable(false);

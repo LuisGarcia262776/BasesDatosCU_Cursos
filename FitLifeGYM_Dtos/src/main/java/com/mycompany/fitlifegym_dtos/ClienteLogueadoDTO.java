@@ -10,24 +10,19 @@ package com.mycompany.fitlifegym_dtos;
  */
 public class ClienteLogueadoDTO {
 
-    private final Long idCliente;
-
+    private final String idCliente;
     private final String nombreCompleto;
-
     private final TipoMembresiaDTO membresiaActiva;
-
     private final EstadoDTO estadoMembresia;
 
-    public ClienteLogueadoDTO(Long idCliente, String nombreCompleto, TipoMembresiaDTO membresiaActiva, EstadoDTO estadoMembresia) {
+    public ClienteLogueadoDTO(String idCliente, String nombreCompleto, TipoMembresiaDTO membresiaActiva, EstadoDTO estadoMembresia) {
         this.idCliente = idCliente;
         this.nombreCompleto = nombreCompleto;
         this.membresiaActiva = membresiaActiva;
         this.estadoMembresia = estadoMembresia;
     }
 
-    
-
-    public Long getIdCliente() {
+    public String getIdCliente() {
         return idCliente;
     }
 
@@ -42,6 +37,8 @@ public class ClienteLogueadoDTO {
     public EstadoDTO getEstadoMembresia() {
         return estadoMembresia;
     }
+    
+    
 
     
 

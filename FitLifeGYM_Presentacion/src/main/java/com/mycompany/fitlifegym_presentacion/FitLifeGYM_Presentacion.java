@@ -11,7 +11,7 @@ package com.mycompany.fitlifegym_presentacion;
 public class FitLifeGYM_Presentacion {
 
     public static void main(String[] args) {
-        ControlForms control = new ControlForms();
+        ControlNavegacion control = new ControlNavegacion();
         
         control.navegarMenuPrincipal();
     }

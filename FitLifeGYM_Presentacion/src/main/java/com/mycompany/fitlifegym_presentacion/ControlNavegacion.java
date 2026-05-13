@@ -18,13 +18,8 @@ import com.mycompany.fitlifegym_negocio.ILoginBO;
 import com.mycompany.fitlifegym_negocio.IMembresiaBO;
 import com.mycompany.fitlifegym_negocio.IRenovarMembresiaBO;
 import com.mycompany.fitlifegym_negocio.LoginBO;
-import com.mycompany.fitlifegym_negocio.MembresiaBO;
 import com.mycompany.fitlifegym_negocio.NegocioException;
 import com.mycompany.fitlifegym_negocio.RenovarMembresiaBO;
-import com.mycompany.fitlifegym_persistencia.ClientesListDAO;
-import com.mycompany.fitlifegym_persistencia.IClientesDAO;
-import com.mycompany.fitlifegym_persistencia.IMembresiaDAO;
-import com.mycompany.fitlifegym_persistencia.MembresiaListDAO;
 import com.mycompany.fitlifegym_persistencia.entidades.Cliente;
 import com.mycompany.fitlifegym_persistencia.entidades.Membresia;
 import com.mycompany.funcionalidadcomprarmembresiausuarionoregistrado.FuncionalidadRegistroUsuario;
@@ -42,14 +37,14 @@ import javax.swing.JOptionPane;
  *
  * @author Diego
  */
-public class ControlForms {
+public class ControlNavegacion {
 
     private JFrame frameActual;
     private ClienteLogueadoDTO clienteActual;
     private IFuncionalidadRegistrarUsuario funcionalidadCU;
     private IFuncionalidadIniciarSesionRenovarMembresia funcionalidad;
 
-    public ControlForms() {
+    public ControlNavegacion() {
         IClientesDAO dao = new ClientesListDAO();
         IClientesBO negocio = new ClientesBO(dao);
         IMembresiaDAO membresiaDAO = new MembresiaListDAO();

@@ -20,10 +20,10 @@ import javax.swing.JOptionPane;
 //o algo asi
 public class BienvenidaFORM extends javax.swing.JFrame {
 
-    private ControlForms control;
+    private ControlNavegacion control;
     private ClienteLogueadoDTO cliente;
 
-    public BienvenidaFORM(ControlForms control, ClienteLogueadoDTO cliente) {
+    public BienvenidaFORM(ControlNavegacion control, ClienteLogueadoDTO cliente) {
         this.control = control;
         this.cliente = cliente;
 
