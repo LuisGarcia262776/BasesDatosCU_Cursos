@@ -31,216 +31,267 @@ import java.util.List;
 
 /**
  *
- * @author Diego
+ * @author Luis
  */
 public class DtosAEntidadesAdapter {
 
     public static Membresia adaptarMembresia(NuevaMembresiaDTO nuevaMembresiaDTO) {
+
         TipoMembresia tipoMembresiaDominio = TipoMembresia.BRONCE;
 
         if (nuevaMembresiaDTO.getTipoMembresia() == TipoMembresiaDTO.PLATA) {
             tipoMembresiaDominio = TipoMembresia.PLATA;
-        } else if (nuevaMembresiaDTO.getTipoMembresia() == TipoMembresiaDTO.ORO) {
+        }else if (nuevaMembresiaDTO.getTipoMembresia() == TipoMembresiaDTO.ORO) {
             tipoMembresiaDominio = TipoMembresia.ORO;
         }
 
-        Membresia membresia = new Membresia(tipoMembresiaDominio,
-                nuevaMembresiaDTO.getPrecio(),
-                nuevaMembresiaDTO.getVigencia());
+        Membresia membresia = new Membresia(tipoMembresiaDominio, nuevaMembresiaDTO.getPrecio(), nuevaMembresiaDTO.getVigencia());
 
         return membresia;
     }
 
     public static MembresiaComprada adaptarMembresiaCompradaDTO(NuevaMembresiaCompradaDTO membresiaCompradaDTO) {
+
         Membresia membresia = adaptarMembresia(membresiaCompradaDTO.getMembresia());
+
         Estado estadoDominio = Estado.ACTIVO;
 
         if (membresiaCompradaDTO.getEstado() == EstadoDTO.INACTIVO) {
             estadoDominio = Estado.INACTIVO;
         }
 
-        MembresiaComprada membresiaComprada = new MembresiaComprada(membresia,
-                membresiaCompradaDTO.getFechaInicio(),
-                membresiaCompradaDTO.getFechaFin(),
-                membresiaCompradaDTO.getPrecioPagado(),
-                estadoDominio);
+        MembresiaComprada membresiaComprada = new MembresiaComprada(membresia, membresiaCompradaDTO.getFechaInicio(), membresiaCompradaDTO.getFechaFin(), membresiaCompradaDTO.getPrecioPagado(), estadoDominio);
 
         return membresiaComprada;
     }
 
     public static Cliente adaptarClienteDTO(NuevoClienteDTO clienteDTO) {
+
         MembresiaComprada membresiaComprada = null;
 
         if (clienteDTO.getMembresiaComprada() != null) {
             membresiaComprada = adaptarMembresiaCompradaDTO(clienteDTO.getMembresiaComprada());
         }
 
-        Cliente clienteNuevo = new Cliente(clienteDTO.getNombre(), clienteDTO.getApellidos(),
-                clienteDTO.getCorreo(), clienteDTO.getTelefono(),
-                clienteDTO.getContrasenia(),
-                clienteDTO.getFechaNacimiento(),
-                clienteDTO.getPin(),
-                membresiaComprada);
+        Cliente clienteNuevo = new Cliente(
+                clienteDTO.getNombre(), clienteDTO.getApellidos(), clienteDTO.getCorreo(), clienteDTO.getTelefono(), clienteDTO.getContrasenia(), clienteDTO.getFechaNacimiento(), clienteDTO.getPin(), membresiaComprada);
 
         return clienteNuevo;
     }
 
     public static TipoMembresia adaptarTipoMembresia(TipoMembresiaDTO tipoDTO) {
+
         if (tipoDTO == TipoMembresiaDTO.PLATA) {
             return TipoMembresia.PLATA;
         } else if (tipoDTO == TipoMembresiaDTO.ORO) {
             return TipoMembresia.ORO;
         }
+
         return TipoMembresia.BRONCE;
     }
 
     public static TipoMembresiaDTO adaptarTipoMembresiaDTO(TipoMembresia tipo) {
+
         if (tipo == TipoMembresia.PLATA) {
             return TipoMembresiaDTO.PLATA;
         } else if (tipo == TipoMembresia.ORO) {
             return TipoMembresiaDTO.ORO;
         }
+
         return TipoMembresiaDTO.BRONCE;
     }
 
     public static EstadoDTO adaptarEstadoDTO(Estado estado) {
+
         if (estado == Estado.ACTIVO) {
             return EstadoDTO.ACTIVO;
         }
+
         return EstadoDTO.INACTIVO;
     }
-    
+
     public static Curso adaptarCursoDTO(CursoDTO dto) {
+
         if (dto == null) return null;
-        return new Curso(
-                dto.getIdCurso(),
-                dto.getNombre(),
-                dto.getImagen(),
-                dto.getDescripcion(),
-                dto.getCupoMinimo(),
-                adaptarDisponibilidad(dto.getDisponibilidad())
-        );
+
+        return new Curso(dto.getIdCurso(), dto.getNombre(), dto.getImagen(), dto.getDescripcion(), dto.getCupoMinimo(), adaptarDisponibilidad(dto.getDisponibilidad()));
     }
 
     public static CursoDTO adaptarCurso(Curso curso) {
-        if (curso == null) return null;
-        return new CursoDTO(
-                curso.getIdCurso(),
-                curso.getNombre(),
-                curso.getImagen(),
-                curso.getDescripcion(),
-                curso.getCupoMinimo(),
-                adaptarDisponibilidadDTO(curso.getDisponibilidad())
-        );
+
+        if (curso == null){
+            return null;
+        }
+
+        return new CursoDTO(curso.getIdCurso(), curso.getNombre(), curso.getImagen(), curso.getDescripcion(), curso.getCupoMinimo(), adaptarDisponibilidadDTO(curso.getDisponibilidad()));
     }
 
     public static List<CursoDTO> adaptarListaCursos(List<Curso> cursos) {
+
         List<CursoDTO> lista = new ArrayList<>();
+
         if (cursos != null) {
-            for (Curso c : cursos) lista.add(adaptarCurso(c));
+
+            for (Curso c : cursos) {
+                lista.add(adaptarCurso(c));
+            }
         }
+
         return lista;
     }
 
     public static DisponibilidadCurso adaptarDisponibilidad(DisponibilidadCursoDTO dto) {
-        if (dto == null) return DisponibilidadCurso.DISPONIBLE;
+
+        if (dto == null) {
+            return DisponibilidadCurso.DISPONIBLE;
+        }
+
         switch (dto) {
-            case NO_DISPONIBLE: return DisponibilidadCurso.NO_DISPONIBLE;
-            case SIN_HORARIOS: return DisponibilidadCurso.SIN_HORARIOS;
-            default: return DisponibilidadCurso.DISPONIBLE;
+            case NO_DISPONIBLE:
+                return DisponibilidadCurso.NO_DISPONIBLE;
+
+            case SIN_HORARIOS:
+                return DisponibilidadCurso.SIN_HORARIOS;
+
+            default:
+                return DisponibilidadCurso.DISPONIBLE;
         }
     }
 
     public static DisponibilidadCursoDTO adaptarDisponibilidadDTO(DisponibilidadCurso d) {
-        if (d == null) return DisponibilidadCursoDTO.DISPONIBLE;
+
+        if (d == null) {
+            return DisponibilidadCursoDTO.DISPONIBLE;
+        }
+
         switch (d) {
-            case NO_DISPONIBLE: return DisponibilidadCursoDTO.NO_DISPONIBLE;
-            case SIN_HORARIOS: return DisponibilidadCursoDTO.SIN_HORARIOS;
-            default: return DisponibilidadCursoDTO.DISPONIBLE;
+            case NO_DISPONIBLE:
+                return DisponibilidadCursoDTO.NO_DISPONIBLE;
+
+            case SIN_HORARIOS:
+                return DisponibilidadCursoDTO.SIN_HORARIOS;
+
+            default:
+                return DisponibilidadCursoDTO.DISPONIBLE;
         }
     }
 
     public static Horario adaptarHorarioDTO(HorarioDTO dto) {
-        if (dto == null) return null;
-        return new Horario(
-                dto.getIdHorario(),
-                dto.getIdCurso(),
-                adaptarDia(dto.getDias()),
-                dto.getHoraInicio(),
-                dto.getHoraFin(),
-                dto.getCupoMax(),
-                dto.getCupoActual()
-        );
+
+        if (dto == null){
+            return null;
+        }
+
+        return new Horario(dto.getIdHorario(), dto.getIdCurso(), adaptarDias(dto.getDias()), dto.getHoraInicio(), dto.getHoraFin(), dto.getCupoMax(), dto.getCupoActual());
     }
 
     public static HorarioDTO adaptarHorario(Horario h) {
-        if (h == null) return null;
+
+        if (h == null){
+            return null;
+        }
+
         return new HorarioDTO(
                 h.getIdHorario(),
                 h.getIdCurso(),
-                adaptarDiaDTO(h.getDias()),
-                h.getHoraInicio(),
-                h.getHoraFin(),
-                h.getCupoMax(),
-                h.getCupoActual()
+                adaptarDiasDTO(h.getDias()),
+                h.getHoraInicio(),h.getHoraFin(), h.getCupoMax(), h.getCupoActual()
         );
     }
 
     public static List<HorarioDTO> adaptarListaHorarios(List<Horario> horarios) {
+
         List<HorarioDTO> lista = new ArrayList<>();
+
         if (horarios != null) {
-            for (Horario h : horarios) lista.add(adaptarHorario(h));
+            for (Horario h : horarios) {
+                lista.add(adaptarHorario(h));
+            }
         }
+
         return lista;
     }
 
-    public static HorarioDiaSemana adaptarDia(HorarioDiaSemanaDTO dto) {
-        if (dto == null) return HorarioDiaSemana.LUNES;
-        return HorarioDiaSemana.valueOf(dto.name());
+    public static List<HorarioDiaSemana> adaptarDias(List<HorarioDiaSemanaDTO> diasDTO) {
+
+        List<HorarioDiaSemana> dias = new ArrayList<>();
+
+        if (diasDTO != null) {
+            for (HorarioDiaSemanaDTO diaDTO : diasDTO) {
+                dias.add(HorarioDiaSemana.valueOf(diaDTO.name()));
+            }
+        }
+
+        return dias;
     }
 
-    public static HorarioDiaSemanaDTO adaptarDiaDTO(HorarioDiaSemana d) {
-        if (d == null) return HorarioDiaSemanaDTO.LUNES;
-        return HorarioDiaSemanaDTO.valueOf(d.name());
+    public static List<HorarioDiaSemanaDTO> adaptarDiasDTO(List<HorarioDiaSemana> dias) {
+
+        List<HorarioDiaSemanaDTO> diasDTO = new ArrayList<>();
+
+        if (dias != null) {
+            for (HorarioDiaSemana dia : dias) {
+                diasDTO.add(HorarioDiaSemanaDTO.valueOf(dia.name()));
+            }
+        }
+
+        return diasDTO;
     }
 
     public static Inscripcion adaptarInscripcionDTO(InscripcionDTO dto) {
-        if (dto == null) return null;
+
+        if (dto == null){
+            return null;
+        }
+
         return new Inscripcion(
                 dto.getIdInscripcion(),
                 dto.getIdCliente(),
                 dto.getIdHorario(),
                 dto.getFechaRegistro(),
-                adaptarEstadoInscripcion(dto.getEstado())
-        );
+                adaptarEstadoInscripcion(dto.getEstado()));
     }
 
     public static InscripcionDTO adaptarInscripcion(Inscripcion i) {
-        if (i == null) return null;
+
+        if (i == null){
+            return null;
+        }
+
         return new InscripcionDTO(
                 i.getIdInscripcion(),
                 i.getIdCliente(),
                 i.getIdHorario(),
                 i.getFechaRegistro(),
-                adaptarEstadoInscripcionDTO(i.getEstado())
-        );
+                adaptarEstadoInscripcionDTO(i.getEstado()));
     }
 
     public static List<InscripcionDTO> adaptarListaInscripciones(List<Inscripcion> ins) {
+
         List<InscripcionDTO> lista = new ArrayList<>();
+
         if (ins != null) {
-            for (Inscripcion i : ins) lista.add(adaptarInscripcion(i));
+            for (Inscripcion i : ins) {
+                lista.add(adaptarInscripcion(i));
+            }
         }
+
         return lista;
     }
 
     public static EstadoInscripcion adaptarEstadoInscripcion(EstadoInscripcionDTO dto) {
-        if (dto == null) return EstadoInscripcion.NO_INSCRITO;
+        if (dto == null) {
+            return EstadoInscripcion.NO_INSCRITO;
+        }
+
         return EstadoInscripcion.valueOf(dto.name());
     }
 
     public static EstadoInscripcionDTO adaptarEstadoInscripcionDTO(EstadoInscripcion e) {
-        if (e == null) return EstadoInscripcionDTO.NO_INSCRITO;
+        if (e == null) {
+            return EstadoInscripcionDTO.NO_INSCRITO;
+        }
+
         return EstadoInscripcionDTO.valueOf(e.name());
     }
 

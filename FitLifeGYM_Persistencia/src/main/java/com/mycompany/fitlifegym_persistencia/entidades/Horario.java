@@ -5,6 +5,7 @@
 package com.mycompany.fitlifegym_persistencia.entidades;
 
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Objects;
 import org.bson.BsonType;
 import org.bson.codecs.pojo.annotations.BsonId;
@@ -22,7 +23,7 @@ public class Horario {
     @BsonRepresentation(BsonType.OBJECT_ID)
     private String idCurso;
 
-    private HorarioDiaSemana dias;
+    private List<HorarioDiaSemana> dias;
     private LocalTime horaInicio;
     private LocalTime horaFin;
     private Integer cupoMax;
@@ -31,16 +32,7 @@ public class Horario {
     public Horario() {
     }
 
-    public Horario(String idCurso, HorarioDiaSemana dias, LocalTime horaInicio, LocalTime horaFin, Integer cupoMax, Integer cupoActual) {
-        this.idCurso = idCurso;
-        this.dias = dias;
-        this.horaInicio = horaInicio;
-        this.horaFin = horaFin;
-        this.cupoMax = cupoMax;
-        this.cupoActual = cupoActual;
-    }
-
-    public Horario(String idHorario, String idCurso, HorarioDiaSemana dias, LocalTime horaInicio, LocalTime horaFin, Integer cupoMax, Integer cupoActual) {
+    public Horario(String idHorario, String idCurso, List<HorarioDiaSemana> dias, LocalTime horaInicio, LocalTime horaFin, Integer cupoMax, Integer cupoActual) {
         this.idHorario = idHorario;
         this.idCurso = idCurso;
         this.dias = dias;
@@ -49,6 +41,17 @@ public class Horario {
         this.cupoMax = cupoMax;
         this.cupoActual = cupoActual;
     }
+
+    public Horario(String idCurso, List<HorarioDiaSemana> dias, LocalTime horaInicio, LocalTime horaFin, Integer cupoMax, Integer cupoActual) {
+        this.idCurso = idCurso;
+        this.dias = dias;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+        this.cupoMax = cupoMax;
+        this.cupoActual = cupoActual;
+    }
+
+    
 
     public String getIdHorario() {
         return idHorario;
@@ -66,11 +69,11 @@ public class Horario {
         this.idCurso = idCurso;
     }
 
-    public HorarioDiaSemana getDias() {
+    public List<HorarioDiaSemana> getDias() {
         return dias;
     }
 
-    public void setDias(HorarioDiaSemana dias) {
+    public void setDias(List<HorarioDiaSemana> dias) {
         this.dias = dias;
     }
 

@@ -5,6 +5,7 @@
 package com.mycompany.fitlifegym_dtos;
 
 import java.time.LocalTime;
+import java.util.List;
 
 /**
  *
@@ -13,7 +14,7 @@ import java.time.LocalTime;
 public class HorarioDTO {
     private String idHorario;
     private String idCurso;
-    private HorarioDiaSemanaDTO dias;
+    private List<HorarioDiaSemanaDTO> dias;
     private LocalTime horaInicio;
     private LocalTime horaFin;
     private Integer cupoMax;
@@ -22,7 +23,7 @@ public class HorarioDTO {
     public HorarioDTO() {
     }
 
-    public HorarioDTO(String idCurso, HorarioDiaSemanaDTO dias, LocalTime horaInicio, LocalTime horaFin, Integer cupoMax, Integer cupoActual) {
+    public HorarioDTO(String idCurso, List<HorarioDiaSemanaDTO> dias, LocalTime horaInicio, LocalTime horaFin, Integer cupoMax, Integer cupoActual) {
         this.idCurso = idCurso;
         this.dias = dias;
         this.horaInicio = horaInicio;
@@ -31,7 +32,7 @@ public class HorarioDTO {
         this.cupoActual = cupoActual;
     }
 
-    public HorarioDTO(String idHorario, String idCurso, HorarioDiaSemanaDTO dias, LocalTime horaInicio, LocalTime horaFin, Integer cupoMax, Integer cupoActual) {
+    public HorarioDTO(String idHorario, String idCurso, List<HorarioDiaSemanaDTO> dias, LocalTime horaInicio, LocalTime horaFin, Integer cupoMax, Integer cupoActual) {
         this.idHorario = idHorario;
         this.idCurso = idCurso;
         this.dias = dias;
@@ -49,7 +50,7 @@ public class HorarioDTO {
         return idCurso;
     }
 
-    public HorarioDiaSemanaDTO getDias() {
+    public List<HorarioDiaSemanaDTO> getDias() {
         return dias;
     }
 
@@ -68,6 +69,8 @@ public class HorarioDTO {
     public Integer getCupoActual() {
         return cupoActual;
     }
+    
+    
     
     
     

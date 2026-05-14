@@ -28,7 +28,6 @@ import com.mycompany.funcionalidadiniciarsesionrenovarmembresia.FuncionalidadIni
 import com.mycompany.funcionalidadiniciarsesionrenovarmembresia.IFuncionalidadIniciarSesionRenovarMembresia;
 import java.time.LocalDate;
 import java.util.List;
-
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;

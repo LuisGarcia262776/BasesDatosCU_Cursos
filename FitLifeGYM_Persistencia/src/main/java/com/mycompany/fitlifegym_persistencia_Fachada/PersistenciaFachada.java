@@ -4,11 +4,14 @@
  */
 package com.mycompany.fitlifegym_persistencia_Fachada;
 
+import com.mycompany.fitlifegym_DAO.ClienteDAO;
 import com.mycompany.fitlifegym_DAO.CursoDAO;
+import com.mycompany.fitlifegym_DAO.HorarioDAO;
 import com.mycompany.fitlifegym_DAO.IClientesDAO;
 import com.mycompany.fitlifegym_DAO.ICursoDAO;
 import com.mycompany.fitlifegym_DAO.IHorarioDAO;
 import com.mycompany.fitlifegym_DAO.IInscripcionDAO;
+import com.mycompany.fitlifegym_DAO.InscripcionDAO;
 
 /**
  *
