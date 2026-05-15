@@ -2,34 +2,34 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.mycompany</groupId>
-    <artifactId>FuncionalidadComprarMembresiaUsuarioNoRegistrado</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>FitLifeGYM_CU_CURSOS</artifactId>
+    <version>1.0</version>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
-            <groupId>org.netbeans.external</groupId>
-            <artifactId>AbsoluteLayout</artifactId>
-            <version>RELEASE280</version>
-        </dependency>
-        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>FitLifeGYM_Negocio</artifactId>
-            <version>${project.version}</version>
+            <version>1.0-SNAPSHOT</version>
             <exclusions>
-                <exclusion>
-                    <groupId>com.mycompany</groupId>
-                    <artifactId>FitLifeGYM_Persistencia</artifactId>
-                </exclusion>
                 <exclusion>
                     <groupId>com.mycompany</groupId>
                     <artifactId>FitLifeGYM_Dtos</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>com.mycompany</groupId>
+                    <artifactId>FitLifeGYM_Persistencia</artifactId>
+                </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>FitLifeGYM_Dtos</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.release>21</maven.compiler.release>
-        <exec.mainClass>com.mycompany.funcionalidadcomprarmembresiausuarionoregistrado.FuncionalidadComprarMembresiaUsuarioNoRegistrado</exec.mainClass>
+        <maven.compiler.release>25</maven.compiler.release>
+        <exec.mainClass>com.mycompany.fitlifegym_cu_cursos.FitLifeGYM_CU_CURSOS</exec.mainClass>
     </properties>
 </project>
