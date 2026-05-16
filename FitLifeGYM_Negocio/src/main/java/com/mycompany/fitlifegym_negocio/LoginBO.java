@@ -5,53 +5,49 @@
 package com.mycompany.fitlifegym_negocio;
 
 import Adapter.DtosAEntidadesAdapter;
-import com.mycompany.fitlifegym_DAO.IClientesDAO;
 import com.mycompany.fitlifegym_PersistenciaException.PersistenciaException;
 import com.mycompany.fitlifegym_dtos.ClienteLogueadoDTO;
-import com.mycompany.fitlifegym_dtos.EstadoDTO;
 import com.mycompany.fitlifegym_dtos.LoginDTO;
-import com.mycompany.fitlifegym_dtos.TipoMembresiaDTO;
 import com.mycompany.fitlifegym_persistencia.entidades.Cliente;
-import com.mycompany.fitlifegym_persistencia.entidades.TipoMembresia;
 import com.mycompany.fitlifegym_persistencia_Fachada.IPersistenciaFachada;
+import com.mycompany.fitlifegym_persistencia_Fachada.PersistenciaFachada;
+import java.util.List;
+
 
 /**
  *
  * @author PC GAMER MASTER RACE
  */
 public class LoginBO implements ILoginBO {
-    private final IClientesDAO clientesDAO;
+    private final IPersistenciaFachada fachada;
 
-    public LoginBO(IPersistenciaFachada fachada) {
-        this.clientesDAO = fachada.obtenerClienteDAO();
+    public LoginBO() {
+        this.fachada = new PersistenciaFachada();
     }
 
     @Override
     public ClienteLogueadoDTO iniciarSesion(LoginDTO login) throws NegocioException {
         try {
-            Cliente cliente = clientesDAO.buscarPorPin(login.getPin());
+            List<Cliente> clientes = fachada.obtenerClienteDAO().consultarClientes();
 
-            if (cliente == null) {
-                return null;
-            }
+            for (Cliente cliente : clientes) {
+                boolean pinCorrecto = cliente.getPin().equals(login.getPin());
 
-            String nombreCompleto = cliente.getNombre() + " " + cliente.getApellidos();
-            TipoMembresiaDTO tipoDTO = null;
-            EstadoDTO estadoDTO = EstadoDTO.INACTIVO;
+                boolean contraseniaCorrecta = cliente.getContrasenia().equals(login.getContrasenia());
 
-            if (cliente.getMembresiaComprada() != null) {
-                estadoDTO = DtosAEntidadesAdapter.adaptarEstadoDTO(cliente.getMembresiaComprada().getEstado());
-                if (cliente.getMembresiaComprada().getMembresia() != null) {
-                    TipoMembresia tipo = cliente.getMembresiaComprada().getMembresia().getTipoMembresia();
-                    if (tipo != null) {
-                        tipoDTO = DtosAEntidadesAdapter.adaptarTipoMembresiaDTO(tipo);
-                    }
+                if (pinCorrecto && contraseniaCorrecta) {
+                    return DtosAEntidadesAdapter.adaptarClienteLogueado(cliente);
                 }
             }
-
-            return new ClienteLogueadoDTO(cliente.getIdCliente(), nombreCompleto, tipoDTO, estadoDTO);
+            
+            throw new NegocioException("PIN o contraseña incorrectos.");
         } catch (PersistenciaException ex) {
-            throw new NegocioException("Error al iniciar sesion", ex);
+            throw new NegocioException("Error al iniciar sesión.", ex );
         }
     }
+        
 }
+        
+
+    
+

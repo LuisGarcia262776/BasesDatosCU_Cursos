@@ -43,7 +43,7 @@ public class InscripcionBO implements IInscripcionBO{
                 throw new NegocioException("El idInscripcion es obligatorio");
             }
 
-            Inscripcion inscripcion =fachada.obtenerInscripcionDAO().obtenerPorId(idInscripcion);
+            Inscripcion inscripcion = fachada.obtenerInscripcionDAO().obtenerPorId(idInscripcion);
 
             return DtosAEntidadesAdapter.adaptarInscripcion(inscripcion);
         } catch (PersistenciaException ex) {

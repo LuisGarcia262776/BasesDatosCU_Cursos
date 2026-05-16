@@ -5,7 +5,7 @@
 package com.mycompany.fitlifegym_negocio;
 
 import com.mycompany.fitlifegym_dtos.NuevaMembresiaDTO;
-import com.mycompany.fitlifegym_persistencia.entidades.Membresia;
+import com.mycompany.fitlifegym_dtos.TipoMembresiaDTO;
 import java.util.List;
 
 /**
@@ -14,9 +14,7 @@ import java.util.List;
  */
 public interface IMembresiaBO {
 
-    public abstract void guardar(NuevaMembresiaDTO membresia) throws NegocioException;
+    public abstract List<NuevaMembresiaDTO>obtenerTodas() throws NegocioException;
 
-    public abstract List<Membresia> obtenerTodas() throws NegocioException;
-
-    public abstract Membresia obtenerPorId(Long id)throws NegocioException;
+    public abstract NuevaMembresiaDTO buscarPorTipo(TipoMembresiaDTO tipo) throws NegocioException;
 }

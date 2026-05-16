@@ -94,8 +94,9 @@ public class BienvenidaFORM extends javax.swing.JFrame {
         btnCursos.setBackground(new java.awt.Color(44, 44, 44));
         btnCursos.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         btnCursos.setForeground(new java.awt.Color(255, 255, 255));
-        btnCursos.setText("Cursos Especiales");
+        btnCursos.setText("Cursos");
         btnCursos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnCursos.addActionListener(this::btnCursosActionPerformed);
 
         btnNutricion.setBackground(new java.awt.Color(44, 44, 44));
         btnNutricion.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -149,13 +150,10 @@ public class BienvenidaFORM extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblTitulo1))
                     .addGroup(jPanelLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(btnBeneficios, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 623, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnBeneficios, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 623, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanelLayout.createSequentialGroup()
@@ -225,13 +223,17 @@ public class BienvenidaFORM extends javax.swing.JFrame {
     }//GEN-LAST:event_btnProgresoActionPerformed
 
     private void btnBeneficiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBeneficiosActionPerformed
-
         ClienteLogueadoDTO cliente = control.getClienteActual();
-        
+
+        if (cliente == null) {
+            JOptionPane.showMessageDialog(this, "No hay cliente logueado.");
+            return;
+        }
+
         if (cliente.getEstadoMembresia() == EstadoDTO.ACTIVO) {
             JOptionPane.showMessageDialog(this, "Ya tienes una membresía activa.");
         } else {
-            control.navegarBenificios(new NuevoClienteDTO());
+            JOptionPane.showMessageDialog(this, "Pantalla de renovación próximamente.");
         }
     }//GEN-LAST:event_btnBeneficiosActionPerformed
 
@@ -239,11 +241,14 @@ public class BienvenidaFORM extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnQuejaSugerenciaActionPerformed
 
+    private void btnCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCursosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCursosActionPerformed
+
     private void configiracionPorMembresia() {
-        if (cliente == null || cliente.getMembresiaActiva() == null) {
+        if (cliente == null || cliente.getMembresiaActiva()== null) {
             return;
         }
-
         TipoMembresiaDTO tipo = cliente.getMembresiaActiva();
 
         btnCursos.setEnabled(false);
@@ -255,9 +260,13 @@ public class BienvenidaFORM extends javax.swing.JFrame {
             case ORO:
                 btnCursos.setEnabled(true);
                 btnProgreso.setEnabled(true);
+                btnNutricion.setEnabled(true);
+                btnAmbienteMusical.setEnabled(true);
+                break;
             case PLATA:
                 btnNutricion.setEnabled(true);
                 btnAmbienteMusical.setEnabled(true);
+                break;
             case BRONCE:
                 break;
         }

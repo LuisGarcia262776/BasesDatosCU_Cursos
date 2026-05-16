@@ -15,6 +15,7 @@ public class ClienteLogueadoDTO {
     private final TipoMembresiaDTO membresiaActiva;
     private final EstadoDTO estadoMembresia;
 
+
     public ClienteLogueadoDTO(String idCliente, String nombreCompleto, TipoMembresiaDTO membresiaActiva, EstadoDTO estadoMembresia) {
         this.idCliente = idCliente;
         this.nombreCompleto = nombreCompleto;

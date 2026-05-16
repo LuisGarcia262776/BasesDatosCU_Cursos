@@ -4,11 +4,10 @@
  */
 package com.mycompany.fitlifegym_presentacion;
 
+import com.mycompany.fitlifegym_dtos.NuevaMembresiaDTO;
 import com.mycompany.fitlifegym_dtos.NuevoClienteDTO;
 import com.mycompany.fitlifegym_dtos.TipoMembresiaDTO;
 import com.mycompany.fitlifegym_negocio.NegocioException;
-import com.mycompany.fitlifegym_persistencia.entidades.Membresia;
-import com.mycompany.fitlifegym_persistencia.entidades.TipoMembresia;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -18,14 +17,13 @@ import javax.swing.JOptionPane;
  * @author Diego
  */
 public class BeneficiosFORM extends javax.swing.JFrame {
+    private final ControlNavegacion control;
+    private NuevoClienteDTO cliente;
+    private List<NuevaMembresiaDTO> membresiasDisponibles;
 
-    private ControlNavegacion control;
-    private NuevoClienteDTO cliente; 
-    private List<Membresia> membresiasDisponibles;
-
-    public BeneficiosFORM(ControlNavegacion control, NuevoClienteDTO cliente) {
+    public BeneficiosFORM(ControlNavegacion control,NuevoClienteDTO cliente) {
         this.control = control;
-        this.cliente = cliente; 
+        this.cliente = cliente;
         this.setTitle("Beneficios");
         initComponents();
         ComboBoxMembresia.setFocusable(false);
@@ -34,6 +32,7 @@ public class BeneficiosFORM extends javax.swing.JFrame {
         setearEditablesFalsosCheckBox();
         actualizarBeneficios();
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -272,9 +271,17 @@ public class BeneficiosFORM extends javax.swing.JFrame {
     }//GEN-LAST:event_ComboBoxMembresiaActionPerformed
 
     private void btnSuscribirseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuscribirseActionPerformed
-        String membresiaSeleccionado = (String) ComboBoxMembresia.getSelectedItem();
-        TipoMembresiaDTO membresia = control.seleccionarMembresia(membresiaSeleccionado);
-        control.navegarMetodosPago(membresia, this.cliente);
+        try {
+            String membresiaSeleccionada = (String) ComboBoxMembresia.getSelectedItem();
+
+            TipoMembresiaDTO membresia = control.seleccionarMembresia(membresiaSeleccionada);
+
+            this.cliente = control.asignarMembresiaCliente(cliente, membresia);
+
+            control.navegarMetodosPago(membresia, this.cliente);
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
     }//GEN-LAST:event_btnSuscribirseActionPerformed
 
     private void actualizarBeneficios() {
@@ -293,25 +300,25 @@ public class BeneficiosFORM extends javax.swing.JFrame {
             case "ORO":
                 checkBoxCursos.setSelected(true);
                 checkBoxFisico.setSelected(true);
-
             case "PLATA":
                 checkBoxNutricion.setSelected(true);
                 checkBoxMusica.setSelected(true);
-
                 break;
             case "BRONCE":
                 break;
         }
 
-        Membresia seleccionada = buscarMembresiaPorNombre(membresia);
-        if (seleccionada != null && seleccionada.getPrecio() != null) {
+        NuevaMembresiaDTO seleccionada = buscarMembresiaPorNombre(membresia);
+        
+        if (seleccionada != null) {
             btnPrecio.setText("$" + seleccionada.getPrecio());
         }
     }
 
     private void cargarMembresias() {
         try {
-            membresiasDisponibles = control.consultarMembresias();
+            membresiasDisponibles =control.consultarMembresias();
+
             String[] nombres = new String[membresiasDisponibles.size()];
 
             for (int i = 0; i < membresiasDisponibles.size(); i++) {
@@ -324,9 +331,10 @@ public class BeneficiosFORM extends javax.swing.JFrame {
         }
     }
 
-    private Membresia buscarMembresiaPorNombre(String nombre) {
+    private NuevaMembresiaDTO buscarMembresiaPorNombre(String nombre) {
         try {
             TipoMembresiaDTO tipo = control.seleccionarMembresia(nombre);
+            
             return control.buscarMembresiaPorTipo(tipo);
         } catch (NegocioException ex) {
             return null;

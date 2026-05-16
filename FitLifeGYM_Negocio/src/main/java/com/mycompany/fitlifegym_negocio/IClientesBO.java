@@ -5,7 +5,6 @@
 package com.mycompany.fitlifegym_negocio;
 
 import com.mycompany.fitlifegym_dtos.NuevoClienteDTO;
-import com.mycompany.fitlifegym_persistencia.entidades.Cliente;
 import java.util.List;
 
 /**
@@ -14,9 +13,9 @@ import java.util.List;
  */
 public interface IClientesBO {
 
-    public abstract Cliente registrarCliente(NuevoClienteDTO cliente) throws NegocioException;
+    public abstract NuevoClienteDTO registrarCliente(NuevoClienteDTO clienteDTO) throws NegocioException;
 
-    public abstract Cliente buscarClientePorId(String id) throws NegocioException;
+    public abstract NuevoClienteDTO buscarClientePorId(String id) throws NegocioException;
 
-    public abstract List<Cliente> consultarClientes() throws NegocioException;
+    public abstract List<NuevoClienteDTO> obtenerTodas() throws NegocioException;
 }

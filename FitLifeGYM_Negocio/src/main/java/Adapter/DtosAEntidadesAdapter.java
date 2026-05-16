@@ -4,6 +4,7 @@
  */
 package Adapter;
 
+import com.mycompany.fitlifegym_dtos.ClienteLogueadoDTO;
 import com.mycompany.fitlifegym_dtos.CursoDTO;
 import com.mycompany.fitlifegym_dtos.DisponibilidadCursoDTO;
 import com.mycompany.fitlifegym_dtos.EstadoDTO;
@@ -294,5 +295,44 @@ public class DtosAEntidadesAdapter {
 
         return EstadoInscripcionDTO.valueOf(e.name());
     }
+    
+    public static NuevoClienteDTO adaptarCliente(Cliente cliente) {
+        if (cliente == null) {
+            return null;
+        }
+        return new NuevoClienteDTO(cliente.getNombre(),cliente.getApellidos(),cliente.getCorreo(),cliente.getTelefono(),cliente.getContrasenia(),cliente.getFechaNacimiento(),cliente.getPin(),null);
+    }
+    
+    public static List<NuevoClienteDTO> adaptarListaClientes(List<Cliente> clientes) {
+        List<NuevoClienteDTO> lista = new ArrayList<>();
+        if (clientes != null) {
+            for (Cliente cliente : clientes) {
+                lista.add(adaptarCliente(cliente));
+            }
+        }
+
+        return lista;
+    }
+    
+    public static ClienteLogueadoDTO adaptarClienteLogueado(Cliente cliente) {
+        if (cliente == null) {
+            return null;
+        }
+
+        TipoMembresiaDTO tipoDTO = null;
+
+        EstadoDTO estadoDTO = null;
+
+        if (cliente.getMembresiaComprada() != null) {
+            tipoDTO = adaptarTipoMembresiaDTO(cliente.getMembresiaComprada().getMembresia().getTipoMembresia());
+
+            estadoDTO = adaptarEstadoDTO(cliente.getMembresiaComprada().getEstado());
+        }
+
+        return new ClienteLogueadoDTO(
+            cliente.getIdCliente(), cliente.getNombre() + " " + cliente.getApellidos(),tipoDTO,estadoDTO);
+        }
+    
+    
 
 }

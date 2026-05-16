@@ -6,7 +6,6 @@ package com.mycompany.funcionalidadcomprarmembresiausuarionoregistrado;
 
 import com.mycompany.fitlifegym_dtos.NuevoClienteDTO;
 import com.mycompany.fitlifegym_negocio.NegocioException;
-import com.mycompany.fitlifegym_persistencia.entidades.Cliente;
 import java.util.List;
 
 
@@ -15,14 +14,14 @@ import java.util.List;
  * @author Diego
  */
 public interface IFuncionalidadRegistrarUsuario {
+    public abstract void registrarUsuario(NuevoClienteDTO clienteDTO) throws NegocioException;
 
-    public abstract void RegistrarUsuario(NuevoClienteDTO clienteDTO) throws NegocioException;
-    
-    public abstract List<Clientes> obtenerTodas() throws NegocioException;
-    
-    public abstract void validarDatosUsuario(NuevoClienteDTO clienteDTO)throws NegocioException;
-    
-    public abstract void validarTarjeta(String cvv, String numeroTarjeta, String fechaVencimiento,String nombreTitular)throws NegocioException;
-    
-    public abstract void validarPaypal(String correo, String contrasenia)throws NegocioException;
+    public abstract List<NuevoClienteDTO> obtenerTodas() throws NegocioException;
+
+    public abstract void validarDatosUsuario(NuevoClienteDTO clienteDTO) throws NegocioException;
+
+    public abstract void validarTarjeta(String cvv, String numeroTarjeta, String fechaVencimiento, String nombreTitular) throws NegocioException;
+
+    public abstract void validarPaypal(String correo, String contrasenia) throws NegocioException;
 }
+

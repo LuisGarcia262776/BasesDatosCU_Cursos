@@ -11,5 +11,5 @@ import com.mycompany.fitlifegym_dtos.RenovarMembresiaDTO;
  * @author PC GAMER MASTER RACE
  */
 public interface IRenovarMembresiaBO {
-    public abstract void renovarMembresia(RenovarMembresiaDTO dto) throws NegocioException; 
+    public abstract void renovarMembresia(RenovarMembresiaDTO dto)throws NegocioException;
 }
