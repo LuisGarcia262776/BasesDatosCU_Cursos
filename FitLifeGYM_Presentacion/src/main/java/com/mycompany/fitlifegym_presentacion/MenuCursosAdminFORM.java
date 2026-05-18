@@ -11,11 +11,12 @@ package com.mycompany.fitlifegym_presentacion;
 public class MenuCursosAdminFORM extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MenuCursosAdminFORM.class.getName());
-
+    private ControlNavegacion control;
     /**
      * Creates new form MenuCursosAdmin
      */
-    public MenuCursosAdminFORM() {
+    public MenuCursosAdminFORM(ControlNavegacion control) {
+        this.control = control;
         initComponents();
     }
 
@@ -102,6 +103,7 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
 
         txtCursosActivos.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         txtCursosActivos.setForeground(new java.awt.Color(255, 255, 255));
+        txtCursosActivos.addActionListener(this::txtCursosActivosActionPerformed);
 
         txtInscripcionesTotales.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         txtInscripcionesTotales.setForeground(new java.awt.Color(255, 255, 255));
@@ -115,12 +117,13 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
         txtHorariosActivos.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         txtHorariosActivos.setForeground(new java.awt.Color(255, 255, 255));
         txtHorariosActivos.setText("jTextField1");
+        txtHorariosActivos.addActionListener(this::txtHorariosActivosActionPerformed);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(242, 242, 242));
         jLabel1.setText("Acciones:");
 
-        btnGestionCursos1.setBackground(new java.awt.Color(128, 128, 128));
+        btnGestionCursos1.setBackground(new java.awt.Color(99, 99, 99));
         btnGestionCursos1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnGestionCursos1.setForeground(new java.awt.Color(255, 255, 255));
         btnGestionCursos1.setText("GESTION CURSOS");
@@ -128,7 +131,7 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(18, 18, 18));
 
-        btnREPORTES.setBackground(new java.awt.Color(128, 128, 128));
+        btnREPORTES.setBackground(new java.awt.Color(99, 99, 99));
         btnREPORTES.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnREPORTES.setForeground(new java.awt.Color(255, 255, 255));
         btnREPORTES.setText("REPORTES");
@@ -151,15 +154,17 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
-        btnGestionHorarios2.setBackground(new java.awt.Color(128, 128, 128));
+        btnGestionHorarios2.setBackground(new java.awt.Color(99, 99, 99));
         btnGestionHorarios2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnGestionHorarios2.setForeground(new java.awt.Color(255, 255, 255));
         btnGestionHorarios2.setText("GESTION HORARIOS");
+        btnGestionHorarios2.addActionListener(this::btnGestionHorarios2ActionPerformed);
 
         btnCerrarSesion.setBackground(new java.awt.Color(255, 0, 0));
         btnCerrarSesion.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         btnCerrarSesion.setForeground(new java.awt.Color(255, 255, 255));
         btnCerrarSesion.setText("Cerrar Sesion");
+        btnCerrarSesion.addActionListener(this::btnCerrarSesionActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -275,12 +280,30 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
     }//GEN-LAST:event_txtInscripcionesTotalesActionPerformed
 
     private void btnGestionCursos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionCursos1ActionPerformed
-        // TODO add your handling code here:
+        GestionDeCursosFORM prueba = new GestionDeCursosFORM(control);
+        prueba.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnGestionCursos1ActionPerformed
 
     private void btnREPORTESActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnREPORTESActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnREPORTESActionPerformed
+
+    private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCerrarSesionActionPerformed
+
+    private void btnGestionHorarios2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionHorarios2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGestionHorarios2ActionPerformed
+
+    private void txtCursosActivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCursosActivosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCursosActivosActionPerformed
+
+    private void txtHorariosActivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHorariosActivosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtHorariosActivosActionPerformed
 
     /**
      * @param args the command line arguments

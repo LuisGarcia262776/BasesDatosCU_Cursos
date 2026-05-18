@@ -242,7 +242,8 @@ public class BienvenidaFORM extends javax.swing.JFrame {
     }//GEN-LAST:event_btnQuejaSugerenciaActionPerformed
 
     private void btnCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCursosActionPerformed
-        // TODO add your handling code here:
+        MenuCursosAdminFORM frame = new MenuCursosAdminFORM(control);
+        frame.setVisible(true);
     }//GEN-LAST:event_btnCursosActionPerformed
 
     private void configiracionPorMembresia() {
