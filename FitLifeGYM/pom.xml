@@ -12,7 +12,7 @@
         <module>../FuncionalidadComprarMembresiaUsuarioNoRegistrado</module>
         <module>../FuncionalidadIniciarSesionRenovarMembresia</module>
         <module>../FitLifeGYM_Dtos</module>
-        <module>../../../NetBeansProjects/FitLifeGYM_CU_CURSOS</module>
+        <module>../FitLifeGYM_CU_CURSOS</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -15,12 +15,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>FitLifeGYM_Negocio</artifactId>
             <version>${project.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.mycompany</groupId>
-                    <artifactId>FitLifeGYM_Persistencia</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
     <properties>

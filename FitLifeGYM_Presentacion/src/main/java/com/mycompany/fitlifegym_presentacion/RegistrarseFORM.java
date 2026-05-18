@@ -293,20 +293,14 @@ public class RegistrarseFORM extends javax.swing.JDialog {
         String pin = txtPIN.getText();
 
         try {
-            LocalDate fechaNacimiento = LocalDate.parse(fechaString);
-
-            NuevoClienteDTO clienteRegistrar = new NuevoClienteDTO(nombre, apellidos, correo, telefono, contrasenia, fechaNacimiento, pin);
-            control.registrarCliente(clienteRegistrar);
-            
-            JOptionPane.showMessageDialog(this, "Datos personales guardados");
-           
-            control.navegarBenificios(clienteRegistrar);
-             
-
+            LocalDate fechaNacimiento =LocalDate.parse(fechaString);
+            NuevoClienteDTO clienteRegistrar =new NuevoClienteDTO(nombre, apellidos, correo, telefono, contrasenia, fechaNacimiento, pin);
+            control.navegarBeneficios(clienteRegistrar);
+            dispose();
         } catch (DateTimeParseException ex) {
-            JOptionPane.showMessageDialog(this, "La fecha debe tener el formato AAAA-MM-DD ");
-        }catch (NegocioException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "La fecha debe tener formato AAAA-MM-DD");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnSiguienteActionPerformed
 

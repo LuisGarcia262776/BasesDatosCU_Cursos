@@ -4,13 +4,10 @@
  */
 package com.mycompany.fitlifegym_presentacion;
 
-import com.mycompany.fitlifegym_dtos.ClienteLogueadoDTO;
+import com.mycompany.fitlifegym_dtos.NuevaMembresiaDTO;
 import com.mycompany.fitlifegym_dtos.NuevoClienteDTO;
 import com.mycompany.fitlifegym_dtos.TipoMembresiaDTO;
 import com.mycompany.fitlifegym_negocio.NegocioException;
-import com.mycompany.fitlifegym_persistencia.entidades.Membresia;
-import com.mycompany.fitlifegym_persistencia.entidades.TipoMembresia;
-import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -35,8 +32,8 @@ public class TransferenciaFORM extends javax.swing.JDialog {
 
     private void cargarMonto() {
         try {
-            Membresia m = control.buscarMembresiaPorTipo(this.membresia);
-            textMonto.setText("Monto: $" + m.getPrecio());
+            NuevaMembresiaDTO membresiaDTO = control.buscarMembresiaPorTipo(this.membresia);
+            textMonto.setText("Monto: $" + membresiaDTO.getPrecio());
         } catch (NegocioException ex) {
             textMonto.setText("Monto: error al cargar");
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -212,19 +209,15 @@ public class TransferenciaFORM extends javax.swing.JDialog {
 
     private void btnTransferenciaRealizadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferenciaRealizadaActionPerformed
         try {
-            // Asignar la membresia al cliente en memoria
-            control.asignarMembresiaCliente(this.cliente, this.membresia);
-
-            // Procesar el "pago" por transferencia reutilizamos el mismo registro
-            control.procesarPagoTransferencia(cliente);
-
+            this.cliente = control.asignarMembresiaCliente(this.cliente, this.membresia);
+            
+            control.procesarPagoTransferencia(this.cliente);
+            
             JOptionPane.showMessageDialog(this, "¡Transferencia recibida! Membresía activada.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-
             this.dispose();
             control.navegarMenuPrincipal();
-
         } catch (NegocioException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnTransferenciaRealizadaActionPerformed
 

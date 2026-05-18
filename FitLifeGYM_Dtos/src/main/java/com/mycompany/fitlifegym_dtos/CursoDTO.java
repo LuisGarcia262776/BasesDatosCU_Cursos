@@ -11,7 +11,7 @@ package com.mycompany.fitlifegym_dtos;
 public class CursoDTO {
     private String idCurso;
     private String nombre;
-    private String imagen;
+    private ImagenDTO imagen;
     private String descripcion;
     private Integer cupoMinimo;
     private DisponibilidadCursoDTO disponibilidad;
@@ -19,7 +19,7 @@ public class CursoDTO {
     public CursoDTO() {
     }
 
-    public CursoDTO(String nombre, String imagen, String descripcion, Integer cupoMinimo, DisponibilidadCursoDTO disponibilidad) {
+    public CursoDTO(String nombre, ImagenDTO imagen, String descripcion, Integer cupoMinimo, DisponibilidadCursoDTO disponibilidad) {
         this.nombre = nombre;
         this.imagen = imagen;
         this.descripcion = descripcion;
@@ -27,7 +27,7 @@ public class CursoDTO {
         this.disponibilidad = disponibilidad;
     }
 
-    public CursoDTO(String idCurso, String nombre, String imagen, String descripcion, Integer cupoMinimo, DisponibilidadCursoDTO disponibilidad) {
+    public CursoDTO(String idCurso, String nombre, ImagenDTO imagen, String descripcion, Integer cupoMinimo, DisponibilidadCursoDTO disponibilidad) {
         this.idCurso = idCurso;
         this.nombre = nombre;
         this.imagen = imagen;
@@ -44,7 +44,7 @@ public class CursoDTO {
         return nombre;
     }
 
-    public String getImagen() {
+    public ImagenDTO getImagen() {
         return imagen;
     }
 

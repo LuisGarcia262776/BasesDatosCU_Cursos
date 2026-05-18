@@ -11,6 +11,7 @@ import com.mycompany.fitlifegym_dtos.EstadoDTO;
 import com.mycompany.fitlifegym_dtos.EstadoInscripcionDTO;
 import com.mycompany.fitlifegym_dtos.HorarioDTO;
 import com.mycompany.fitlifegym_dtos.HorarioDiaSemanaDTO;
+import com.mycompany.fitlifegym_dtos.ImagenDTO;
 import com.mycompany.fitlifegym_dtos.InscripcionDTO;
 import com.mycompany.fitlifegym_dtos.NuevaMembresiaCompradaDTO;
 import com.mycompany.fitlifegym_dtos.NuevaMembresiaDTO;
@@ -23,6 +24,7 @@ import com.mycompany.fitlifegym_persistencia.entidades.Estado;
 import com.mycompany.fitlifegym_persistencia.entidades.EstadoInscripcion;
 import com.mycompany.fitlifegym_persistencia.entidades.Horario;
 import com.mycompany.fitlifegym_persistencia.entidades.HorarioDiaSemana;
+import com.mycompany.fitlifegym_persistencia.entidades.Imagen;
 import com.mycompany.fitlifegym_persistencia.entidades.Inscripcion;
 import com.mycompany.fitlifegym_persistencia.entidades.Membresia;
 import com.mycompany.fitlifegym_persistencia.entidades.MembresiaComprada;
@@ -112,32 +114,26 @@ public class DtosAEntidadesAdapter {
     }
 
     public static Curso adaptarCursoDTO(CursoDTO dto) {
-
-        if (dto == null) return null;
-
-        return new Curso(dto.getIdCurso(), dto.getNombre(), dto.getImagen(), dto.getDescripcion(), dto.getCupoMinimo(), adaptarDisponibilidad(dto.getDisponibilidad()));
+        if (dto == null) {
+            return null;
+        }
+        return new Curso(dto.getIdCurso(), dto.getNombre(), adaptarImagenDTO(dto.getImagen()), dto.getDescripcion(), dto.getCupoMinimo(),adaptarDisponibilidad(dto.getDisponibilidad()));
     }
 
     public static CursoDTO adaptarCurso(Curso curso) {
-
-        if (curso == null){
+        if (curso == null) {
             return null;
         }
-
-        return new CursoDTO(curso.getIdCurso(), curso.getNombre(), curso.getImagen(), curso.getDescripcion(), curso.getCupoMinimo(), adaptarDisponibilidadDTO(curso.getDisponibilidad()));
+        return new CursoDTO(curso.getIdCurso(),curso.getNombre(), adaptarImagen(curso.getImagen()), curso.getDescripcion(), curso.getCupoMinimo(), adaptarDisponibilidadDTO(curso.getDisponibilidad()));
     }
 
     public static List<CursoDTO> adaptarListaCursos(List<Curso> cursos) {
-
         List<CursoDTO> lista = new ArrayList<>();
-
         if (cursos != null) {
-
             for (Curso c : cursos) {
                 lista.add(adaptarCurso(c));
             }
         }
-
         return lista;
     }
 
@@ -332,6 +328,21 @@ public class DtosAEntidadesAdapter {
         return new ClienteLogueadoDTO(
             cliente.getIdCliente(), cliente.getNombre() + " " + cliente.getApellidos(),tipoDTO,estadoDTO);
         }
+    
+    public static Imagen adaptarImagenDTO(ImagenDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+        return new Imagen(dto.getRuta());
+    }
+
+    public static ImagenDTO adaptarImagen(Imagen imagen) {
+        if (imagen == null) {
+            return null;
+        }
+
+        return new ImagenDTO(imagen.getRuta());
+    }
     
     
 

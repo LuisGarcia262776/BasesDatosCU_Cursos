@@ -18,7 +18,7 @@ public class Curso {
     @BsonRepresentation(BsonType.OBJECT_ID)
     private String idCurso;
     private String nombre;
-    private String imagen;
+    private Imagen imagen;
     private String descripcion;
     private Integer cupoMinimo;
     private DisponibilidadCurso disponibilidad;
@@ -27,7 +27,7 @@ public class Curso {
         
     }
 
-    public Curso(String nombre, String imagen, String descripcion, Integer cupoMinimo, DisponibilidadCurso disponibilidad) {
+    public Curso(String nombre, Imagen imagen, String descripcion, Integer cupoMinimo, DisponibilidadCurso disponibilidad) {
         this.nombre = nombre;
         this.imagen = imagen;
         this.descripcion = descripcion;
@@ -35,7 +35,7 @@ public class Curso {
         this.disponibilidad = disponibilidad;
     }
 
-    public Curso(String idCurso, String nombre, String imagen, String descripcion, Integer cupoMinimo, DisponibilidadCurso disponibilidad) {
+    public Curso(String idCurso, String nombre, Imagen imagen, String descripcion, Integer cupoMinimo, DisponibilidadCurso disponibilidad) {
         this.idCurso = idCurso;
         this.nombre = nombre;
         this.imagen = imagen;
@@ -60,11 +60,11 @@ public class Curso {
         this.nombre = nombre;
     }
 
-    public String getImagen() {
+    public Imagen getImagen() {
         return imagen;
     }
 
-    public void setImagen(String imagen) {
+    public void setImagen(Imagen imagen) {
         this.imagen = imagen;
     }
 

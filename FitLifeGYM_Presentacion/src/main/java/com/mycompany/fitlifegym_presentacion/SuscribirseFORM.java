@@ -210,7 +210,7 @@ public class SuscribirseFORM extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTarjetaActionPerformed
 
     private void btnVolverAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverAtrasActionPerformed
-       control.navegarBenificios(this.cliente);   
+       control.navegarBeneficios(this.cliente);   
     }//GEN-LAST:event_btnVolverAtrasActionPerformed
 
     
