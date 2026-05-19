@@ -192,6 +192,7 @@ public class IniciarSesionFORM extends javax.swing.JDialog {
             ClienteLogueadoDTO cliente = control.iniciarSesion(pin, contrasenia);
             dispose();
             control.navegarBienvenida(cliente);
+            dispose();
         } catch (NegocioException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }

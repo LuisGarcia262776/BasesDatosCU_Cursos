@@ -8,6 +8,7 @@ import com.mycompany.fitlifegym_cu_cursos.CU_Cursos;
 import com.mycompany.fitlifegym_cu_cursos.ICU_Cursos;
 import com.mycompany.fitlifegym_dtos.ClienteLogueadoDTO;
 import com.mycompany.fitlifegym_dtos.CursoDTO;
+import com.mycompany.fitlifegym_dtos.DatosReporteDTO;
 import com.mycompany.fitlifegym_dtos.EstadoDTO;
 import com.mycompany.fitlifegym_dtos.HorarioDTO;
 import com.mycompany.fitlifegym_dtos.InscripcionDTO;
@@ -16,6 +17,7 @@ import com.mycompany.fitlifegym_dtos.NuevaMembresiaCompradaDTO;
 import com.mycompany.fitlifegym_dtos.NuevaMembresiaDTO;
 import com.mycompany.fitlifegym_dtos.NuevoClienteDTO;
 import com.mycompany.fitlifegym_dtos.RenovarMembresiaDTO;
+import com.mycompany.fitlifegym_dtos.ReporteDTO;
 import com.mycompany.fitlifegym_dtos.TipoMembresiaDTO;
 import com.mycompany.fitlifegym_negocio.NegocioException;
 import com.mycompany.funcionalidadcomprarmembresiausuarionoregistrado.FuncionalidadRegistroUsuario;
@@ -38,17 +40,15 @@ public class ControlNavegacion {
     private JFrame frameActual;
     private ClienteLogueadoDTO clienteActual;
 
-    // ── Funcionalidades existentes ────────────────────────────────────────
+    // Funcionalidades existentes 
     private final IFuncionalidadRegistrarUsuario funcionalidadRegistro;
     private final IFuncionalidadIniciarSesionRenovarMembresia funcionalidadSesion;
-
-    // ── CU Cursos ─────────────────────────────────────────────────────────
     private final ICU_Cursos cuCursos;
 
     public ControlNavegacion() {
         this.funcionalidadRegistro = new FuncionalidadRegistroUsuario();
         this.funcionalidadSesion = new FuncionalidadIniciarSesionRenovarMembresia();
-        this.cuCursos = new CU_Cursos();  // ← tu CU
+        this.cuCursos = new CU_Cursos(); 
     }
 
     private void mostrarPantalla(JFrame nuevoFrame) {
@@ -66,9 +66,7 @@ public class ControlNavegacion {
         nuevoDialogo.setVisible(true);
     }
 
-    // ════════════════════════════════════════════════════════
-    // NAVEGACIÓN — proyecto base (sin cambios)
-    // ════════════════════════════════════════════════════════
+    // NAVEGACIÓN — proyecto base 
 
     public void navegarMenuPrincipal() {
         mostrarPantalla(new MainFitLifeFORM(this));
@@ -106,10 +104,7 @@ public class ControlNavegacion {
         mostrarDialogo(new IniciarSesionPaypalFORM(this.frameActual, true, this, membresia, cliente));
     }
 
-    // ════════════════════════════════════════════════════════
-    // NAVEGACIÓN — CU Cursos (nuevos)
-    // ════════════════════════════════════════════════════════
-
+    // NAVEGACIÓN — CU Cursos 
     public void navegarGestionCursos() {
         mostrarPantalla(new MenuCursosAdminFORM(this));
     }
@@ -117,19 +112,41 @@ public class ControlNavegacion {
     public void navegarAgregarCurso() {
         mostrarPantalla(new AgregarCursoFORM(this));
     }
-
-    public void navegarEditarCurso(CursoDTO curso) {
-        // mostrarDialogo(new AgregarCursoFORM(this.frameActual, true, this, curso));
+    
+    public void navegarAgregarHorario(CursoDTO curso) {
+        mostrarPantalla(new AgregarHorarioFORM(this, curso)); 
+    }
+    
+    public void navegarEditarHorario(HorarioDTO horario, CursoDTO curso) {
+        mostrarPantalla(new EditarHorarioFORM(this, curso));
+    }
+    
+    public void navegarVerHorario(HorarioDTO horario) {
+        String dias = horario.getDias() != null
+                ? horario.getDias().toString() : "Sin días";
+        String inicio = horario.getHoraInicio() != null
+                ? horario.getHoraInicio().toString() : "--:--";
+        String fin = horario.getHoraFin() != null
+                ? horario.getHoraFin().toString() : "--:--";
+        String cupo = (horario.getCupoActual() != null ? horario.getCupoActual() : 0)
+                + "/" + (horario.getCupoMax() != null ? horario.getCupoMax() : 0);
+        mostrarExito("Días: " + dias
+                + "\nInicio: " + inicio
+                + "\nFin: " + fin
+                + "\nCupo: " + cupo);
     }
 
     public void navegarGestionHorarios(CursoDTO curso) {
-        // mostrarPantalla(new GestionHorariosFORM(this, curso));
+        mostrarPantalla(new GestionHorariosFORM(this));
+    }
+    
+    public void navegarReportes() {
+        mostrarPantalla(new GenerarReportesCursosFORM(this));
     }
 
-    // ════════════════════════════════════════════════════════
-    // ACCIONES — Cursos
-    // ════════════════════════════════════════════════════════
+    
 
+    // ACCIONES — Cursos
     public List<CursoDTO> obtenerCursos() {
         try {
             return cuCursos.listarCursos();
@@ -165,11 +182,18 @@ public class ControlNavegacion {
             return false;
         }
     }
+    
+    // ACCIONES — Reportes
+    public ReporteDTO generarReporte(DatosReporteDTO filtros) {
+        try {
+            return cuCursos.generarReporte(filtros);
+        } catch (NegocioException ex) {
+            mostrarError(ex.getMessage());
+            return null;
+        }
+    }
 
-    // ════════════════════════════════════════════════════════
     // ACCIONES — Horarios
-    // ════════════════════════════════════════════════════════
-
     public List<HorarioDTO> obtenerHorariosPorCurso(String idCurso) {
         try {
             return cuCursos.listarHorariosPorCurso(idCurso);
@@ -206,10 +230,7 @@ public class ControlNavegacion {
         }
     }
 
-    // ════════════════════════════════════════════════════════
     // ACCIONES — Inscripciones
-    // ════════════════════════════════════════════════════════
-
     public List<InscripcionDTO> obtenerInscripciones() {
         try {
             return cuCursos.listarInscripciones();
@@ -228,10 +249,7 @@ public class ControlNavegacion {
         }
     }
 
-    // ════════════════════════════════════════════════════════
-    // MEMBRESÍAS (sin cambios)
-    // ════════════════════════════════════════════════════════
-
+    // MEMBRESÍAS
     public TipoMembresiaDTO seleccionarMembresia(String tipo) {
         switch (tipo) {
             case "ORO":   return TipoMembresiaDTO.ORO;
@@ -243,18 +261,11 @@ public class ControlNavegacion {
     public NuevoClienteDTO asignarMembresiaCliente(NuevoClienteDTO cliente, TipoMembresiaDTO membresia) throws NegocioException {
         NuevaMembresiaDTO membresiaDTO = funcionalidadSesion.buscarMembresiaPorTipo(membresia);
         LocalDate hoy = LocalDate.now();
-        NuevaMembresiaCompradaDTO membresiaCompradaDTO = new NuevaMembresiaCompradaDTO(
-                membresiaDTO, hoy, hoy.plusMonths(1), membresiaDTO.getPrecio(), EstadoDTO.ACTIVO);
-        return new NuevoClienteDTO(
-                cliente.getNombre(), cliente.getApellidos(), cliente.getCorreo(),
-                cliente.getTelefono(), cliente.getContrasenia(),
-                cliente.getFechaNacimiento(), cliente.getPin(), membresiaCompradaDTO);
+        NuevaMembresiaCompradaDTO membresiaCompradaDTO = new NuevaMembresiaCompradaDTO(membresiaDTO, hoy, hoy.plusMonths(1), membresiaDTO.getPrecio(), EstadoDTO.ACTIVO);
+        return new NuevoClienteDTO(cliente.getNombre(), cliente.getApellidos(), cliente.getCorreo(), cliente.getTelefono(), cliente.getContrasenia(), cliente.getFechaNacimiento(), cliente.getPin(), membresiaCompradaDTO);
     }
-
-    // ════════════════════════════════════════════════════════
-    // CLIENTES (sin cambios)
-    // ════════════════════════════════════════════════════════
-
+    
+    // CLIENTES 
     public void registrarCliente(NuevoClienteDTO clienteDTO) throws NegocioException {
         funcionalidadRegistro.validarDatosUsuario(clienteDTO);
     }
@@ -263,10 +274,7 @@ public class ControlNavegacion {
         return funcionalidadRegistro.obtenerTodas();
     }
 
-    // ════════════════════════════════════════════════════════
-    // PAGOS (sin cambios)
-    // ════════════════════════════════════════════════════════
-
+    // PAGOS 
     public void procesarPagoTarjeta(NuevoClienteDTO cliente, String numeroTarjeta,
             String cvv, String fechaVencimiento, String nombreTitular) throws NegocioException {
         funcionalidadRegistro.validarTarjeta(cvv, numeroTarjeta, fechaVencimiento, nombreTitular);
@@ -289,10 +297,7 @@ public class ControlNavegacion {
         funcionalidadRegistro.registrarUsuario(cliente);
     }
 
-    // ════════════════════════════════════════════════════════
-    // LOGIN (sin cambios)
-    // ════════════════════════════════════════════════════════
-
+    // LOGIN 
     public ClienteLogueadoDTO iniciarSesion(String pin, String contrasenia) throws NegocioException {
         LoginDTO loginDTO = new LoginDTO(pin, contrasenia);
         this.clienteActual = funcionalidadSesion.iniciarSesion(loginDTO);
@@ -317,10 +322,7 @@ public class ControlNavegacion {
         funcionalidadSesion.renovarMembresia(dto);
     }
 
-    // ════════════════════════════════════════════════════════
     // HELPER — Mensajes de error centralizados
-    // ════════════════════════════════════════════════════════
-
     public void mostrarError(String mensaje) {
         JOptionPane.showMessageDialog(frameActual, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
     }

@@ -286,7 +286,9 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGestionCursos1ActionPerformed
 
     private void btnREPORTESActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnREPORTESActionPerformed
-        // TODO add your handling code here:
+        GenerarReportesCursosFORM frame = new GenerarReportesCursosFORM(control);
+        frame.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnREPORTESActionPerformed
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
@@ -294,7 +296,9 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     private void btnGestionHorarios2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionHorarios2ActionPerformed
-        // TODO add your handling code here:
+        GestionHorariosFORM frame = new GestionHorariosFORM(control);
+        frame.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnGestionHorarios2ActionPerformed
 
     private void txtCursosActivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCursosActivosActionPerformed

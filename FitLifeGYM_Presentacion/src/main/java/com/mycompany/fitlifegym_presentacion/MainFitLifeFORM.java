@@ -165,10 +165,12 @@ public class MainFitLifeFORM extends javax.swing.JFrame {
 
     private void btnRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarseActionPerformed
        control.navegarRegistrarse();
+       dispose();
     }//GEN-LAST:event_btnRegistrarseActionPerformed
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
         control.navegarIniciarSesion();
+        dispose();
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     

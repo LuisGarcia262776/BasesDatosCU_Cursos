@@ -133,7 +133,7 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
         JButton btnVer      = crearBoton("Ver");
 
         btnEditar.addActionListener(e -> {
-            control.navegarEditarCurso(curso);
+            control.editarCurso(curso);
             cargarCursos();
         });
         btnEliminar.addActionListener(e -> {

@@ -306,6 +306,7 @@ public class RegistrarseFORM extends javax.swing.JDialog {
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
         control.navegarIniciarSesion();
+        dispose();
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     private void txtApellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidosActionPerformed

@@ -279,6 +279,7 @@ public class BeneficiosFORM extends javax.swing.JFrame {
             this.cliente = control.asignarMembresiaCliente(cliente, membresia);
 
             control.navegarMetodosPago(membresia, this.cliente);
+            dispose();
         } catch (NegocioException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
