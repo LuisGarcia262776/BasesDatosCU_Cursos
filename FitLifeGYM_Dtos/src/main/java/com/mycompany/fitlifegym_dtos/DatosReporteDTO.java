@@ -15,17 +15,17 @@ public class DatosReporteDTO {
     private Date fechaFin;
     private Integer cantidadMin;
     private HorarioDiaSemanaDTO dias;
-    private String curso;
+    private String Idcurso;
 
     public DatosReporteDTO() {
     }
 
-    public DatosReporteDTO(Date fechaInicio, Date fechaFin, Integer cantidadMin, HorarioDiaSemanaDTO dias, String curso) {
+    public DatosReporteDTO(Date fechaInicio, Date fechaFin, Integer cantidadMin, HorarioDiaSemanaDTO dias, String Idcurso) {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.cantidadMin = cantidadMin;
         this.dias = dias;
-        this.curso = curso;
+        this.Idcurso = Idcurso;
     }
 
     public Date getFechaInicio() {
@@ -45,7 +45,7 @@ public class DatosReporteDTO {
     }
 
     public String getCurso() {
-        return curso;
+        return Idcurso;
     }
     
 }

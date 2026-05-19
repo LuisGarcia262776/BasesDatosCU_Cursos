@@ -183,6 +183,7 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
         JPanel = new javax.swing.JPanel();
         jSeparator3 = new javax.swing.JSeparator();
         btnAgregarCurso = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         jSeparator1.setBackground(new java.awt.Color(225, 6, 0));
         jSeparator1.setForeground(new java.awt.Color(225, 6, 0));
@@ -213,10 +214,16 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
         JscrollPane.setViewportView(JPanel);
 
         btnAgregarCurso.setBackground(new java.awt.Color(245, 0, 0));
-        btnAgregarCurso.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnAgregarCurso.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         btnAgregarCurso.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregarCurso.setText("+ AgregarCurso");
         btnAgregarCurso.addActionListener(this::btnAgregarCursoActionPerformed);
+
+        jButton1.setBackground(new java.awt.Color(245, 0, 0));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Volver");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -236,12 +243,14 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(JscrollPane)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(JscrollPane)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnAgregarCurso)
+                                .addGap(360, 360, 360)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(505, 505, 505)
-                .addComponent(btnAgregarCurso)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,8 +263,10 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(JscrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 617, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addComponent(btnAgregarCurso)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAgregarCurso)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
 
@@ -279,11 +290,18 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnAgregarCursoActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       MenuCursosAdminFORM frame = new MenuCursosAdminFORM(control);
+       frame.setVisible(true);
+       dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel JPanel;
     private javax.swing.JScrollPane JscrollPane;
     private javax.swing.JButton btnAgregarCurso;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;

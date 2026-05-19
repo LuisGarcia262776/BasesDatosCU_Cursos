@@ -19,11 +19,15 @@ import com.mycompany.fitlifegym_dtos.DatosReporteDTO;
 import com.mycompany.fitlifegym_dtos.HorarioDTO;
 import com.mycompany.fitlifegym_dtos.ReporteDTO;
 import java.awt.Color;
+import java.io.File;
 import java.io.FileOutputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -56,11 +60,11 @@ public class GenerarReportesCursosFORM extends javax.swing.JFrame {
         jTable1.getTableHeader().setFont(awtFont("Segoe UI", java.awt.Font.BOLD, 14));
         jTable1.getTableHeader().setBackground(new java.awt.Color(61, 173, 255));
         jTable1.getTableHeader().setForeground(java.awt.Color.WHITE);
-        jTable1.setSelectionBackground(new java.awt.Color(225, 6, 0));
+        jTable1.setSelectionBackground(new java.awt.Color(255, 255, 255));
         jTable1.setGridColor(new java.awt.Color(70, 70, 70));
     }
 
-    // ── Carga cursos en el combo ──────────────────────────────────────────
+    // Carga cursos en el combo
     private void cargarCursos() {
         cmbCurso.removeAllItems();
         cmbCurso.addItem("TODOS");
@@ -73,110 +77,127 @@ public class GenerarReportesCursosFORM extends javax.swing.JFrame {
         }
     }
 
-    // ── Llena la tabla con resultados ─────────────────────────────────────
+    // Llena la tabla con resultados
     private void llenarTabla(ReporteDTO reporte, SimpleDateFormat sdf) {
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
         modelo.setRowCount(0);
 
-        String cursoFiltro = cmbCurso.getSelectedItem() != null
-                ? cmbCurso.getSelectedItem().toString() : "TODOS";
+        // Curso seleccionado en el combo 
+        String cursoSeleccionado = "TODOS";
+        if (cmbCurso.getSelectedItem() != null) {
+            cursoSeleccionado = cmbCurso.getSelectedItem().toString();
+        }
 
-        for (int i = 0; i < reporte.getHorarios().size(); i++) {
-            HorarioDTO horario = reporte.getHorarios().get(i);
+        List<HorarioDTO> horarios = reporte.getHorarios();
+        List<CursoDTO> cursos = reporte.getCursos();
 
+        for (int i = 0; i < horarios.size(); i++) {
+            HorarioDTO horario = horarios.get(i);
+
+            // Nombre del curso 
             String nombreCurso = "";
-            if (reporte.getCursos() != null && i < reporte.getCursos().size()) {
-                nombreCurso = reporte.getCursos().get(i).getNombre() != null
-                        ? reporte.getCursos().get(i).getNombre().toUpperCase() : "";
+            if (cursos != null && i < cursos.size()) {
+                if (cursos.get(i).getNombre() != null) {
+                    nombreCurso = cursos.get(i).getNombre().toUpperCase();
+                }
             }
 
-            if (!cursoFiltro.equals("TODOS")
-                    && !nombreCurso.equalsIgnoreCase(cursoFiltro)) {
+            // Filtrar por curso si no es TODOS 
+            boolean esTodos = cursoSeleccionado.equals("TODOS");
+            boolean coincideCurso = nombreCurso.equalsIgnoreCase(cursoSeleccionado);
+            if (!esTodos && !coincideCurso) {
                 continue;
             }
 
-            String horaInicio = horario.getHoraInicio() != null
-                    ? horario.getHoraInicio().toString() : "--:--";
-            String horaFin = horario.getHoraFin() != null
-                    ? horario.getHoraFin().toString() : "--:--";
+            // Hora inicio 
+            String horaInicio = "--:--";
+            if (horario.getHoraInicio() != null) {
+                horaInicio = horario.getHoraInicio().toString();
+            }
+
+            // Hora fin 
+            String horaFin = "--:--";
+            if (horario.getHoraFin() != null) {
+                horaFin = horario.getHoraFin().toString();
+            }
+
             String horarioStr = horaInicio + " - " + horaFin;
 
-            String dias = "";
+            // Dias abreviados 
+            String diasStr = "";
             if (horario.getDias() != null && !horario.getDias().isEmpty()) {
                 StringBuilder sb = new StringBuilder();
                 for (int j = 0; j < horario.getDias().size(); j++) {
-                    String d = horario.getDias().get(j).toString();
-                    sb.append(d.length() >= 2 ? d.substring(0, 2) : d);
-                    if (j < horario.getDias().size() - 1) sb.append(" - ");
+                    String dia = horario.getDias().get(j).toString();
+                    sb.append(dia.length() >= 2 ? dia.substring(0, 2) : dia);
+                    if (j < horario.getDias().size() - 1) {
+                        sb.append(" - ");
+                    }
                 }
-                dias = sb.toString();
+                diasStr = sb.toString();
             }
 
-            String cantidad = horario.getCupoActual() != null
-                    ? String.valueOf(horario.getCupoActual()) : "0";
+            // Cupo actual
+            String cantidad = "0";
+            if (horario.getCupoActual() != null) {
+                cantidad = String.valueOf(horario.getCupoActual());
+            }
+
+            // Fecha de hoy 
             String fecha = sdf.format(new Date());
 
             modelo.addRow(new Object[]{
-                nombreCurso, horarioStr, dias, cantidad, fecha
+                nombreCurso,
+                horarioStr,
+                diasStr,
+                cantidad,
+                fecha
             });
         }
     }
 
-    // ── Limpia la tabla ───────────────────────────────────────────────────
+    // Limpia la tabla
     private void limpiarTabla() {
         ((DefaultTableModel) jTable1.getModel()).setRowCount(0);
     }
 
-    // ── Exportar PDF con iText ────────────────────────────────────────────
+    // Exportar PDF 
     private void exportarPDF(String ruta) throws Exception {
         Document documento = new Document(PageSize.A4.rotate());
         PdfWriter.getInstance(documento, new FileOutputStream(ruta));
         documento.open();
 
-        // ── Fuentes iText (com.itextpdf.text.Font explícito) ─────────────
-        com.itextpdf.text.Font fuenteTitulo = new com.itextpdf.text.Font(
-                com.itextpdf.text.Font.FontFamily.HELVETICA, 18,
-                com.itextpdf.text.Font.BOLD, BaseColor.BLACK);
+        // Fuentes iText
+        Font fuenteTitulo = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD, BaseColor.BLACK);
 
-        com.itextpdf.text.Font fuenteSubtitulo = new com.itextpdf.text.Font(
-                com.itextpdf.text.Font.FontFamily.HELVETICA, 11,
-                com.itextpdf.text.Font.NORMAL, BaseColor.DARK_GRAY);
+        Font fuenteSubtitulo = new Font(Font.FontFamily.HELVETICA, 11, NORMAL, BaseColor.DARK_GRAY);
 
-        com.itextpdf.text.Font fuenteHeader = new com.itextpdf.text.Font(
-                com.itextpdf.text.Font.FontFamily.HELVETICA, 11,
-                com.itextpdf.text.Font.BOLD, BaseColor.WHITE);
+        Font fuenteHeader = new Font(Font.FontFamily.HELVETICA, 11, Font.BOLD, BaseColor.WHITE);
 
-        com.itextpdf.text.Font fuenteCelda = new com.itextpdf.text.Font(
-                com.itextpdf.text.Font.FontFamily.HELVETICA, 10,
-                com.itextpdf.text.Font.NORMAL, BaseColor.BLACK);
+        Font fuenteCelda = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL, BaseColor.BLACK);
 
-        // ── Título ────────────────────────────────────────────────────────
-        Paragraph titulo = new Paragraph(
-                "REPORTE DE CURSOS - FIT LIFE GYM\n", fuenteTitulo);
+        // Titulo 
+        Paragraph titulo = new Paragraph("REPORTE DE CURSOS - FIT LIFE GYM\n", fuenteTitulo);
         titulo.setAlignment(Element.ALIGN_CENTER);
         documento.add(titulo);
 
-        // ── Subtítulo con filtros ─────────────────────────────────────────
-        String subtituloTexto = "Período: " + txtFechaInicio.getText()
-                + " al " + txtFechaFin.getText()
-                + "   |   Cantidad mínima: " + txtCantidadMin.getText()
-                + "   |   Curso: " + cmbCurso.getSelectedItem()
-                + "\nGenerado: " + new SimpleDateFormat(
-                        "dd/MM/yyyy HH:mm").format(new Date());
+        // Subtitulo con filtros
+        String subtituloTexto = "Período: " + txtFechaInicio.getText() + " al " + txtFechaFin.getText() + "   |   Cantidad mínima: " + txtCantidadMin.getText()
+            + "   |   Curso: " + cmbCurso.getSelectedItem() + "\nGenerado: " + new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date());
 
         Paragraph subtitulo = new Paragraph(subtituloTexto, fuenteSubtitulo);
         subtitulo.setAlignment(Element.ALIGN_CENTER);
         subtitulo.setSpacingAfter(16);
         documento.add(subtitulo);
 
-        // ── Tabla ─────────────────────────────────────────────────────────
+        // Tabla 
         PdfPTable tabla = new PdfPTable(5);
         tabla.setWidthPercentage(100);
         tabla.setWidths(new float[]{2f, 2.5f, 3f, 1.5f, 2f});
 
-        // ── Headers rojos ─────────────────────────────────────────────────
+        // Headers rojos ─
         String[] headers = {"CURSO", "HORARIO", "DÍAS", "CANTIDAD", "FECHA"};
-        BaseColor rojoGym = new BaseColor(225, 6, 0);
+        BaseColor rojoGym = new BaseColor(255, 255, 255);
 
         for (String header : headers) {
             PdfPCell celda = new PdfPCell(new Phrase(header, fuenteHeader));
@@ -187,15 +208,14 @@ public class GenerarReportesCursosFORM extends javax.swing.JFrame {
             tabla.addCell(celda);
         }
 
-        // ── Filas alternadas blanco/gris ──────────────────────────────────
+        // Filas alternadas blanco/gris 
         BaseColor grisClaro = new BaseColor(240, 240, 240);
         BaseColor blanco = BaseColor.WHITE;
 
         for (int i = 0; i < jTable1.getRowCount(); i++) {
             BaseColor colorFila = (i % 2 == 0) ? blanco : grisClaro;
             for (int j = 0; j < 5; j++) {
-                String valor = jTable1.getValueAt(i, j) != null
-                        ? jTable1.getValueAt(i, j).toString() : "";
+                String valor = jTable1.getValueAt(i, j) != null ? jTable1.getValueAt(i, j).toString() : "";
                 PdfPCell celda = new PdfPCell(new Phrase(valor, fuenteCelda));
                 celda.setBackgroundColor(colorFila);
                 celda.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -207,10 +227,8 @@ public class GenerarReportesCursosFORM extends javax.swing.JFrame {
 
         documento.add(tabla);
 
-        // ── Pie de página ─────────────────────────────────────────────────
-        Paragraph pie = new Paragraph(
-                "\nTotal de registros: " + jTable1.getRowCount(),
-                fuenteSubtitulo);
+        // Pie de pagina
+        Paragraph pie = new Paragraph("\nTotal de registros: " + jTable1.getRowCount(), fuenteSubtitulo);
         pie.setAlignment(Element.ALIGN_RIGHT);
         documento.add(pie);
 
@@ -241,6 +259,7 @@ public class GenerarReportesCursosFORM extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btnExportarPDF = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -268,6 +287,7 @@ public class GenerarReportesCursosFORM extends javax.swing.JFrame {
 
         txtFechaFin.setBackground(new java.awt.Color(99, 99, 99));
         txtFechaFin.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        txtFechaFin.setForeground(new java.awt.Color(242, 242, 242));
         txtFechaFin.addActionListener(this::txtFechaFinActionPerformed);
 
         lblCantidadMin.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -315,6 +335,12 @@ public class GenerarReportesCursosFORM extends javax.swing.JFrame {
         btnExportarPDF.setText("Exportar PDF");
         btnExportarPDF.addActionListener(this::btnExportarPDFActionPerformed);
 
+        jButton1.setBackground(new java.awt.Color(255, 0, 0));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Volver");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+
         javax.swing.GroupLayout pnlNegroLayout = new javax.swing.GroupLayout(pnlNegro);
         pnlNegro.setLayout(pnlNegroLayout);
         pnlNegroLayout.setHorizontalGroup(
@@ -351,7 +377,8 @@ public class GenerarReportesCursosFORM extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlNegroLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btnExportarPDF)
-                .addGap(594, 594, 594))
+                .addGap(473, 473, 473)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         pnlNegroLayout.setVerticalGroup(
             pnlNegroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -374,7 +401,9 @@ public class GenerarReportesCursosFORM extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnExportarPDF)
+                .addGroup(pnlNegroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnExportarPDF)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
 
@@ -411,11 +440,8 @@ public class GenerarReportesCursosFORM extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbCursoActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        if (txtFechaInicio.getText().trim().isEmpty()
-                || txtFechaFin.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "Las fechas son obligatorias. Formato: dd/MM/yyyy",
-                    "Error", JOptionPane.ERROR_MESSAGE);
+        if (txtFechaInicio.getText().trim().isEmpty() || txtFechaFin.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Las fechas son obligatorias. Formato: dd/MM/yyyy", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         try {
@@ -423,12 +449,10 @@ public class GenerarReportesCursosFORM extends javax.swing.JFrame {
             sdf.setLenient(false);
 
             Date fechaInicio = sdf.parse(txtFechaInicio.getText().trim());
-            Date fechaFin    = sdf.parse(txtFechaFin.getText().trim());
+            Date fechaFin = sdf.parse(txtFechaFin.getText().trim());
 
             if (fechaInicio.after(fechaFin)) {
-                JOptionPane.showMessageDialog(this,
-                        "La fecha inicio no puede ser mayor a la fecha fin.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "La fecha inicio no puede ser mayor a la fecha fin.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -437,62 +461,89 @@ public class GenerarReportesCursosFORM extends javax.swing.JFrame {
                 cantidadMin = Integer.parseInt(txtCantidadMin.getText().trim());
             }
 
-            DatosReporteDTO filtros = new DatosReporteDTO(
-                    fechaInicio, fechaFin,
-                    cantidadMin != null ? cantidadMin : 0,
-                    null, null);
+            // Obtener id del curso seleccionado
+            String idCursoFiltro = null;
+            String cursoSeleccionado = cmbCurso.getSelectedItem().toString();
+            if (!cursoSeleccionado.equals("TODOS")) {
+                List<CursoDTO> cursos = control.obtenerCursos();
+                for (CursoDTO c : cursos) {
+                    if (c.getNombre().equalsIgnoreCase(cursoSeleccionado)) {
+                        idCursoFiltro = c.getIdCurso();
+                        break;
+                    }
+                }
+            }
+
+            // Cupo minimo
+            int cupoMinimo = 0;
+            if (!txtCantidadMin.getText().trim().isEmpty()) {
+                cupoMinimo = Integer.parseInt(txtCantidadMin.getText().trim());
+            }
+
+            DatosReporteDTO filtros = new DatosReporteDTO(fechaInicio, fechaFin, cupoMinimo, null, idCursoFiltro);
 
             ReporteDTO reporte = control.generarReporte(filtros);
 
-            if (reporte == null || reporte.getHorarios() == null
-                    || reporte.getHorarios().isEmpty()) {
+            if (reporte == null || reporte.getHorarios() == null || reporte.getHorarios().isEmpty()) {
                 limpiarTabla();
-                JOptionPane.showMessageDialog(this,
-                        "No se encontraron resultados con esos filtros.",
-                        "Sin resultados", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "No se encontraron resultados con esos filtros.", "Sin resultados", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
 
             llenarTabla(reporte, sdf);
 
-        } catch (java.text.ParseException e) {
-            JOptionPane.showMessageDialog(this,
-                    "Formato de fecha inválido. Usa dd/MM/yyyy (ej. 01/04/2026)",
-                    "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(this, "Formato de fecha inválido. Usa dd/MM/yyyy (ej. 01/04/2026)", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this,
-                    "La cantidad mínima debe ser un número entero.",
-                    "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "La cantidad mínima debe ser un número entero.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnExportarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarPDFActionPerformed
         if (jTable1.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this,
-                    "No hay datos para exportar. Haz una búsqueda primero.",
-                    "Sin datos", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No hay datos para exportar. Haz una búsqueda primero.", "Sin datos", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        String ruta = "C:\\Users\\PC GAMER MASTER RACE\\Downloads\\reporte_cursos.pdf";
+        // El usuario elige dónde guardar
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Guardar Reporte PDF");
+        fileChooser.setFileFilter(new FileNameExtensionFilter("PDF", "pdf"));
+        fileChooser.setSelectedFile(new File("reporte_cursos.pdf"));
+
+        int resultado = fileChooser.showSaveDialog(this);
+
+        if (resultado != JFileChooser.APPROVE_OPTION) {
+            return; // cancelo
+        }
+
+        String ruta = fileChooser.getSelectedFile().getAbsolutePath();
+
+        // Asegurar que termine en .pdf
+        if (!ruta.toLowerCase().endsWith(".pdf")) {
+            ruta += ".pdf";
+        }
 
         try {
             exportarPDF(ruta);
-            JOptionPane.showMessageDialog(this,
-                    "PDF exportado correctamente en:\n" + ruta,
-                    "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "PDF exportado correctamente en:\n" + ruta, "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,
-                    "Error al exportar PDF: " + e.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al exportar PDF: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnExportarPDFActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        MenuCursosAdminFORM frame = new MenuCursosAdminFORM(control);
+        frame.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnExportarPDF;
     private javax.swing.JComboBox<String> cmbCurso;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;

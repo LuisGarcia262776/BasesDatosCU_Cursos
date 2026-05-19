@@ -4,6 +4,12 @@
  */
 package com.mycompany.fitlifegym_presentacion;
 
+import com.mycompany.fitlifegym_dtos.CursoDTO;
+import com.mycompany.fitlifegym_dtos.HorarioDTO;
+import com.mycompany.fitlifegym_dtos.InscripcionDTO;
+import java.awt.Color;
+import java.util.List;
+
 /**
  *
  * @author PC GAMER MASTER RACE
@@ -18,6 +24,59 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
     public MenuCursosAdminFORM(ControlNavegacion control) {
         this.control = control;
         initComponents();
+        cargarEstadisticas(); // ← agrega esta línea
+    }
+    
+    private void cargarEstadisticas() {
+        // No editables
+        txtCursosActivos.setEditable(false);
+        txtCursosActivos.setBackground(new Color(40, 40, 40));
+
+        txtHorariosActivos.setEditable(false);
+        txtHorariosActivos.setBackground(new Color(40, 40, 40));
+
+        txtInscripcionesTotales.setEditable(false);
+        txtInscripcionesTotales.setBackground(new Color(40, 40, 40));
+
+        // Cargar datos desde MongoDB 
+        try {
+            // Cursos activos
+            List<CursoDTO> cursos = control.obtenerCursos();
+            int totalCursos = cursos != null ? cursos.size() : 0;
+            txtCursosActivos.setText(String.valueOf(totalCursos));
+        } catch (Exception e) {
+            txtCursosActivos.setText("0");
+        }
+
+        try {
+            // Horarios activos suma todos los horarios de todos los cursos
+            List<CursoDTO> cursos = control.obtenerCursos();
+            int totalHorarios = 0;
+            if (cursos != null) {
+                for (CursoDTO curso : cursos) {
+                    List<HorarioDTO> horarios = control.obtenerHorariosPorCurso(curso.getIdCurso());
+                    if (horarios != null) {
+                        totalHorarios += horarios.size();
+                    }
+                }
+            }
+            txtHorariosActivos.setText(String.valueOf(totalHorarios));
+
+        } catch (Exception e) {
+            txtHorariosActivos.setText("0");
+        }
+
+        try {
+            List<InscripcionDTO> inscripciones = control.obtenerInscripciones();
+            int totalInscripciones = 0;
+            
+            if (inscripciones != null) {
+                totalInscripciones = inscripciones.size();
+            }
+            txtInscripcionesTotales.setText(String.valueOf(totalInscripciones));
+        } catch (Exception e) {
+            txtInscripcionesTotales.setText("0");
+        }
     }
 
     /**
@@ -49,8 +108,8 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
         btnGestionCursos1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         btnREPORTES = new javax.swing.JButton();
-        btnGestionHorarios2 = new javax.swing.JButton();
         btnCerrarSesion = new javax.swing.JButton();
+        btnGestionHorarios2 = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
@@ -141,10 +200,10 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addComponent(btnREPORTES)
-                .addContainerGap(62, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(299, Short.MAX_VALUE)
+                .addComponent(btnREPORTES, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(82, 82, 82))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,17 +213,17 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
-        btnGestionHorarios2.setBackground(new java.awt.Color(99, 99, 99));
-        btnGestionHorarios2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnGestionHorarios2.setForeground(new java.awt.Color(255, 255, 255));
-        btnGestionHorarios2.setText("GESTION HORARIOS");
-        btnGestionHorarios2.addActionListener(this::btnGestionHorarios2ActionPerformed);
-
         btnCerrarSesion.setBackground(new java.awt.Color(255, 0, 0));
         btnCerrarSesion.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         btnCerrarSesion.setForeground(new java.awt.Color(255, 255, 255));
         btnCerrarSesion.setText("Cerrar Sesion");
         btnCerrarSesion.addActionListener(this::btnCerrarSesionActionPerformed);
+
+        btnGestionHorarios2.setBackground(new java.awt.Color(99, 99, 99));
+        btnGestionHorarios2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnGestionHorarios2.setForeground(new java.awt.Color(255, 255, 255));
+        btnGestionHorarios2.setText("GESTION HORARIOS");
+        btnGestionHorarios2.addActionListener(this::btnGestionHorarios2ActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -173,11 +232,11 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addComponent(btnGestionCursos1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(77, 77, 77)
-                        .addComponent(btnGestionHorarios2)
-                        .addGap(45, 45, 45)
+                        .addGap(97, 97, 97)
+                        .addComponent(btnGestionCursos1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(210, 210, 210)
+                        .addComponent(btnGestionHorarios2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
