@@ -271,9 +271,7 @@ public class EditarHorarioFORM extends javax.swing.JFrame {
 
             HorarioDTO horarioDTO = new HorarioDTO(curso.getIdCurso(), dias, horaInicio, horaFin, Integer.parseInt(txtCupoMaximo.getText().trim()), 0);
 
-            ConfirmacionHorarioFORM confirmacion = new ConfirmacionHorarioFORM(control, horarioDTO);
-            confirmacion.setVisible(true);
-            this.dispose(); // 
+            control.navegarConfirmacionHorario(horarioDTO); 
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "El cupo máximo debe ser un número entero.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -283,7 +281,7 @@ public class EditarHorarioFORM extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        dispose();
+        control.navegarMenuAdmin();
     }//GEN-LAST:event_btnCancelarActionPerformed
     
     // Convierte 9:00 + AM/PM a LocalTime 

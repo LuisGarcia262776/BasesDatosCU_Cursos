@@ -4,7 +4,7 @@
  */
 package com.mycompany.fitlifegym_dtos;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  *
@@ -14,7 +14,7 @@ public class InscripcionDTO {
     private String idInscripcion;
     private String idCliente;
     private String idHorario;
-    private LocalDateTime fechaRegistro;
+    private Date fechaRegistro;
     private EstadoInscripcionDTO estado;
 
     public InscripcionDTO() {
@@ -23,11 +23,11 @@ public class InscripcionDTO {
     public InscripcionDTO(String idCliente, String idHorario) {
         this.idCliente = idCliente;
         this.idHorario = idHorario;
-        this.fechaRegistro = LocalDateTime.now();
+        this.fechaRegistro = new Date();
         this.estado = EstadoInscripcionDTO.ACTIVO;
     }
 
-    public InscripcionDTO(String idInscripcion, String idCliente, String idHorario, LocalDateTime fechaRegistro, EstadoInscripcionDTO estado) {
+    public InscripcionDTO(String idInscripcion, String idCliente, String idHorario, Date fechaRegistro, EstadoInscripcionDTO estado) {
         this.idInscripcion = idInscripcion;
         this.idCliente = idCliente;
         this.idHorario = idHorario;
@@ -47,7 +47,7 @@ public class InscripcionDTO {
         return idHorario;
     }
 
-    public LocalDateTime getFechaRegistro() {
+    public Date getFechaRegistro() {
         return fechaRegistro;
     }
 

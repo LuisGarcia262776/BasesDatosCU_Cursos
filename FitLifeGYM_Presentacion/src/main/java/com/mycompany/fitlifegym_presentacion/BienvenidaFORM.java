@@ -30,7 +30,6 @@ public class BienvenidaFORM extends javax.swing.JFrame {
         this.setTitle("Bienvenida");
         initComponents();
         this.setLocationRelativeTo(null);
-        configiracionPorMembresia();
         mostrarDatosCliente();
 
     }
@@ -60,12 +59,8 @@ public class BienvenidaFORM extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         textAreaInstalaciones = new javax.swing.JTextArea();
         btnCursos = new javax.swing.JButton();
-        btnNutricion = new javax.swing.JButton();
-        btnAmbienteMusical = new javax.swing.JButton();
-        btnProgreso = new javax.swing.JButton();
         btnBeneficios = new javax.swing.JButton();
         lblTitulo1 = new javax.swing.JLabel();
-        btnQuejaSugerencia = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,27 +93,6 @@ public class BienvenidaFORM extends javax.swing.JFrame {
         btnCursos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btnCursos.addActionListener(this::btnCursosActionPerformed);
 
-        btnNutricion.setBackground(new java.awt.Color(44, 44, 44));
-        btnNutricion.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        btnNutricion.setForeground(new java.awt.Color(255, 255, 255));
-        btnNutricion.setText("Centro de nutrición");
-        btnNutricion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        btnNutricion.addActionListener(this::btnNutricionActionPerformed);
-
-        btnAmbienteMusical.setBackground(new java.awt.Color(44, 44, 44));
-        btnAmbienteMusical.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        btnAmbienteMusical.setForeground(new java.awt.Color(255, 255, 255));
-        btnAmbienteMusical.setText("Ambiente Musical");
-        btnAmbienteMusical.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        btnAmbienteMusical.addActionListener(this::btnAmbienteMusicalActionPerformed);
-
-        btnProgreso.setBackground(new java.awt.Color(44, 44, 44));
-        btnProgreso.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        btnProgreso.setForeground(new java.awt.Color(255, 255, 255));
-        btnProgreso.setText("Progreso Fisico");
-        btnProgreso.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        btnProgreso.addActionListener(this::btnProgresoActionPerformed);
-
         btnBeneficios.setBackground(new java.awt.Color(51, 51, 51));
         btnBeneficios.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         btnBeneficios.setForeground(new java.awt.Color(255, 255, 255));
@@ -129,13 +103,6 @@ public class BienvenidaFORM extends javax.swing.JFrame {
         lblTitulo1.setBackground(new java.awt.Color(255, 255, 255));
         lblTitulo1.setFont(new java.awt.Font("Arial", 3, 36)); // NOI18N
         lblTitulo1.setForeground(new java.awt.Color(255, 255, 255));
-
-        btnQuejaSugerencia.setBackground(new java.awt.Color(44, 44, 44));
-        btnQuejaSugerencia.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        btnQuejaSugerencia.setForeground(new java.awt.Color(255, 255, 255));
-        btnQuejaSugerencia.setText("Quejas");
-        btnQuejaSugerencia.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        btnQuejaSugerencia.addActionListener(this::btnQuejaSugerenciaActionPerformed);
 
         javax.swing.GroupLayout jPanelLayout = new javax.swing.GroupLayout(jPanel);
         jPanel.setLayout(jPanelLayout);
@@ -151,23 +118,15 @@ public class BienvenidaFORM extends javax.swing.JFrame {
                         .addComponent(lblTitulo1))
                     .addGroup(jPanelLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnBeneficios, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelLayout.createSequentialGroup()
+                                .addGap(201, 201, 201)
+                                .addComponent(btnCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnBeneficios, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 623, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 339, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(jPanelLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(btnProgreso, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addComponent(btnCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addComponent(btnNutricion, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addComponent(btnAmbienteMusical, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                .addComponent(btnQuejaSugerencia, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
         );
         jPanelLayout.setVerticalGroup(
             jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,13 +142,8 @@ public class BienvenidaFORM extends javax.swing.JFrame {
                 .addGap(56, 56, 56)
                 .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNutricion, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAmbienteMusical, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnProgreso, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnQuejaSugerencia, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
-                .addComponent(btnBeneficios, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                    .addComponent(btnBeneficios, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -210,14 +164,6 @@ public class BienvenidaFORM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnNutricionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNutricionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnNutricionActionPerformed
-
-    private void btnProgresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProgresoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnProgresoActionPerformed
-
     private void btnBeneficiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBeneficiosActionPerformed
         ClienteLogueadoDTO cliente = control.getClienteActual();
 
@@ -233,52 +179,14 @@ public class BienvenidaFORM extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBeneficiosActionPerformed
 
-    private void btnQuejaSugerenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuejaSugerenciaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnQuejaSugerenciaActionPerformed
-
     private void btnCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCursosActionPerformed
         control.navegarCursosCliente();
     }//GEN-LAST:event_btnCursosActionPerformed
 
-    private void btnAmbienteMusicalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAmbienteMusicalActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAmbienteMusicalActionPerformed
-
-    private void configiracionPorMembresia() {
-        if (cliente == null || cliente.getMembresiaActiva()== null) {
-            return;
-        }
-        TipoMembresiaDTO tipo = cliente.getMembresiaActiva();
-
-        btnCursos.setEnabled(false);
-        btnNutricion.setEnabled(false);
-        btnAmbienteMusical.setEnabled(false);
-        btnProgreso.setEnabled(false);
-
-        switch (tipo) {
-            case ORO:
-                btnCursos.setEnabled(true);
-                btnProgreso.setEnabled(true);
-                btnNutricion.setEnabled(true);
-                btnAmbienteMusical.setEnabled(true);
-                break;
-            case PLATA:
-                btnNutricion.setEnabled(true);
-                btnAmbienteMusical.setEnabled(true);
-                break;
-            case BRONCE:
-                break;
-        }
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAmbienteMusical;
     private javax.swing.JButton btnBeneficios;
     private javax.swing.JButton btnCursos;
-    private javax.swing.JButton btnNutricion;
-    private javax.swing.JButton btnProgreso;
-    private javax.swing.JButton btnQuejaSugerencia;
     private javax.swing.JPanel jPanel;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;

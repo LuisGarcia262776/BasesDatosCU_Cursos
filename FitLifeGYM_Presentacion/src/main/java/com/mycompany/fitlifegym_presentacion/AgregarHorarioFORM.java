@@ -270,10 +270,8 @@ public class AgregarHorarioFORM extends javax.swing.JFrame {
 
             HorarioDTO horarioDTO = new HorarioDTO(curso.getIdCurso(), dias, horaInicio, horaFin, Integer.parseInt(txtCupoMaximo.getText().trim()), 0);
 
-            // ── Abrir confirmación pasándole el DTO listo ────────────────
-            ConfirmacionHorarioFORM confirmacion = new ConfirmacionHorarioFORM(control, horarioDTO);
-            confirmacion.setVisible(true);
-            this.dispose(); // 
+            // Abrir confirmación pasandole el DTO listo 
+            control.navegarConfirmacionHorario(horarioDTO);
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "El cupo máximo debe ser un número entero.", "Error", JOptionPane.ERROR_MESSAGE);

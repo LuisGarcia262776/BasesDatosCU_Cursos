@@ -5,6 +5,7 @@
 package com.mycompany.fitlifegym_presentacion;
 
 import com.mycompany.fitlifegym_dtos.CursoDTO;
+import com.mycompany.fitlifegym_presentacion.guardarImagen.GurdadorImagenCarpeta;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -34,11 +35,9 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
     public GestionDeCursosFORM(ControlNavegacion control) {
         this.control = control;
         initComponents();
-        
         JPanel.remove(jSeparator3);
         JPanel.setLayout(new BoxLayout(JPanel, BoxLayout.Y_AXIS));
         JPanel.setBackground(new Color(18, 18, 18));
-
         cargarCursos();
     }
 
@@ -70,7 +69,7 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
         fila.setMaximumSize(new Dimension(Integer.MAX_VALUE, 82));
         fila.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(225, 6, 0)));
 
-        // Imagen 
+        // ── Imagen ────────────────────────────────────────────────────────
         JLabel lblImagen = new JLabel();
         lblImagen.setPreferredSize(new Dimension(82, 72));
         lblImagen.setMinimumSize(new Dimension(82, 72));
@@ -79,19 +78,10 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
         lblImagen.setHorizontalAlignment(SwingConstants.CENTER);
 
         if (curso.getImagen() != null && curso.getImagen().getRuta() != null && !curso.getImagen().getRuta().isEmpty()) {
-            try {
-                String ruta = curso.getImagen().getRuta();
-                ImageIcon icon;
-
-                if (ruta.startsWith("http://") || ruta.startsWith("https://")) {
-                    icon = new ImageIcon(new java.net.URL(ruta));
-                } else {
-                    icon = new ImageIcon(ruta);
-                }
-
-                Image scaled = icon.getImage().getScaledInstance(82, 72, Image.SCALE_SMOOTH);
-                lblImagen.setIcon(new ImageIcon(scaled));
-            } catch (Exception e) {
+            ImageIcon icon = GurdadorImagenCarpeta.cargarImagen(curso.getImagen().getRuta(), 82, 72);
+            if (icon != null) {
+                lblImagen.setIcon(icon);
+            } else {
                 lblImagen.setText("img");
                 lblImagen.setForeground(Color.GRAY);
             }

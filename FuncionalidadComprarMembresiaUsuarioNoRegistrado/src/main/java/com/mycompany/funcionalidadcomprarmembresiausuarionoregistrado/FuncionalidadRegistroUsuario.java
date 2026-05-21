@@ -43,9 +43,17 @@ public class FuncionalidadRegistroUsuario implements IFuncionalidadRegistrarUsua
         if (clienteDTO.getNombre() == null || clienteDTO.getNombre().isBlank()) {
             throw new NegocioException("El nombre es obligatorio");
         }
+        
+        if (!clienteDTO.getNombre().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
+            throw new NegocioException("El nombre solo puede contener letras.");
+        }
 
         if (clienteDTO.getApellidos() == null || clienteDTO.getApellidos().isBlank()) {
             throw new NegocioException("Los apellidos son obligatorios");
+        }
+        
+        if(!clienteDTO.getApellidos().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")){
+            throw new NegocioException("El Apellido solo puede contener letras.");
         }
 
         if (clienteDTO.getCorreo() == null || clienteDTO.getCorreo().isBlank()) {
@@ -55,6 +63,10 @@ public class FuncionalidadRegistroUsuario implements IFuncionalidadRegistrarUsua
         if (!clienteDTO.getCorreo().contains("@")) {
             throw new NegocioException("Correo inválido");
         }
+        
+        if (!clienteDTO.getCorreo().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
+            throw new NegocioException("Correo inválido.");
+        }
 
         if (clienteDTO.getTelefono() == null || clienteDTO.getTelefono().isBlank()) {
             throw new NegocioException("El teléfono es obligatorio");
@@ -63,9 +75,17 @@ public class FuncionalidadRegistroUsuario implements IFuncionalidadRegistrarUsua
         if (clienteDTO.getContrasenia() == null || clienteDTO.getContrasenia().isBlank()) {
             throw new NegocioException("La contraseña es obligatoria");
         }
+        
+        if (!clienteDTO.getContrasenia().matches("^[a-zA-Z0-9]+$")) {
+            throw new NegocioException("La contraseña solo puede contener letras y números.");
+        }
 
         if (clienteDTO.getPin() == null || clienteDTO.getPin().isBlank()) {
             throw new NegocioException("El PIN es obligatorio");
+        }
+        
+        if (!clienteDTO.getPin().matches("^\\d{4}$")) {
+            throw new NegocioException("El PIN debe tener 4 dígitos.");
         }
     }
 

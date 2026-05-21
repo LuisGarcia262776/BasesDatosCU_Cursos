@@ -7,11 +7,14 @@ package com.mycompany.fitlifegym_presentacion;
 import com.mycompany.fitlifegym_dtos.CursoDTO;
 import com.mycompany.fitlifegym_dtos.HorarioDTO;
 import com.mycompany.fitlifegym_dtos.InscripcionDTO;
+import com.mycompany.fitlifegym_presentacion.guardarImagen.GurdadorImagenCarpeta;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -21,6 +24,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -33,41 +37,58 @@ public class InscripcionCursoFORM extends javax.swing.JFrame {
     private final CursoDTO curso;
 
     public InscripcionCursoFORM(ControlNavegacion control, CursoDTO curso) {
-        txtCurso.setEditable(false);
         this.control = control;
         this.curso = curso;
         initComponents();
+        txtCurso.setEditable(false);
         cargarCurso();
         cargarHorarios();
+        
+        // Verifica horarios después de que el frame este visible 
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                List<HorarioDTO> horarios = control.obtenerHorariosPorCurso(curso.getIdCurso());
+                if (horarios == null || horarios.isEmpty()) {
+                    control.navegarNoHayHorariosDisponible(curso);
+                } else {
+                    cargarHorarios();
+                }
+            }
+        });
     }
+    
+    
     
     private void cargarCurso() {
         txtCurso.setText(curso.getNombre());
 
-        if (curso.getImagen() != null && curso.getImagen().getRuta() != null) {
-            try {
-                ImageIcon icon = new ImageIcon(curso.getImagen().getRuta());
-                Image scaled = icon.getImage().getScaledInstance(227,155,Image.SCALE_SMOOTH);
-                lblPreviwe.setIcon(new ImageIcon(scaled));
-            } catch (Exception e) {
+        if (curso.getImagen() != null && curso.getImagen().getRuta() != null && !curso.getImagen().getRuta().isEmpty()) {
+            ImageIcon icon = GurdadorImagenCarpeta.cargarImagen(curso.getImagen().getRuta(), 227, 155);
+            if (icon != null) {
+                lblPreviwe.setIcon(icon);
+            } else {
                 lblPreviwe.setText("Sin imagen");
             }
+        } else {
+            lblPreviwe.setText("Sin imagen");
         }
     }
+    
     private void cargarHorarios() {
         jPanel1.removeAll();
-
         jPanel1.setLayout(new GridLayout(0, 3, 16, 16));
 
         List<HorarioDTO> horarios = control.obtenerHorariosPorCurso(curso.getIdCurso());
+
+        // Si no hay horarios
         if (horarios == null || horarios.isEmpty()) {
-            JLabel lbl = new JLabel("No hay horarios.");
-            lbl.setForeground(Color.WHITE);
-            jPanel1.add(lbl);
-        } else {
-            for (HorarioDTO horario : horarios) {
-                jPanel1.add(crearCardHorario(horario));
-            }
+            control.navegarNoHayHorariosDisponible(curso);
+            return;
+        }
+
+        for (HorarioDTO horario : horarios) {
+            jPanel1.add(crearCardHorario(horario));
         }
 
         jPanel1.revalidate();
@@ -113,18 +134,37 @@ public class InscripcionCursoFORM extends javax.swing.JFrame {
         btnSeleccionar.setBackground(new Color(225,6,0));
         btnSeleccionar.setForeground(Color.WHITE);
         btnSeleccionar.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btnSeleccionar.addActionListener(e -> {
+        btnSeleccionar.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
             try {
+                List<InscripcionDTO> inscripciones = control.obtenerInscripciones();
+                boolean yaInscrito = false;
+
+                if (inscripciones != null) {
+                    for (InscripcionDTO ins : inscripciones) {
+                        if (ins.getIdCliente().equals(control.getClienteActual().getIdCliente()) && ins.getIdHorario().equals(horario.getIdHorario())) {
+                            yaInscrito = true;
+                            break;
+                        }
+                    }
+                }
+                if (yaInscrito) {
+                    control.navegarYaInscrito(curso, horario);
+                    return;
+                }
                 InscripcionDTO dto = new InscripcionDTO(control.getClienteActual().getIdCliente(), horario.getIdHorario());
                 InscripcionDTO guardada = control.agregarInscripcion(dto);
 
                 if (guardada != null) {
                     control.mostrarExito("Inscripción realizada correctamente.");
                 }
+
             } catch (Exception ex) {
                 control.mostrarError(ex.getMessage());
             }
-        });
+        }
+    });
 
         card.add(Box.createVerticalStrut(20));
         card.add(lblDias);
@@ -152,6 +192,7 @@ public class InscripcionCursoFORM extends javax.swing.JFrame {
         txtCurso = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
+        btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -182,14 +223,20 @@ public class InscripcionCursoFORM extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1048, Short.MAX_VALUE)
+            .addGap(0, 1076, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 530, Short.MAX_VALUE)
+            .addGap(0, 663, Short.MAX_VALUE)
         );
 
         jScrollPane1.setViewportView(jPanel1);
+
+        btnVolver.setBackground(new java.awt.Color(255, 0, 0));
+        btnVolver.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        btnVolver.setForeground(new java.awt.Color(255, 255, 255));
+        btnVolver.setText("Volver");
+        btnVolver.addActionListener(this::btnVolverActionPerformed);
 
         javax.swing.GroupLayout pnlNegroLayout = new javax.swing.GroupLayout(pnlNegro);
         pnlNegro.setLayout(pnlNegroLayout);
@@ -204,11 +251,15 @@ public class InscripcionCursoFORM extends javax.swing.JFrame {
                     .addGroup(pnlNegroLayout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addGroup(pnlNegroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1078, Short.MAX_VALUE)
                             .addGroup(pnlNegroLayout.createSequentialGroup()
-                                .addComponent(lblPreviwe, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(58, 58, 58)
-                                .addComponent(txtCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGroup(pnlNegroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnlNegroLayout.createSequentialGroup()
+                                        .addComponent(lblPreviwe, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(58, 58, 58)
+                                        .addComponent(txtCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         pnlNegroLayout.setVerticalGroup(
@@ -222,9 +273,11 @@ public class InscripcionCursoFORM extends javax.swing.JFrame {
                 .addGroup(pnlNegroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblPreviwe, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnVolver)
+                .addGap(13, 13, 13))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -245,8 +298,13 @@ public class InscripcionCursoFORM extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCursoActionPerformed
 
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        control.navegarBienvenida(control.getClienteActual());
+    }//GEN-LAST:event_btnVolverActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnVolver;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;

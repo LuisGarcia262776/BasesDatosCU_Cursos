@@ -5,6 +5,7 @@
 package com.mycompany.fitlifegym_presentacion;
 
 import com.mycompany.fitlifegym_dtos.CursoDTO;
+import com.mycompany.fitlifegym_presentacion.guardarImagen.GurdadorImagenCarpeta;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -69,19 +70,22 @@ public class CursosClienteFORM extends javax.swing.JFrame {
 
         card.setLayout(new BorderLayout(15,10));
 
-        // IMAGEN
+        // ── Imagen ────────────────────────────────────────────────────────
         JLabel lblImagen = new JLabel();
-        lblImagen.setPreferredSize(new Dimension(180,150));
+        lblImagen.setPreferredSize(new Dimension(180, 150));
         lblImagen.setHorizontalAlignment(SwingConstants.CENTER);
 
-        if (curso.getImagen() != null && curso.getImagen().getRuta() != null) {
-            try {
-                ImageIcon icon = new ImageIcon(curso.getImagen().getRuta());
-                Image scaled = icon.getImage().getScaledInstance(180, 150, Image.SCALE_SMOOTH);
-                lblImagen.setIcon(new ImageIcon(scaled));
-            } catch (Exception e) {
+        if (curso.getImagen() != null && curso.getImagen().getRuta() != null && !curso.getImagen().getRuta().isEmpty()) {
+            ImageIcon icon = GurdadorImagenCarpeta.cargarImagen(curso.getImagen().getRuta(), 180, 150);
+            if (icon != null) {
+                lblImagen.setIcon(icon);
+            } else {
                 lblImagen.setText("Sin imagen");
+                lblImagen.setForeground(Color.GRAY);
             }
+        } else {
+            lblImagen.setText("Sin imagen");
+            lblImagen.setForeground(Color.GRAY);
         }
 
         // INFO
@@ -131,6 +135,7 @@ public class CursosClienteFORM extends javax.swing.JFrame {
         lblCursos = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -159,18 +164,31 @@ public class CursosClienteFORM extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(jPanel1);
 
+        jButton1.setBackground(new java.awt.Color(255, 0, 0));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Volver");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+
         javax.swing.GroupLayout pnlNegroLayout = new javax.swing.GroupLayout(pnlNegro);
         pnlNegro.setLayout(pnlNegroLayout);
         pnlNegroLayout.setHorizontalGroup(
             pnlNegroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(pnlNegroLayout.createSequentialGroup()
-                .addGap(397, 397, 397)
-                .addComponent(lblCursos)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(pnlNegroLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addGroup(pnlNegroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlNegroLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1045, Short.MAX_VALUE))
+                    .addGroup(pnlNegroLayout.createSequentialGroup()
+                        .addGroup(pnlNegroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlNegroLayout.createSequentialGroup()
+                                .addGap(397, 397, 397)
+                                .addComponent(lblCursos))
+                            .addGroup(pnlNegroLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlNegroLayout.setVerticalGroup(
@@ -180,8 +198,10 @@ public class CursosClienteFORM extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 747, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 727, Short.MAX_VALUE)
+                .addGap(26, 26, 26)
+                .addComponent(jButton1)
+                .addGap(20, 20, 20))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -192,14 +212,21 @@ public class CursosClienteFORM extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlNegro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(pnlNegro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        control.navegarBienvenida(control.getClienteActual());
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;

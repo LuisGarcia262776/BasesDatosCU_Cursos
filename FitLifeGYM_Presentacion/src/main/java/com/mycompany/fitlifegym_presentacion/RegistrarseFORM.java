@@ -280,22 +280,25 @@ public class RegistrarseFORM extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-        String nombre = txtNombreCompleto.getText();
-        String apellidos = txtApellidos.getText();
-        String correo = txtCorreoElectronico.getText();
-        String telefono = txtTelefono.getText();
-        String fechaString = txtFechaNacimiento.getText();
-        String contrasenia = txtContrasenia.getText();
-        String pin = txtPIN.getText();
+        String nombre = txtNombreCompleto.getText().trim();
+        String apellidos = txtApellidos.getText().trim();
+        String correo = txtCorreoElectronico.getText().trim();
+        String telefono = txtTelefono.getText().trim();
+        String fechaString = txtFechaNacimiento.getText().trim();
+        String contrasenia = txtContrasenia.getText().trim();
+        String pin = txtPIN.getText().trim();
 
         try {
             LocalDate fechaNacimiento = LocalDate.parse(fechaString);
             NuevoClienteDTO clienteRegistrar = new NuevoClienteDTO(nombre, apellidos, correo, telefono, contrasenia, fechaNacimiento, pin);
+
+            // Valida ANTES de navegar
+            control.validarCliente(clienteRegistrar);
             control.navegarBeneficios(clienteRegistrar);
         } catch (DateTimeParseException ex) {
-            JOptionPane.showMessageDialog(this, "La fecha debe tener formato AAAA-MM-DD");
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "La fecha debe tener formato AAAA-MM-DD", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error de validación", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnSiguienteActionPerformed
 

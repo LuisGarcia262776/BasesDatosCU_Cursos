@@ -27,7 +27,6 @@ import com.mycompany.funcionalidadiniciarsesionrenovarmembresia.IFuncionalidadIn
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -106,6 +105,18 @@ public class ControlNavegacion {
     public void navegarInscripcionCurso(CursoDTO curso) {
         mostrarPantalla(new InscripcionCursoFORM(this, curso));
     }
+    
+    public void navegarYaInscrito(CursoDTO curso, HorarioDTO horario) {
+        mostrarPantalla(new YaEstasInscritoFORM(this, curso, horario));
+    }
+    
+    public void navegarVerMiscursos(){
+        mostrarPantalla(new MisCursosFORM(this));
+    }
+    
+    public void navegarNoHayHorariosDisponible(CursoDTO curso){
+        mostrarPantalla(new NoHayHorariosDisponiblesFORM(this, curso));
+    }
 
 
     // NAVEGACION — Admin
@@ -144,6 +155,26 @@ public class ControlNavegacion {
 
     public void navegarReportes() {
         mostrarPantalla(new GenerarReportesCursosFORM(this));
+    }
+    
+    public void navegarConfirmacionCurso(CursoDTO curso) {
+        mostrarPantalla(new ConfirmacionCursoFORM(this, curso));
+    }
+
+    public void navegarExitoCurso(CursoDTO curso) {
+        mostrarPantalla(new ExitoCursoFORM(this, curso));
+    }
+    
+    public void navegarConfirmacionHorario(HorarioDTO horario) {
+        mostrarPantalla(new ConfirmacionHorarioFORM(this, horario));
+    }
+
+    public void navegarExitoHorario() {
+        mostrarPantalla(new ExitoHorarioFORM(this));
+    }
+    
+    public void navegarNoEliminarHorario() {
+        mostrarPantalla(new NoEliminarHorarioInscripcionesActivasFORM(this));
     }
 
     // SESION
@@ -345,6 +376,10 @@ public class ControlNavegacion {
             mostrarError(ex.getMessage());
             return null;
         }
+    }
+    
+    public void validarCliente(NuevoClienteDTO clienteDTO) throws NegocioException {
+        funcionalidadRegistro.validarDatosUsuario(clienteDTO);
     }
 
     // MENSAJES

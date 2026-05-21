@@ -4,26 +4,25 @@
  */
 package com.mycompany.fitlifegym_presentacion;
 
+import com.mycompany.fitlifegym_dtos.CursoDTO;
 import com.mycompany.fitlifegym_presentacion.guardarImagen.GurdadorImagenCarpeta;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Image;
-import java.awt.MediaTracker;
 import java.net.URL;
 import javax.swing.ImageIcon;
-import static javax.swing.SwingUtilities.invokeLater;
 
 /**
  *
  * @author PC GAMER MASTER RACE
  */
-public class ExitoHorarioFORM extends javax.swing.JFrame {
+public class ExitoCursoFORM extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ExitoHorarioFORM.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ExitoCursoFORM.class.getName());
     private final ControlNavegacion control;
+    private final CursoDTO curso;
 
-    public ExitoHorarioFORM(ControlNavegacion control) {
+    public ExitoCursoFORM(ControlNavegacion control, CursoDTO curso) {
         this.control = control;
+        this.curso = curso;
         initComponents();
         this.setLocationRelativeTo(null);
         cargarPalomita();
@@ -31,7 +30,6 @@ public class ExitoHorarioFORM extends javax.swing.JFrame {
 
     private void cargarPalomita() {
         try {
-            //Palomita hardcodeada desde resources
             URL url = getClass().getResource("/palomita.png");
             if (url != null) {
                 ImageIcon icon = new ImageIcon(url);
@@ -39,19 +37,16 @@ public class ExitoHorarioFORM extends javax.swing.JFrame {
                 lblPreviwe.setIcon(new ImageIcon(scaled));
                 lblPreviwe.setText("");
             } else {
-                //
                 lblPreviwe.setText("✓");
-                lblPreviwe.setFont(new Font("Segoe UI", Font.BOLD, 200));
-                lblPreviwe.setForeground(new Color(0, 180, 0));
+                lblPreviwe.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 200));
+                lblPreviwe.setForeground(new java.awt.Color(0, 180, 0));
             }
         } catch (Exception e) {
             lblPreviwe.setText("✓");
-            lblPreviwe.setFont(new Font("Segoe UI", Font.BOLD, 200));
-            lblPreviwe.setForeground(new Color(0, 180, 0));
+            lblPreviwe.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 200));
+            lblPreviwe.setForeground(new java.awt.Color(0, 180, 0));
         }
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -65,14 +60,14 @@ public class ExitoHorarioFORM extends javax.swing.JFrame {
         pnlNegro = new javax.swing.JPanel();
         lblExito = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        lblHorarioGuradadoCorrectamente = new javax.swing.JLabel();
-        lblImagen = new javax.swing.JLabel();
-        btnVolverAlMenu = new javax.swing.JButton();
+        lblCursoGuradadoCorrectamente = new javax.swing.JLabel();
         lblPreviwe = new javax.swing.JLabel();
+        btnVolverAlMenu = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         pnlNegro.setBackground(new java.awt.Color(18, 18, 18));
+        pnlNegro.setForeground(new java.awt.Color(242, 242, 242));
 
         lblExito.setFont(new java.awt.Font("Segoe UI", 1, 60)); // NOI18N
         lblExito.setForeground(new java.awt.Color(242, 242, 242));
@@ -81,15 +76,9 @@ public class ExitoHorarioFORM extends javax.swing.JFrame {
         jSeparator1.setBackground(new java.awt.Color(225, 6, 0));
         jSeparator1.setForeground(new java.awt.Color(225, 6, 0));
 
-        lblHorarioGuradadoCorrectamente.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblHorarioGuradadoCorrectamente.setForeground(new java.awt.Color(242, 242, 242));
-        lblHorarioGuradadoCorrectamente.setText("Horario Guardado Correctamente");
-
-        btnVolverAlMenu.setBackground(new java.awt.Color(255, 18, 18));
-        btnVolverAlMenu.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        btnVolverAlMenu.setForeground(new java.awt.Color(255, 255, 255));
-        btnVolverAlMenu.setText("Volver Al Menu");
-        btnVolverAlMenu.addActionListener(this::btnVolverAlMenuActionPerformed);
+        lblCursoGuradadoCorrectamente.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblCursoGuradadoCorrectamente.setForeground(new java.awt.Color(242, 242, 242));
+        lblCursoGuradadoCorrectamente.setText("Curso Guardado Correctamente");
 
         lblPreviwe.setBackground(new java.awt.Color(64, 64, 64));
         lblPreviwe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -97,50 +86,51 @@ public class ExitoHorarioFORM extends javax.swing.JFrame {
         lblPreviwe.setOpaque(true);
         lblPreviwe.setPreferredSize(new java.awt.Dimension(150, 130));
 
+        btnVolverAlMenu.setBackground(new java.awt.Color(255, 18, 18));
+        btnVolverAlMenu.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        btnVolverAlMenu.setForeground(new java.awt.Color(255, 255, 255));
+        btnVolverAlMenu.setText("Volver Al Menu");
+        btnVolverAlMenu.addActionListener(this::btnVolverAlMenuActionPerformed);
+
         javax.swing.GroupLayout pnlNegroLayout = new javax.swing.GroupLayout(pnlNegro);
         pnlNegro.setLayout(pnlNegroLayout);
         pnlNegroLayout.setHorizontalGroup(
             pnlNegroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlNegroLayout.createSequentialGroup()
-                .addGroup(pnlNegroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlNegroLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jSeparator1))
-                    .addGroup(pnlNegroLayout.createSequentialGroup()
-                        .addGroup(pnlNegroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlNegroLayout.createSequentialGroup()
-                                .addGap(481, 481, 481)
-                                .addComponent(lblExito))
-                            .addGroup(pnlNegroLayout.createSequentialGroup()
-                                .addGap(399, 399, 399)
-                                .addComponent(lblHorarioGuradadoCorrectamente))
-                            .addGroup(pnlNegroLayout.createSequentialGroup()
-                                .addGap(515, 515, 515)
-                                .addComponent(lblImagen))
-                            .addGroup(pnlNegroLayout.createSequentialGroup()
-                                .addGap(336, 336, 336)
-                                .addComponent(lblPreviwe, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlNegroLayout.createSequentialGroup()
-                                .addGap(475, 475, 475)
-                                .addComponent(btnVolverAlMenu)))
-                        .addGap(0, 368, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGap(484, 484, 484)
+                .addComponent(lblExito)
+                .addContainerGap(501, Short.MAX_VALUE))
+            .addComponent(jSeparator1)
+            .addGroup(pnlNegroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlNegroLayout.createSequentialGroup()
+                    .addGap(333, 333, 333)
+                    .addGroup(pnlNegroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlNegroLayout.createSequentialGroup()
+                            .addGap(63, 63, 63)
+                            .addComponent(lblCursoGuradadoCorrectamente))
+                        .addComponent(lblPreviwe, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(pnlNegroLayout.createSequentialGroup()
+                            .addGap(139, 139, 139)
+                            .addComponent(btnVolverAlMenu)))
+                    .addContainerGap(334, Short.MAX_VALUE)))
         );
         pnlNegroLayout.setVerticalGroup(
             pnlNegroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlNegroLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(lblExito)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblHorarioGuradadoCorrectamente)
-                .addGap(48, 48, 48)
-                .addComponent(lblPreviwe, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblImagen)
-                .addGap(84, 84, 84)
-                .addComponent(btnVolverAlMenu)
-                .addContainerGap(187, Short.MAX_VALUE))
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(748, Short.MAX_VALUE))
+            .addGroup(pnlNegroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlNegroLayout.createSequentialGroup()
+                    .addGap(152, 152, 152)
+                    .addComponent(lblCursoGuradadoCorrectamente)
+                    .addGap(48, 48, 48)
+                    .addComponent(lblPreviwe, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(90, 90, 90)
+                    .addComponent(btnVolverAlMenu)
+                    .addContainerGap(152, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -163,14 +153,12 @@ public class ExitoHorarioFORM extends javax.swing.JFrame {
         control.navegarMenuAdmin();
     }//GEN-LAST:event_btnVolverAlMenuActionPerformed
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnVolverAlMenu;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblCursoGuradadoCorrectamente;
     private javax.swing.JLabel lblExito;
-    private javax.swing.JLabel lblHorarioGuradadoCorrectamente;
-    private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblPreviwe;
     private javax.swing.JPanel pnlNegro;
     // End of variables declaration//GEN-END:variables

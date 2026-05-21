@@ -4,7 +4,7 @@
  */
 package com.mycompany.fitlifegym_persistencia.entidades;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 import org.bson.BsonType;
 import org.bson.codecs.pojo.annotations.BsonId;
@@ -25,20 +25,20 @@ public class Inscripcion {
     @BsonRepresentation(BsonType.OBJECT_ID)
     private String idHorario;
 
-    private LocalDateTime fechaRegistro;
+    private Date fechaRegistro;
     private EstadoInscripcion estado;
 
     public Inscripcion() {
     }
 
-    public Inscripcion(String idCliente, String idHorario, LocalDateTime fechaRegistro, EstadoInscripcion estado) {
+    public Inscripcion(String idCliente, String idHorario, Date fechaRegistro, EstadoInscripcion estado) {
         this.idCliente = idCliente;
         this.idHorario = idHorario;
         this.fechaRegistro = fechaRegistro;
         this.estado = estado;
     }
 
-    public Inscripcion(String idInscripcion, String idCliente, String idHorario, LocalDateTime fechaRegistro, EstadoInscripcion estado) {
+    public Inscripcion(String idInscripcion, String idCliente, String idHorario, Date fechaRegistro, EstadoInscripcion estado) {
         this.idInscripcion = idInscripcion;
         this.idCliente = idCliente;
         this.idHorario = idHorario;
@@ -70,11 +70,11 @@ public class Inscripcion {
         this.idHorario = idHorario;
     }
 
-    public LocalDateTime getFechaRegistro() {
+    public Date getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(LocalDateTime fechaRegistro) {
+    public void setFechaRegistro(Date fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
 

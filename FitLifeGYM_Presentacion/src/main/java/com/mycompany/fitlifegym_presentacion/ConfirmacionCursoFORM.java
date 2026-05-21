@@ -4,21 +4,21 @@
  */
 package com.mycompany.fitlifegym_presentacion;
 
-import com.mycompany.fitlifegym_dtos.HorarioDTO;
+import com.mycompany.fitlifegym_dtos.CursoDTO;
 
 /**
  *
  * @author PC GAMER MASTER RACE
  */
-public class ConfirmacionHorarioFORM extends javax.swing.JFrame {
+public class ConfirmacionCursoFORM extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ConfirmacionHorarioFORM.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ConfirmacionCursoFORM.class.getName());
     private final ControlNavegacion control;
-    private final HorarioDTO horarioDTO;
+    private final CursoDTO curso;
 
-    public ConfirmacionHorarioFORM(ControlNavegacion control, HorarioDTO horarioDTO) {
-        this.control    = control;
-        this.horarioDTO = horarioDTO;
+    public ConfirmacionCursoFORM(ControlNavegacion control, CursoDTO curso) {
+        this.control = control;
+        this.curso = curso;
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -33,7 +33,7 @@ public class ConfirmacionHorarioFORM extends javax.swing.JFrame {
     private void initComponents() {
 
         pnlNegro = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lblConfirmar = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         lblConfirmacionDelGurdadoHoraio = new javax.swing.JLabel();
         btnSi = new javax.swing.JButton();
@@ -42,10 +42,11 @@ public class ConfirmacionHorarioFORM extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         pnlNegro.setBackground(new java.awt.Color(18, 18, 18));
+        pnlNegro.setForeground(new java.awt.Color(242, 242, 242));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 60)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(242, 242, 242));
-        jLabel1.setText("¿CONFIRMAR?");
+        lblConfirmar.setFont(new java.awt.Font("Segoe UI", 1, 60)); // NOI18N
+        lblConfirmar.setForeground(new java.awt.Color(242, 242, 242));
+        lblConfirmar.setText("¿CONFIRMAR?");
 
         jSeparator1.setBackground(new java.awt.Color(225, 6, 0));
         jSeparator1.setForeground(new java.awt.Color(225, 6, 0));
@@ -70,62 +71,58 @@ public class ConfirmacionHorarioFORM extends javax.swing.JFrame {
         pnlNegro.setLayout(pnlNegroLayout);
         pnlNegroLayout.setHorizontalGroup(
             pnlNegroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlNegroLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jSeparator1))
-            .addGroup(pnlNegroLayout.createSequentialGroup()
-                .addGap(365, 365, 365)
-                .addGroup(pnlNegroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(pnlNegroLayout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addComponent(btnSi, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(161, 161, 161)
-                        .addComponent(btnNO, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(372, Short.MAX_VALUE))
+            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlNegroLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblConfirmacionDelGurdadoHoraio)
-                .addGap(279, 279, 279))
+                .addContainerGap(282, Short.MAX_VALUE)
+                .addGroup(pnlNegroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlNegroLayout.createSequentialGroup()
+                        .addComponent(lblConfirmar)
+                        .addGap(358, 358, 358))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlNegroLayout.createSequentialGroup()
+                        .addGroup(pnlNegroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlNegroLayout.createSequentialGroup()
+                                .addGap(93, 93, 93)
+                                .addComponent(btnSi, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(135, 135, 135)
+                                .addComponent(btnNO, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblConfirmacionDelGurdadoHoraio, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(245, 245, 245))))
         );
         pnlNegroLayout.setVerticalGroup(
             pnlNegroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlNegroLayout.createSequentialGroup()
-                .addComponent(jLabel1)
+                .addContainerGap()
+                .addComponent(lblConfirmar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
+                .addGap(18, 18, 18)
                 .addComponent(lblConfirmacionDelGurdadoHoraio)
-                .addGap(106, 106, 106)
+                .addGap(143, 143, 143)
                 .addGroup(pnlNegroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSi)
                     .addComponent(btnNO))
-                .addGap(0, 511, Short.MAX_VALUE))
+                .addContainerGap(499, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlNegro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(pnlNegro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlNegro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(pnlNegro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiActionPerformed
-        // Guarda el horario y navega a exito
-        HorarioDTO guardado = control.agregarHorario(horarioDTO);
+        // Guarda el curso y navega a exito
+        CursoDTO guardado = control.agregarCurso(curso);
         if (guardado != null) {
-            control.navegarExitoHorario();
+            control.navegarExitoCurso(guardado);
         }
     }//GEN-LAST:event_btnSiActionPerformed
 
@@ -137,9 +134,9 @@ public class ConfirmacionHorarioFORM extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnNO;
     private javax.swing.JButton btnSi;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblConfirmacionDelGurdadoHoraio;
+    private javax.swing.JLabel lblConfirmar;
     private javax.swing.JPanel pnlNegro;
     // End of variables declaration//GEN-END:variables
 }

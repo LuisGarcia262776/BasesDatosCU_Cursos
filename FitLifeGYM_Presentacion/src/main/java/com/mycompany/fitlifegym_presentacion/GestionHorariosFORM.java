@@ -6,6 +6,8 @@ package com.mycompany.fitlifegym_presentacion;
 
 import com.mycompany.fitlifegym_dtos.CursoDTO;
 import com.mycompany.fitlifegym_dtos.HorarioDTO;
+import com.mycompany.fitlifegym_dtos.InscripcionDTO;
+import com.mycompany.fitlifegym_presentacion.guardarImagen.GurdadorImagenCarpeta;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -77,7 +79,7 @@ public class GestionHorariosFORM extends javax.swing.JFrame {
         card.setBorder(BorderFactory.createLineBorder(new Color(225, 6, 0), 2));
         card.setPreferredSize(new Dimension(170, 230));
 
-        // Image
+        // Imagen
         JLabel lblImagen = new JLabel();
         lblImagen.setPreferredSize(new Dimension(166, 130));
         lblImagen.setMinimumSize(new Dimension(166, 130));
@@ -88,17 +90,10 @@ public class GestionHorariosFORM extends javax.swing.JFrame {
         lblImagen.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         if (curso.getImagen() != null && curso.getImagen().getRuta() != null && !curso.getImagen().getRuta().isEmpty()) {
-            try {
-                String ruta = curso.getImagen().getRuta();
-                ImageIcon icon;
-                if (ruta.startsWith("http://") || ruta.startsWith("https://")) {
-                    icon = new ImageIcon(new java.net.URL(ruta));
-                } else {
-                    icon = new ImageIcon(ruta);
-                }
-                Image scaled = icon.getImage().getScaledInstance(166, 130, Image.SCALE_SMOOTH);
-                lblImagen.setIcon(new ImageIcon(scaled));
-            } catch (Exception e) {
+            ImageIcon icon = GurdadorImagenCarpeta.cargarImagen(curso.getImagen().getRuta(), 166, 130);
+            if (icon != null) {
+                lblImagen.setIcon(icon);
+            } else {
                 lblImagen.setText("img");
                 lblImagen.setForeground(Color.GRAY);
             }
@@ -107,7 +102,7 @@ public class GestionHorariosFORM extends javax.swing.JFrame {
             lblImagen.setForeground(Color.GRAY);
         }
 
-        // ── Nombre ────────────────────────────────────────────────────────
+        // Nombre
         String nombreCurso = "SIN NOMBRE";
         if (curso.getNombre() != null) {
             nombreCurso = curso.getNombre().toUpperCase();
@@ -251,14 +246,33 @@ public class GestionHorariosFORM extends javax.swing.JFrame {
         });
 
         btnEliminar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (control.mostrarConfirmacion("¿Eliminar este horario?")) {
-                    control.eliminarHorario(horario.getIdHorario());
-                    abrirHorariosCurso(curso);
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (control.mostrarConfirmacion("¿Eliminar este horario?")) {
+                // Verificar si tiene inscripciones activas
+                List<InscripcionDTO> inscripciones = control.obtenerInscripciones();
+                boolean tieneInscritos = false;
+                if (inscripciones != null) {
+                    for (InscripcionDTO ins : inscripciones) {
+                        if (ins.getIdHorario().equals(horario.getIdHorario())) {
+                            tieneInscritos = true;
+                            break;
+                        }
+                    }
                 }
+
+                if (tieneInscritos) {
+                    // Tiene inscritos no se puede eliminar
+                    control.navegarNoEliminarHorario();
+                    return;
+                }
+
+                // Sin inscritos, elimina normalmente
+                control.eliminarHorario(horario.getIdHorario());
+                abrirHorariosCurso(curso);
             }
-        });
+        }
+    });
 
         btnVer.addActionListener(new ActionListener() {
             @Override
