@@ -9,7 +9,16 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 
 /**
- *
+ * Formulario encargado
+ * de mostrar un mensaje
+ * de error al intentar
+ * eliminar un horario
+ * con inscripciones activas.
+ * 
+ * Informa al administrador
+ * que no es posible realizar
+ * la operación solicitada.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public class NoEliminarHorarioInscripcionesActivasFORM extends javax.swing.JFrame {
@@ -18,14 +27,33 @@ public class NoEliminarHorarioInscripcionesActivasFORM extends javax.swing.JFram
     private final ControlNavegacion control;
 
     /**
-     * Creates new form NoEliminarHorarioInscripcionesActivasFORM
-     */
+    * Constructor del formulario
+    * de error de eliminación
+    * de horario.
+    * 
+    * Inicializa los componentes
+    * y carga la imagen
+    * de error.
+    * 
+    * @param control Controlador
+    * de navegación del sistema.
+    */
     public NoEliminarHorarioInscripcionesActivasFORM(ControlNavegacion control) {
         this.control = control;
         initComponents();
         cargarPalomita();
     }
     
+    /**
+    * Carga la imagen
+    * de error dentro
+    * del formulario.
+    * 
+    * Si no encuentra
+    * la imagen,
+    * muestra una tacha
+    * generada por texto.
+    */
     private void cargarPalomita() {
         try {
             URL url = getClass().getResource("/tacha.png");
@@ -152,6 +180,17 @@ public class NoEliminarHorarioInscripcionesActivasFORM extends javax.swing.JFram
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * volver al menú.
+    * 
+    * Regresa al menú
+    * principal del administrador.
+    * 
+    * @param evt Evento generado
+    * por el botón volver.
+    */
     private void btnVolverAlMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverAlMenuActionPerformed
         control.navegarMenuAdmin();
     }//GEN-LAST:event_btnVolverAlMenuActionPerformed

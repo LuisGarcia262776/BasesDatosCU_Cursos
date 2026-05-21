@@ -13,7 +13,14 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Formulario encargado
+ * de agregar horarios
+ * a los cursos del sistema.
+ * 
+ * Permite capturar la información
+ * necesaria para registrar
+ * un nuevo horario.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public class AgregarHorarioFORM extends javax.swing.JFrame {
@@ -22,7 +29,19 @@ public class AgregarHorarioFORM extends javax.swing.JFrame {
     private final ControlNavegacion control;
     private final CursoDTO curso;
 
-    // ── Constructor 
+    /**
+    * Constructor del formulario
+    * para agregar horarios.
+    * 
+    * Inicializa los componentes
+    * y configura los datos
+    * del curso seleccionado.
+    * 
+    * @param control Controlador
+    * de navegación del sistema.
+    * @param curso Curso asociado
+    * al horario.
+    */
     public AgregarHorarioFORM(ControlNavegacion control, CursoDTO curso) {
         this.control = control;
         this.curso   = curso;
@@ -33,7 +52,13 @@ public class AgregarHorarioFORM extends javax.swing.JFrame {
         txtCurso.setEditable(false);
     }
 
-    // Llenar los combos con datos reales 
+    /**
+    * Configura los combos
+    * del formulario.
+    * 
+    * Llena los días disponibles
+    * y las opciones AM/PM.
+    */ 
     private void configurarCombos() {
         // Dias
         cmbDias.removeAllItems();
@@ -234,6 +259,17 @@ public class AgregarHorarioFORM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón guardar.
+    * 
+    * Realiza las validaciones
+    * necesarias y genera
+    * el horario correspondiente.
+    * 
+    * @param evt Evento generado
+    * por el botón guardar.
+    */
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // ── Validaciones ──────────────────────────────────────────────────
         if (txtHoraInicio.getText().trim().isEmpty()) {
@@ -280,11 +316,31 @@ public class AgregarHorarioFORM extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón cancelar.
+    * 
+    * Regresa al menú
+    * principal del administrador.
+    * 
+    * @param evt Evento generado
+    * por el botón cancelar.
+    */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         control.navegarMenuAdmin();
     }//GEN-LAST:event_btnCancelarActionPerformed
     
-    // Convierte 9:00 + AM/PM a LocalTime 
+    /**
+    * Convierte una hora
+    * en formato texto
+    * junto con AM/PM
+    * a un objeto LocalTime.
+    * 
+    * @param hora Hora en texto.
+    * @param amPm Indicador AM o PM.
+    * @return Hora convertida
+    * a LocalTime.
+    */ 
     private LocalTime parsearHora(String hora, String amPm) {
         // Acepta "9:00" o "09:00"
         String[] partes = hora.split(":");

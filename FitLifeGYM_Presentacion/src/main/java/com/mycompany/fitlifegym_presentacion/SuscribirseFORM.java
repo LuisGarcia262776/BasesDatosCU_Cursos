@@ -8,7 +8,16 @@ import com.mycompany.fitlifegym_dtos.NuevoClienteDTO;
 import com.mycompany.fitlifegym_dtos.TipoMembresiaDTO;
 
 /**
- *
+ * Formulario encargado
+ * de mostrar los métodos
+ * de pago disponibles
+ * para la suscripción.
+ * 
+ * Permite seleccionar
+ * el método de pago
+ * deseado para activar
+ * la membresía.
+ * 
  * @author Jaime
  */
 public class SuscribirseFORM extends javax.swing.JFrame {
@@ -17,6 +26,22 @@ public class SuscribirseFORM extends javax.swing.JFrame {
     private TipoMembresiaDTO membresia;
     private NuevoClienteDTO cliente;
    
+    /**
+    * Constructor del formulario
+    * de suscripción.
+    * 
+    * Inicializa los componentes,
+    * configura la ventana
+    * y establece los datos
+    * del cliente y membresía.
+    * 
+    * @param control Controlador
+    * de navegación del sistema.
+    * @param membresia Membresía
+    * seleccionada.
+    * @param cliente Cliente
+    * registrado.
+    */
     public SuscribirseFORM(ControlNavegacion control, TipoMembresiaDTO membresia, NuevoClienteDTO cliente) {
         this.control = control;
         this.membresia = membresia;
@@ -193,22 +218,76 @@ public class SuscribirseFORM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * progreso físico.
+    * 
+    * @param evt Evento generado
+    * por el botón.
+    */
     private void btnProgresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProgresoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnProgresoActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * transferencia.
+    * 
+    * Navega al formulario
+    * de pago mediante
+    * transferencia bancaria.
+    * 
+    * @param evt Evento generado
+    * por el botón transferencia.
+    */
     private void btnTransferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferenciaActionPerformed
         control.navegarTransferenciaMetodo(membresia, this.cliente);
     }//GEN-LAST:event_btnTransferenciaActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * PayPal.
+    * 
+    * Navega al formulario
+    * de inicio de sesión
+    * de PayPal.
+    * 
+    * @param evt Evento generado
+    * por el botón PayPal.
+    */
     private void btnPaypalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPaypalActionPerformed
         control.navegarIniciarSesionPaypal(membresia, this.cliente);
     }//GEN-LAST:event_btnPaypalActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * tarjeta.
+    * 
+    * Navega al formulario
+    * de pago mediante tarjeta.
+    * 
+    * @param evt Evento generado
+    * por el botón tarjeta.
+    */
     private void btnTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTarjetaActionPerformed
         control.navegarTarjetaMetodo(membresia, this.cliente);
     }//GEN-LAST:event_btnTarjetaActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * volver atrás.
+    * 
+    * Regresa a la pantalla
+    * de beneficios.
+    * 
+    * @param evt Evento generado
+    * por el botón volver.
+    */
     private void btnVolverAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverAtrasActionPerformed
        control.navegarBeneficios(this.cliente);   
     }//GEN-LAST:event_btnVolverAtrasActionPerformed

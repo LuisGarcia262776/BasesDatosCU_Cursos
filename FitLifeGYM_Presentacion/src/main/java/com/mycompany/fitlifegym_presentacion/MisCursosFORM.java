@@ -22,7 +22,15 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 /**
- *
+ * Formulario encargado
+ * de mostrar los cursos
+ * inscritos del cliente.
+ * 
+ * Permite visualizar
+ * la información de los cursos
+ * y horarios registrados
+ * del usuario actual.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public class MisCursosFORM extends javax.swing.JFrame {
@@ -30,6 +38,18 @@ public class MisCursosFORM extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MisCursosFORM.class.getName());
     private final ControlNavegacion control;
 
+    /**
+    * Constructor del formulario
+    * de mis cursos.
+    * 
+    * Inicializa los componentes,
+    * configura la ventana
+    * y carga los cursos
+    * inscritos del cliente.
+    * 
+    * @param control Controlador
+    * de navegación del sistema.
+    */
     public MisCursosFORM(ControlNavegacion control) {
         this.control = control;
         initComponents();
@@ -37,7 +57,15 @@ public class MisCursosFORM extends javax.swing.JFrame {
         cargarMisCursos();
     }
 
-    // Carga los cursos del cliente logueado
+    /**
+    * Carga los cursos
+    * inscritos del cliente
+    * actualmente logueado.
+    * 
+    * Genera dinámicamente
+    * las tarjetas visuales
+    * de cada inscripción.
+    */
     private void cargarMisCursos() {
         jPanel2.removeAll();
         jPanel2.setLayout(new BoxLayout(jPanel2, BoxLayout.Y_AXIS));
@@ -83,6 +111,19 @@ public class MisCursosFORM extends javax.swing.JFrame {
         jPanel2.repaint();
     }
 
+    /**
+    * Busca un horario
+    * por su identificador.
+    * 
+    * Recorre los cursos
+    * y horarios registrados
+    * en el sistema.
+    * 
+    * @param idHorario ID
+    * del horario.
+    * @return Horario encontrado
+    * o null si no existe.
+    */
     private HorarioDTO buscarHorario(String idHorario) {
         List<CursoDTO> cursos = control.obtenerCursos();
         if (cursos == null) return null;
@@ -99,6 +140,15 @@ public class MisCursosFORM extends javax.swing.JFrame {
         return null;
     }
 
+    /**
+    * Busca un curso
+    * por su identificador.
+    * 
+    * @param idCurso ID
+    * del curso.
+    * @return Curso encontrado
+    * o null si no existe.
+    */
     private CursoDTO buscarCurso(String idCurso) {
         List<CursoDTO> cursos = control.obtenerCursos();
         if (cursos == null) return null;
@@ -110,6 +160,22 @@ public class MisCursosFORM extends javax.swing.JFrame {
         return null;
     }
 
+    /**
+    * Crea una tarjeta visual
+    * para representar
+    * una inscripción.
+    * 
+    * Incluye imagen,
+    * nombre del curso,
+    * días y horario.
+    * 
+    * @param curso Curso
+    * relacionado.
+    * @param horario Horario
+    * relacionado.
+    * @return Tarjeta visual
+    * de inscripción.
+    */
     private JPanel crearTarjetaInscripcion(CursoDTO curso, HorarioDTO horario) {
         JPanel card = new JPanel(new BorderLayout(15, 0));
         card.setBackground(new Color(30, 30, 30));
@@ -288,6 +354,16 @@ public class MisCursosFORM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón volver.
+    * 
+    * Regresa a la pantalla
+    * de bienvenida del cliente.
+    * 
+    * @param evt Evento generado
+    * por el botón volver.
+    */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         control.navegarBienvenida(control.getClienteActual());
     }//GEN-LAST:event_btnVolverActionPerformed

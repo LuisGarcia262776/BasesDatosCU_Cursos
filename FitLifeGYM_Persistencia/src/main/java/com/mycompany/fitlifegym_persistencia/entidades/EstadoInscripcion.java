@@ -5,9 +5,38 @@
 package com.mycompany.fitlifegym_persistencia.entidades;
 
 /**
- *
+ * Enumeración que representa
+ * el estado de una inscripción
+ * dentro del sistema.
+ * 
+ * Define los posibles estados
+ * en los que puede encontrarse
+ * una inscripción.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public enum EstadoInscripcion {
-    ACTIVO, CANCELADA, YA_INSCRITO, NO_INSCRITO
+    /**
+     * Indica que la inscripción
+     * se encuentra activa.
+     */
+    ACTIVO,
+    
+    /**
+     * Indica que la inscripción
+     * fue cancelada.
+     */
+    CANCELADA,
+    
+    /**
+     * Indica que el cliente
+     * ya se encuentra inscrito.
+     */
+    YA_INSCRITO,
+    
+    /**
+     * Indica que el cliente
+     * no se encuentra inscrito.
+     */
+    NO_INSCRITO
 }

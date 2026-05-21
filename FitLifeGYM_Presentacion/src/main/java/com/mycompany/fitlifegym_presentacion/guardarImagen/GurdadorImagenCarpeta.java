@@ -14,13 +14,33 @@ import java.nio.file.StandardCopyOption;
 import javax.swing.ImageIcon;
 
 /**
- *
+ * Clase utilitaria encargada
+ * de guardar y cargar imágenes
+ * utilizadas en los cursos del sistema.
+ * 
+ * Permite almacenar imágenes
+ * dentro de la carpeta local
+ * del proyecto y recuperarlas
+ * para mostrarlas en la interfaz.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public class GurdadorImagenCarpeta {
+    /**
+     * Nombre de la carpeta
+     * donde se almacenan
+     * las imágenes de cursos.
+     */
     private static final String CARPETA = "imagenesCursos";
 
-    // Ruta absoluta a imagenesCursos en el repositorio
+    /**
+     * Obtiene la ruta absoluta
+     * de la carpeta de imágenes
+     * dentro del proyecto.
+     * 
+     * @return Ruta absoluta
+     * de la carpeta de imágenes.
+     */
     private static String obtenerRutaCarpeta() {
         String dir = System.getProperty("user.dir");
         if (dir.contains("FitLifeGYM_Presentacion")) {
@@ -31,7 +51,22 @@ public class GurdadorImagenCarpeta {
         return dir + CARPETA;
     }
 
-    // Copia el archivo a imagenesCursos y devuelve la ruta
+    /**
+     * Guarda una imagen
+     * dentro de la carpeta
+     * imagenesCursos.
+     * 
+     * Genera un nombre único
+     * utilizando el tiempo actual
+     * para evitar duplicados.
+     * 
+     * @param archivo Archivo de imagen
+     * a guardar.
+     * @return Ruta completa
+     * de la imagen guardada.
+     * @throws IOException Si ocurre
+     * un error durante la copia.
+     */
     public static String guardarImagen(File archivo) throws IOException {
         File carpeta = new File(obtenerRutaCarpeta());
         if (!carpeta.exists()) {
@@ -43,7 +78,26 @@ public class GurdadorImagenCarpeta {
         return destino.toString();
     }
 
-    // Carga imagen desde URL, ruta absoluta o imagenesCursos 
+    /**
+     * Carga una imagen
+     * desde una URL,
+     * ruta absoluta
+     * o desde la carpeta
+     * imagenesCursos.
+     * 
+     * La imagen es escalada
+     * al tamaño especificado.
+     * 
+     * @param ruta Ruta o URL
+     * de la imagen.
+     * @param ancho Ancho deseado
+     * de la imagen.
+     * @param alto Alto deseado
+     * de la imagen.
+     * @return ImageIcon de la imagen
+     * cargada y escalada,
+     * o null si no se encuentra.
+     */
     public static ImageIcon cargarImagen(String ruta, int ancho, int alto) {
         try {
             if (ruta == null || ruta.isBlank()) {

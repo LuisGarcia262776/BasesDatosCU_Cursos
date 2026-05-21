@@ -5,9 +5,24 @@
 package com.mycompany.fitlifegym_dtos;
 
 /**
- *
- * @author Diego
+ * Enum que representa los diferentes tipos
+ * de membresías disponibles dentro del sistema.
+ * 
+ * @author Luis
  */
 public enum TipoMembresiaDTO {
-    BRONCE, PLATA, ORO
+    /**
+     * Membresía de nivel bronce.
+     */
+    BRONCE,
+    
+    /**
+     * Membresía de nivel plata.
+     */
+    PLATA,
+    
+    /**
+     * Membresía de nivel oro.
+     */
+    ORO
 }

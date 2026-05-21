@@ -17,7 +17,16 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 /**
- *
+ * Formulario encargado
+ * de mostrar al cliente
+ * que ya se encuentra
+ * inscrito en un curso.
+ * 
+ * Permite visualizar
+ * la información del curso
+ * y acceder a la sección
+ * de mis cursos.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public class YaEstasInscritoFORM extends javax.swing.JFrame {
@@ -27,6 +36,22 @@ public class YaEstasInscritoFORM extends javax.swing.JFrame {
     private final CursoDTO curso;
     private final HorarioDTO horario;
 
+    /**
+    * Constructor del formulario
+    * de ya inscrito.
+    * 
+    * Inicializa los componentes,
+    * centra la ventana
+    * y muestra la información
+    * del horario inscrito.
+    * 
+    * @param control Controlador
+    * de navegación del sistema.
+    * @param curso Curso
+    * al que ya está inscrito.
+    * @param horario Horario
+    * relacionado con la inscripción.
+    */
     public YaEstasInscritoFORM(ControlNavegacion control, CursoDTO curso, HorarioDTO horario) {
         this.control = control;
         this.curso = curso;
@@ -36,7 +61,16 @@ public class YaEstasInscritoFORM extends javax.swing.JFrame {
         mostrarInfoHorario();
     }
 
-    // Muestra el horario en el que ya esta inscrito
+    /**
+    * Muestra la información
+    * del horario en el que
+    * el cliente ya se encuentra
+    * inscrito.
+    * 
+    * Visualiza imagen,
+    * nombre del curso,
+    * días y horario.
+    */
     private void mostrarInfoHorario() {
         jPanel1.setLayout(new BoxLayout(jPanel1, BoxLayout.Y_AXIS));
         jPanel1.setBackground(new Color(18, 18, 18));
@@ -210,6 +244,18 @@ public class YaEstasInscritoFORM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * ver mis cursos.
+    * 
+    * Navega a la pantalla
+    * de cursos inscritos
+    * del cliente.
+    * 
+    * @param evt Evento generado
+    * por el botón.
+    */
     private void btnVerMisCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerMisCursosActionPerformed
         control.navegarVerMiscursos();
     }//GEN-LAST:event_btnVerMisCursosActionPerformed

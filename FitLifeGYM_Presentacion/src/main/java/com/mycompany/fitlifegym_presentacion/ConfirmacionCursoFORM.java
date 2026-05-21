@@ -7,7 +7,14 @@ package com.mycompany.fitlifegym_presentacion;
 import com.mycompany.fitlifegym_dtos.CursoDTO;
 
 /**
- *
+ * Formulario encargado
+ * de confirmar el guardado
+ * de un curso dentro del sistema.
+ * 
+ * Permite validar la acción
+ * antes de registrar
+ * el curso definitivamente.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public class ConfirmacionCursoFORM extends javax.swing.JFrame {
@@ -16,6 +23,19 @@ public class ConfirmacionCursoFORM extends javax.swing.JFrame {
     private final ControlNavegacion control;
     private final CursoDTO curso;
 
+    /**
+    * Constructor del formulario
+    * de confirmación de curso.
+    * 
+    * Inicializa los componentes
+    * y recibe el curso
+    * a guardar.
+    * 
+    * @param control Controlador
+    * de navegación del sistema.
+    * @param curso Curso
+    * a confirmar.
+    */
     public ConfirmacionCursoFORM(ControlNavegacion control, CursoDTO curso) {
         this.control = control;
         this.curso = curso;
@@ -118,6 +138,17 @@ public class ConfirmacionCursoFORM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón sí.
+    * 
+    * Guarda el curso
+    * y navega a la pantalla
+    * de éxito.
+    * 
+    * @param evt Evento generado
+    * por el botón sí.
+    */
     private void btnSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiActionPerformed
         // Guarda el curso y navega a exito
         CursoDTO guardado = control.agregarCurso(curso);
@@ -126,6 +157,17 @@ public class ConfirmacionCursoFORM extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSiActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón no.
+    * 
+    * Cancela la operación
+    * y regresa al menú
+    * del administrador.
+    * 
+    * @param evt Evento generado
+    * por el botón no.
+    */
     private void btnNOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNOActionPerformed
         control.navegarMenuAdmin();
     }//GEN-LAST:event_btnNOActionPerformed

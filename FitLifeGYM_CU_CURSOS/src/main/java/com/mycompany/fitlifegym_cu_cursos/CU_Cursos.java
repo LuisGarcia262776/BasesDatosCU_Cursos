@@ -21,16 +21,39 @@ import com.mycompany.fitlifegym_negocio.ReporteBO;
 import java.util.List;
 
 /**
- *
+ * Clase que implementa el caso de uso relacionado con la gestión
+ * de cursos, horarios, inscripciones y reportes dentro del sistema.
+ * 
+ * Se encarga de validar la información antes de delegar las operaciones
+ * a la capa de negocio correspondiente.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public class CU_Cursos implements ICU_Cursos {
-    
+    /**
+     * BO encargado de la gestión de cursos.
+     */
     private final ICursoBO cursoNegocio;
+    
+    /**
+     * BO encargado de la gestión de horarios.
+     */
     private final IHorarioBO horarioNegocio;
+    
+    /**
+     * BO encargado de la gestión de inscripciones.
+     */
     private final IInscripcionBO inscripcionNegocio;
+    
+    /**
+     * BO encargado de la generación de reportes.
+     */
     private final IReporteBO reporteNegocio;
 
+    /**
+     * Constructor que inicializa las dependencias necesarias
+     * para el caso de uso.
+     */
     public CU_Cursos() {
         this.cursoNegocio = new CursoBO();
         this.horarioNegocio = new HorarioBO();
@@ -39,32 +62,69 @@ public class CU_Cursos implements ICU_Cursos {
     }
 
     // CURSOS
+    
+    /**
+     * Obtiene todos los cursos registrados.
+     * 
+     * @return Lista de cursos.
+     * @throws NegocioException Si ocurre un error durante la consulta.
+     */
     @Override
     public List<CursoDTO> listarCursos() throws NegocioException {
         return cursoNegocio.obtenerTodos();
     }
 
+    /**
+     * Agrega un nuevo curso al sistema.
+     * 
+     * @param cursoDTO DTO con la información del curso.
+     * @return CursoDTO del curso agregado.
+     * @throws NegocioException Si ocurre un error durante el registro.
+     */
     @Override
     public CursoDTO agregarCurso(CursoDTO cursoDTO) throws NegocioException {
         validarCurso(cursoDTO);
         return cursoNegocio.guardar(cursoDTO);
     }
 
+    /**
+     * Edita la información de un curso existente.
+     * 
+     * @param cursoDTO DTO con la información actualizada del curso.
+     * @return CursoDTO del curso editado.
+     * @throws NegocioException Si ocurre un error durante la edición.
+     */
     @Override
     public CursoDTO editarCurso(CursoDTO cursoDTO) throws NegocioException {
         validarCurso(cursoDTO);
         return cursoNegocio.actualizar(cursoDTO);
     }
 
+    /**
+     * Elimina un curso del sistema.
+     * 
+     * @param idCurso ID del curso a eliminar.
+     * @return true si el curso fue eliminado correctamente.
+     * @throws NegocioException Si ocurre un error durante la eliminación.
+     */
     @Override
     public boolean eliminarCurso(String idCurso) throws NegocioException {
         if (idCurso == null || idCurso.isBlank()) {
             throw new NegocioException("El idCurso es obligatorio");
         }
+        
         return cursoNegocio.eliminar(idCurso);
     }
     
     // HORARIOS
+    
+    /**
+     * Obtiene los horarios asociados a un curso.
+     * 
+     * @param idCurso ID del curso.
+     * @return Lista de horarios del curso.
+     * @throws NegocioException Si ocurre un error durante la consulta.
+     */
     @Override
     public List<HorarioDTO> listarHorariosPorCurso(String idCurso) throws NegocioException {
         if (idCurso == null || idCurso.isBlank()) {
@@ -74,6 +134,13 @@ public class CU_Cursos implements ICU_Cursos {
         return horarioNegocio.obtenerPorCurso(idCurso);
     }
 
+    /**
+     * Agrega un nuevo horario al sistema.
+     * 
+     * @param horarioDTO DTO con la información del horario.
+     * @return HorarioDTO del horario agregado.
+     * @throws NegocioException Si ocurre un error durante el registro.
+     */
     @Override
     public HorarioDTO agregarHorario(HorarioDTO horarioDTO) throws NegocioException {
         validarHorario(horarioDTO);
@@ -81,6 +148,13 @@ public class CU_Cursos implements ICU_Cursos {
         return horarioNegocio.guardar(horarioDTO);
     }
 
+    /**
+     * Edita un horario existente.
+     * 
+     * @param horarioDTO DTO con la información actualizada del horario.
+     * @return HorarioDTO del horario editado.
+     * @throws NegocioException Si ocurre un error durante la edición.
+     */
     @Override
     public HorarioDTO editarHorario(HorarioDTO horarioDTO) throws NegocioException {
         validarHorario(horarioDTO);
@@ -88,6 +162,13 @@ public class CU_Cursos implements ICU_Cursos {
         return horarioNegocio.actualizar(horarioDTO);
     }
 
+    /**
+     * Elimina un horario del sistema.
+     * 
+     * @param idHorario ID del horario a eliminar.
+     * @return true si el horario fue eliminado correctamente.
+     * @throws NegocioException Si ocurre un error durante la eliminación.
+     */
     @Override
     public boolean eliminarHorario(String idHorario) throws NegocioException {
         if (idHorario == null || idHorario.isBlank()) {
@@ -98,11 +179,25 @@ public class CU_Cursos implements ICU_Cursos {
     }
     
     // INSCRIPCIONES
+    
+    /**
+     * Obtiene todas las inscripciones registradas.
+     * 
+     * @return Lista de inscripciones.
+     * @throws NegocioException Si ocurre un error durante la consulta.
+     */
     @Override
     public List<InscripcionDTO> listarInscripciones() throws NegocioException {
         return inscripcionNegocio.obtenerTodas();
     }
 
+    /**
+     * Registra una nueva inscripción en un curso.
+     * 
+     * @param inscripcionDTO DTO con la información de la inscripción.
+     * @return InscripcionDTO registrada.
+     * @throws NegocioException Si ocurre un error durante el registro.
+     */
     @Override
     public InscripcionDTO agregarInscripcion(InscripcionDTO inscripcionDTO) throws NegocioException {
         validarInscripcion(inscripcionDTO);
@@ -111,6 +206,14 @@ public class CU_Cursos implements ICU_Cursos {
     }
 
     // REPORTES
+    
+    /**
+     * Genera un reporte utilizando los filtros proporcionados.
+     * 
+     * @param datosReporteDTO DTO con la información del reporte.
+     * @return ReporteDTO generado.
+     * @throws NegocioException Si ocurre un error durante la generación.
+     */
     @Override
     public ReporteDTO generarReporte(DatosReporteDTO datosReporteDTO) throws NegocioException {
         validarReporte(datosReporteDTO);
@@ -119,6 +222,13 @@ public class CU_Cursos implements ICU_Cursos {
     }
 
     // VALIDACIONES
+    
+    /**
+     * Valida la información de un curso.
+     * 
+     * @param cursoDTO DTO del curso a validar.
+     * @throws NegocioException Si los datos son inválidos.
+     */
     private void validarCurso(CursoDTO cursoDTO) throws NegocioException {
         if (cursoDTO == null) {
             throw new NegocioException("El curso no puede ser null");
@@ -137,6 +247,12 @@ public class CU_Cursos implements ICU_Cursos {
         }     
     }
 
+    /**
+     * Valida la información de un horario.
+     * 
+     * @param horarioDTO DTO del horario a validar.
+     * @throws NegocioException Si los datos son inválidos.
+     */
     private void validarHorario(HorarioDTO horarioDTO) throws NegocioException {
         if (horarioDTO == null) {
             throw new NegocioException("El horario no puede ser null");
@@ -163,6 +279,12 @@ public class CU_Cursos implements ICU_Cursos {
         }
     }
 
+    /**
+     * Valida la información de una inscripción.
+     * 
+     * @param inscripcionDTO DTO de la inscripción a validar.
+     * @throws NegocioException Si los datos son inválidos.
+     */
     private void validarInscripcion(InscripcionDTO inscripcionDTO) throws NegocioException {
         if (inscripcionDTO == null) {
             throw new NegocioException("La inscripción no puede ser null");
@@ -181,6 +303,12 @@ public class CU_Cursos implements ICU_Cursos {
         }
     }
 
+    /**
+     * Valida los datos necesarios para generar un reporte.
+     * 
+     * @param datosReporteDTO DTO con los filtros del reporte.
+     * @throws NegocioException Si los datos son inválidos.
+     */
     private void validarReporte(DatosReporteDTO datosReporteDTO) throws NegocioException {
         if (datosReporteDTO == null) {
             throw new NegocioException("Los filtros son obligatorios");

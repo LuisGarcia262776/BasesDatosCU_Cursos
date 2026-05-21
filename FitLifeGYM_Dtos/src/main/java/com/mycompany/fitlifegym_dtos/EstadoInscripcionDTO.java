@@ -5,9 +5,29 @@
 package com.mycompany.fitlifegym_dtos;
 
 /**
- *
+ * Enum que representa los posibles estados
+ * de una inscripción dentro del sistema.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public enum EstadoInscripcionDTO {
-    ACTIVO, CANCELADA, YA_INSCRITO, NO_INSCRITO
+    /**
+     * Indica que la inscripción se encuentra activa.
+     */
+    ACTIVO,
+    
+    /**
+     * Indica que la inscripción fue cancelada.
+     */
+    CANCELADA,
+    
+    /**
+     * Indica que el cliente ya se encuentra inscrito.
+     */
+    YA_INSCRITO,
+    
+    /**
+     * Indica que el cliente no se encuentra inscrito.
+     */
+    NO_INSCRITO
 }

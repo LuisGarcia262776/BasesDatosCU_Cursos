@@ -9,7 +9,17 @@ import com.mycompany.fitlifegym_presentacion.guardarImagen.GurdadorImagenCarpeta
 import javax.swing.ImageIcon;
 
 /**
- *
+ * Formulario encargado
+ * de mostrar un mensaje
+ * cuando un curso
+ * no tiene horarios
+ * disponibles.
+ * 
+ * Permite visualizar
+ * la información del curso
+ * y regresar al menú
+ * principal del cliente.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public class NoHayHorariosDisponiblesFORM extends javax.swing.JFrame {
@@ -18,6 +28,20 @@ public class NoHayHorariosDisponiblesFORM extends javax.swing.JFrame {
     private final ControlNavegacion control;
     private final CursoDTO curso;
 
+    /**
+    * Constructor del formulario
+    * de horarios no disponibles.
+    * 
+    * Inicializa los componentes,
+    * configura la ventana
+    * y carga la información
+    * del curso.
+    * 
+    * @param control Controlador
+    * de navegación del sistema.
+    * @param curso Curso
+    * seleccionado.
+    */
     public NoHayHorariosDisponiblesFORM(ControlNavegacion control, CursoDTO curso) {
         this.control = control;
         this.curso = curso;
@@ -27,6 +51,14 @@ public class NoHayHorariosDisponiblesFORM extends javax.swing.JFrame {
         cargarDatos();
     }
 
+    /**
+    * Carga la información
+    * del curso seleccionado.
+    * 
+    * Muestra el nombre
+    * y la imagen asociada
+    * al curso.
+    */
     private void cargarDatos() {
         txtCurso.setText(curso.getNombre());
 
@@ -155,6 +187,16 @@ public class NoHayHorariosDisponiblesFORM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón volver.
+    * 
+    * Regresa a la pantalla
+    * de bienvenida del cliente.
+    * 
+    * @param evt Evento generado
+    * por el botón volver.
+    */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
        control.navegarBienvenida(control.getClienteActual());
     }//GEN-LAST:event_btnVolverActionPerformed

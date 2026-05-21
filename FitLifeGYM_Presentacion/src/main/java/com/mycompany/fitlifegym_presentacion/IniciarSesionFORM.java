@@ -10,7 +10,14 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Formulario encargado
+ * del inicio de sesión
+ * de clientes y administradores.
+ * 
+ * Permite validar credenciales
+ * y acceder a las funcionalidades
+ * correspondientes del sistema.
+ * 
  * @author Diego
  */
 public class IniciarSesionFORM extends javax.swing.JFrame {
@@ -18,6 +25,18 @@ public class IniciarSesionFORM extends javax.swing.JFrame {
     private static final Logger LOGGER = Logger.getLogger(IniciarSesionFORM.class.getName());
     private final ControlNavegacion control;
 
+    /**
+    * Constructor del formulario
+    * de inicio de sesión.
+    * 
+    * Inicializa los componentes,
+    * configura la ventana
+    * y carga los tipos
+    * de usuario disponibles.
+    * 
+    * @param control Controlador
+    * de navegación del sistema.
+    */
     public IniciarSesionFORM(ControlNavegacion control) {
         this.control = control;
         initComponents();
@@ -182,18 +201,58 @@ public class IniciarSesionFORM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Evento ejecutado
+    * al interactuar con
+    * el campo NIP.
+    * 
+    * @param evt Evento generado
+    * por el campo NIP.
+    */
     private void txtNIPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNIPActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNIPActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * volver atrás.
+    * 
+    * Regresa al menú
+    * principal del sistema.
+    * 
+    * @param evt Evento generado
+    * por el botón volver.
+    */
     private void btnVolverAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverAtrasActionPerformed
         control.navegarMenuPrincipal();
     }//GEN-LAST:event_btnVolverAtrasActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * de quejas o sugerencias.
+    * 
+    * @param evt Evento generado
+    * por el botón.
+    */
     private void btnQuejasSugerenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuejasSugerenciasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnQuejasSugerenciasActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * iniciar sesión.
+    * 
+    * Valida las credenciales
+    * ingresadas y navega
+    * a la pantalla correspondiente
+    * según el tipo de usuario.
+    * 
+    * @param evt Evento generado
+    * por el botón iniciar sesión.
+    */
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
         String pin = txtNIP.getText().trim();
         String contrasenia = new String(jPasswordField1.getPassword()).trim();
@@ -211,6 +270,14 @@ public class IniciarSesionFORM extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al seleccionar
+    * un tipo de usuario.
+    * 
+    * @param evt Evento generado
+    * por el ComboBox.
+    */
     private void cmbTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoActionPerformed
 
     }//GEN-LAST:event_cmbTipoActionPerformed

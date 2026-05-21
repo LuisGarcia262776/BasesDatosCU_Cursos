@@ -13,7 +13,15 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Formulario encargado
+ * de mostrar el menú
+ * administrativo del sistema.
+ * 
+ * Permite visualizar estadísticas
+ * generales y acceder
+ * a las funcionalidades
+ * de administración.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public class MenuCursosAdminFORM extends javax.swing.JFrame {
@@ -21,6 +29,18 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MenuCursosAdminFORM.class.getName());
     private final ControlNavegacion control;
 
+    /**
+    * Constructor del menú
+    * administrativo.
+    * 
+    * Inicializa los componentes,
+    * ajusta tamaños
+    * y carga las estadísticas
+    * generales del sistema.
+    * 
+    * @param control Controlador
+    * de navegación del sistema.
+    */
     public MenuCursosAdminFORM(ControlNavegacion control) {
         this.control = control;
         initComponents();
@@ -28,6 +48,12 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
         cargarEstadisticas();
     }
 
+    /**
+    * Ajusta el tamaño
+    * de los campos
+    * de texto utilizados
+    * en las estadísticas.
+    */
     private void ajustarTamañoTextFields() {
         java.awt.Dimension tamaño = new Dimension(80, 40);
         txtCursosActivos.setPreferredSize(tamaño);
@@ -35,7 +61,14 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
         txtHorariosActivos.setPreferredSize(tamaño);
     }
 
-    // Cargamos estadísticas desde MongoDB 
+    /**
+    * Carga las estadísticas
+    * generales del sistema.
+    * 
+    * Consulta cursos,
+    * horarios e inscripciones
+    * registradas en MongoDB.
+    */
     private void cargarEstadisticas() {
         txtCursosActivos.setEditable(false);
         txtCursosActivos.setBackground(new Color(40, 40, 40));
@@ -344,38 +377,103 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Evento ejecutado
+    * al interactuar con
+    * el campo de inscripciones
+    * totales.
+    * 
+    * @param evt Evento generado
+    * por el campo.
+    */
     private void txtInscripcionesTotalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtInscripcionesTotalesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtInscripcionesTotalesActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * gestión de cursos.
+    * 
+    * Navega al formulario
+    * de gestión de cursos.
+    * 
+    * @param evt Evento generado
+    * por el botón.
+    */
     private void btnGestionCursos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionCursos1ActionPerformed
         control.navegarGestionCursos();
     }//GEN-LAST:event_btnGestionCursos1ActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * reportes.
+    * 
+    * Navega al formulario
+    * de generación de reportes.
+    * 
+    * @param evt Evento generado
+    * por el botón.
+    */
     private void btnREPORTESActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnREPORTESActionPerformed
         control.navegarReportes();
     }//GEN-LAST:event_btnREPORTESActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * cerrar sesión.
+    * 
+    * Regresa a la pantalla
+    * de inicio de sesión.
+    * 
+    * @param evt Evento generado
+    * por el botón.
+    */
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
         control.navegarIniciarSesion();
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * gestión de horarios.
+    * 
+    * Navega al formulario
+    * de gestión de horarios.
+    * 
+    * @param evt Evento generado
+    * por el botón.
+    */
     private void btnGestionHorarios2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionHorarios2ActionPerformed
         control.navegarGestionHorarios(null);
     }//GEN-LAST:event_btnGestionHorarios2ActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al interactuar con
+    * el campo cursos activos.
+    * 
+    * @param evt Evento generado
+    * por el campo.
+    */
     private void txtCursosActivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCursosActivosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCursosActivosActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al interactuar con
+    * el campo horarios activos.
+    * 
+    * @param evt Evento generado
+    * por el campo.
+    */
     private void txtHorariosActivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHorariosActivosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtHorariosActivosActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrarSesion;

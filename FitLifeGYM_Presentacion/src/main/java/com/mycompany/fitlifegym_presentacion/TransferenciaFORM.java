@@ -11,7 +11,16 @@ import com.mycompany.fitlifegym_negocio.NegocioException;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Formulario encargado
+ * de mostrar la información
+ * necesaria para realizar
+ * una transferencia bancaria.
+ * 
+ * Permite visualizar
+ * los datos bancarios
+ * y confirmar el pago
+ * de la membresía.
+ * 
  * @author Jaime
  */
 public class TransferenciaFORM extends javax.swing.JFrame {
@@ -20,6 +29,22 @@ public class TransferenciaFORM extends javax.swing.JFrame {
     private NuevoClienteDTO cliente;
     private final TipoMembresiaDTO membresia;
 
+    /**
+    * Constructor del formulario
+    * de transferencia bancaria.
+    * 
+    * Inicializa los componentes,
+    * configura la ventana
+    * y carga el monto
+    * correspondiente a la membresía.
+    * 
+    * @param control Controlador
+    * de navegación del sistema.
+    * @param membresia Membresía
+    * seleccionada.
+    * @param cliente Cliente
+    * registrado.
+    */
     public TransferenciaFORM(ControlNavegacion control, TipoMembresiaDTO membresia, NuevoClienteDTO cliente) {
         this.control = control;
         this.membresia = membresia;
@@ -30,6 +55,15 @@ public class TransferenciaFORM extends javax.swing.JFrame {
         cargarMonto();
     }
 
+    /**
+    * Carga el monto
+    * correspondiente
+    * a la membresía seleccionada.
+    * 
+    * Consulta el precio
+    * y lo muestra
+    * dentro del formulario.
+    */
     private void cargarMonto() {
         try {
             NuevaMembresiaDTO membresiaDTO = control.buscarMembresiaPorTipo(this.membresia);
@@ -206,6 +240,19 @@ public class TransferenciaFORM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * de transferencia realizada.
+    * 
+    * Asigna la membresía
+    * al cliente, procesa
+    * el pago y muestra
+    * un mensaje de éxito.
+    * 
+    * @param evt Evento generado
+    * por el botón.
+    */
     private void btnTransferenciaRealizadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferenciaRealizadaActionPerformed
         try {
             this.cliente = control.asignarMembresiaCliente(this.cliente, this.membresia);

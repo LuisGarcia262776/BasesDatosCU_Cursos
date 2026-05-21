@@ -5,13 +5,31 @@
 package com.mycompany.fitlifegym_presentacion;
 
 /**
- *
+ * Formulario principal
+ * del sistema Fit Life GYM.
+ * 
+ * Permite acceder
+ * al registro de clientes
+ * e inicio de sesión
+ * del sistema.
+ * 
  * @author Diego
  */
 public class MainFitLifeFORM extends javax.swing.JFrame {
 
     private ControlNavegacion control;
-            
+    
+    /**
+    * Constructor del formulario
+    * principal del sistema.
+    * 
+    * Inicializa los componentes,
+    * configura el título
+    * y centra la ventana.
+    * 
+    * @param control Controlador
+    * de navegación del sistema.
+    */
     public MainFitLifeFORM(ControlNavegacion control) {
         this.control = control;
         this.setTitle("Main Fit Life");
@@ -163,11 +181,33 @@ public class MainFitLifeFORM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * registrarse.
+    * 
+    * Navega al formulario
+    * de registro de clientes.
+    * 
+    * @param evt Evento generado
+    * por el botón registrarse.
+    */
     private void btnRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarseActionPerformed
        control.navegarRegistrarse();
        this.dispose();
     }//GEN-LAST:event_btnRegistrarseActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * iniciar sesión.
+    * 
+    * Navega al formulario
+    * de inicio de sesión.
+    * 
+    * @param evt Evento generado
+    * por el botón iniciar sesión.
+    */
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
         control.navegarIniciarSesion();
         this.dispose();

@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Adapter;
-import java.util.Date;
+
 import com.mycompany.fitlifegym_dtos.ClienteLogueadoDTO;
 import com.mycompany.fitlifegym_dtos.CursoDTO;
 import com.mycompany.fitlifegym_dtos.DisponibilidadCursoDTO;
@@ -33,7 +33,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Clase adaptadora encargada de convertir DTOs
+ * en entidades de dominio y viceversa.
+ * 
+ * Facilita la transformación de objetos entre
+ * las capas de presentación, negocio y persistencia.
+ * 
+ * Contiene métodos auxiliares para adaptar cursos,
+ * horarios, inscripciones, clientes, membresías,
+ * imágenes y enums utilizados dentro del sistema.
+ * 
  * @author Luis
  */
 public class DtosAEntidadesAdapter {

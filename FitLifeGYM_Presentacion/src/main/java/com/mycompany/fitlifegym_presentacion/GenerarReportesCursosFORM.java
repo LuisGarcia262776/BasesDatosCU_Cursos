@@ -18,7 +18,6 @@ import com.mycompany.fitlifegym_dtos.CursoDTO;
 import com.mycompany.fitlifegym_dtos.DatosReporteDTO;
 import com.mycompany.fitlifegym_dtos.HorarioDTO;
 import com.mycompany.fitlifegym_dtos.ReporteDTO;
-import java.awt.Color;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.ParseException;
@@ -32,7 +31,15 @@ import javax.swing.table.DefaultTableModel;
 
 
 /**
- *
+ * Formulario encargado
+ * de generar reportes
+ * de cursos del sistema.
+ * 
+ * Permite filtrar información
+ * por fechas, cursos
+ * y cantidad mínima
+ * de inscritos.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public class GenerarReportesCursosFORM extends javax.swing.JFrame {
@@ -40,7 +47,18 @@ public class GenerarReportesCursosFORM extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GenerarReportesCursosFORM.class.getName());
     private final ControlNavegacion control;
 
-    // Constructor
+    /**
+    * Constructor del formulario
+    * de generación de reportes.
+    * 
+    * Inicializa los componentes,
+    * configura la tabla
+    * y carga los cursos
+    * disponibles.
+    * 
+    * @param control Controlador
+    * de navegación del sistema.
+    */
     public GenerarReportesCursosFORM(ControlNavegacion control) {
         this.control = control;
         initComponents();
@@ -49,11 +67,30 @@ public class GenerarReportesCursosFORM extends javax.swing.JFrame {
         cargarCursos();
     }
 
-    // Helper Font AWT
+    /**
+    * Genera una fuente AWT
+    * personalizada.
+    * 
+    * @param nombre Nombre
+    * de la fuente.
+    * @param estilo Estilo
+    * de la fuente.
+    * @param tamaño Tamaño
+    * de la fuente.
+    * @return Fuente configurada.
+    */
     private java.awt.Font awtFont(String nombre, int estilo, int tamaño) {
         return new java.awt.Font(nombre, estilo, tamaño);
     }
 
+    /**
+    * Configura la apariencia
+    * visual de la tabla.
+    * 
+    * Define colores,
+    * tipografía y estilos
+    * de encabezados.
+    */
     private void configurarTabla() {
         jTable1.setRowHeight(30);
         jTable1.setFont(awtFont("Segoe UI", java.awt.Font.PLAIN, 14));
@@ -64,7 +101,14 @@ public class GenerarReportesCursosFORM extends javax.swing.JFrame {
         jTable1.setGridColor(new java.awt.Color(70, 70, 70));
     }
 
-    // Carga cursos en el combo
+    /**
+    * Carga los cursos
+    * disponibles dentro
+    * del ComboBox.
+    * 
+    * Agrega la opción
+    * TODOS como filtro general.
+    */
     private void cargarCursos() {
         cmbCurso.removeAllItems();
         cmbCurso.addItem("TODOS");
@@ -77,7 +121,16 @@ public class GenerarReportesCursosFORM extends javax.swing.JFrame {
         }
     }
 
-    // Llena la tabla con resultados
+    /**
+    * Llena la tabla
+    * con los resultados
+    * del reporte generado.
+    * 
+    * @param reporte Reporte
+    * generado.
+    * @param sdf Formato
+    * de fechas utilizado.
+    */
     private void llenarTabla(ReporteDTO reporte, SimpleDateFormat sdf) {
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
         modelo.setRowCount(0);
@@ -156,12 +209,25 @@ public class GenerarReportesCursosFORM extends javax.swing.JFrame {
         }
     }
 
-    // Limpia la tabla
+    /**
+    * Limpia todos los registros
+    * de la tabla.
+    */
     private void limpiarTabla() {
         ((DefaultTableModel) jTable1.getModel()).setRowCount(0);
     }
 
-    // Exportar PDF 
+    /**
+    * Exporta el reporte
+    * mostrado en tabla
+    * a un archivo PDF.
+    * 
+    * @param ruta Ruta destino
+    * del archivo PDF.
+    * @throws Exception
+    * Si ocurre un error
+    * durante la exportación.
+    */
     private void exportarPDF(String ruta) throws Exception {
         Document documento = new Document(PageSize.A4.rotate());
         PdfWriter.getInstance(documento, new FileOutputStream(ruta));
@@ -424,22 +490,66 @@ public class GenerarReportesCursosFORM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Evento ejecutado
+    * al interactuar con
+    * el campo fecha inicio.
+    * 
+    * @param evt Evento generado
+    * por el campo.
+    */
     private void txtFechaInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaInicioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFechaInicioActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al interactuar con
+    * el campo fecha fin.
+    * 
+    * @param evt Evento generado
+    * por el campo.
+    */
     private void txtFechaFinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaFinActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFechaFinActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al interactuar con
+    * el campo cantidad mínima.
+    * 
+    * @param evt Evento generado
+    * por el campo.
+    */
     private void txtCantidadMinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadMinActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCantidadMinActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al seleccionar
+    * un curso del ComboBox.
+    * 
+    * @param evt Evento generado
+    * por el ComboBox.
+    */
     private void cmbCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCursoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbCursoActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón buscar.
+    * 
+    * Valida los filtros,
+    * genera el reporte
+    * y llena la tabla
+    * con los resultados.
+    * 
+    * @param evt Evento generado
+    * por el botón buscar.
+    */
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         if (txtFechaInicio.getText().trim().isEmpty() || txtFechaFin.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Las fechas son obligatorias. Formato: dd/MM/yyyy", "Error", JOptionPane.ERROR_MESSAGE);
@@ -500,6 +610,19 @@ public class GenerarReportesCursosFORM extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * exportar PDF.
+    * 
+    * Permite seleccionar
+    * la ubicación del archivo
+    * y exporta el reporte
+    * en formato PDF.
+    * 
+    * @param evt Evento generado
+    * por el botón exportar PDF.
+    */
     private void btnExportarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarPDFActionPerformed
         if (jTable1.getRowCount() == 0) {
             JOptionPane.showMessageDialog(this, "No hay datos para exportar. Haz una búsqueda primero.", "Sin datos", JOptionPane.WARNING_MESSAGE);
@@ -533,6 +656,16 @@ public class GenerarReportesCursosFORM extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnExportarPDFActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón volver.
+    * 
+    * Regresa al menú
+    * principal del administrador.
+    * 
+    * @param evt Evento generado
+    * por el botón volver.
+    */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         control.navegarMenuAdmin();
     }//GEN-LAST:event_btnVolverActionPerformed

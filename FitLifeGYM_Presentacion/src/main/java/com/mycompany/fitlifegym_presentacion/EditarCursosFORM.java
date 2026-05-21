@@ -8,21 +8,22 @@ import com.mycompany.fitlifegym_dtos.CursoDTO;
 import com.mycompany.fitlifegym_dtos.DisponibilidadCursoDTO;
 import com.mycompany.fitlifegym_dtos.ImagenDTO;
 import com.mycompany.fitlifegym_presentacion.guardarImagen.GurdadorImagenCarpeta;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
- *
+ * Formulario encargado
+ * de editar cursos
+ * existentes del sistema.
+ * 
+ * Permite modificar la información
+ * de un curso, incluyendo
+ * imagen, descripción y cupo.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public class EditarCursosFORM extends javax.swing.JFrame {
@@ -32,6 +33,19 @@ public class EditarCursosFORM extends javax.swing.JFrame {
     private final CursoDTO cursoOriginal;
     private String rutaImagenSeleccionada = "";
 
+    /**
+    * Constructor del formulario
+    * de edición de cursos.
+    * 
+    * Inicializa los componentes
+    * y carga los datos
+    * del curso seleccionado.
+    * 
+    * @param control Controlador
+    * de navegación del sistema.
+    * @param curso Curso
+    * a editar.
+    */
     public EditarCursosFORM(ControlNavegacion control, CursoDTO curso) {
         this.control = control;
         this.cursoOriginal = curso;
@@ -41,7 +55,15 @@ public class EditarCursosFORM extends javax.swing.JFrame {
         precargarDatos();
     }
 
-    // Precarga los datos del curso a editar
+    /**
+    * Precarga los datos
+    * del curso seleccionado
+    * dentro del formulario.
+    * 
+    * Muestra la información
+    * actual del curso
+    * a editar.
+    */
     private void precargarDatos() {
         txtNombreDelCurso.setText(cursoOriginal.getNombre());
         txtDescripcion.setText(cursoOriginal.getDescripcion());
@@ -226,6 +248,18 @@ public class EditarCursosFORM extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreDelCursoActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al seleccionar una imagen
+    * para el curso.
+    * 
+    * Permite elegir una imagen
+    * desde el explorador
+    * de archivos.
+    * 
+    * @param evt Evento generado
+    * por el botón seleccionar imagen.
+    */
     private void btnSeleccionarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImagenActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter(new FileNameExtensionFilter("Imágenes", "jpg", "jpeg", "png"));
@@ -241,6 +275,13 @@ public class EditarCursosFORM extends javax.swing.JFrame {
         }
     }
 
+    /**
+    * Muestra una vista previa
+    * de la imagen seleccionada.
+    * 
+    * @param ruta Ruta
+    * de la imagen.
+    */
     private void mostrarPreview(String ruta) {
         ImageIcon icon = GurdadorImagenCarpeta.cargarImagen(ruta, lblPreviwe.getWidth(), lblPreviwe.getHeight());
             if (icon != null) {
@@ -260,6 +301,17 @@ public class EditarCursosFORM extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCupoMinimoActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón guardar.
+    * 
+    * Valida los datos capturados
+    * y actualiza el curso
+    * dentro del sistema.
+    * 
+    * @param evt Evento generado
+    * por el botón guardar.
+    */
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         if (txtNombreDelCurso.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "El nombre es obligatorio.");
@@ -295,6 +347,16 @@ public class EditarCursosFORM extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón cancelar.
+    * 
+    * Regresa a la gestión
+    * de cursos.
+    * 
+    * @param evt Evento generado
+    * por el botón cancelar.
+    */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         control.navegarGestionCursos();
     }//GEN-LAST:event_btnCancelarActionPerformed

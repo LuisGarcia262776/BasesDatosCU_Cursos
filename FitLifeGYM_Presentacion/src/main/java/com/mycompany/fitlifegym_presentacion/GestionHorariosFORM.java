@@ -29,13 +29,32 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 /**
- *
+ * Formulario encargado
+ * de gestionar los horarios
+ * de los cursos del sistema.
+ * 
+ * Permite visualizar,
+ * agregar, editar,
+ * eliminar y consultar
+ * horarios registrados.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public class GestionHorariosFORM extends javax.swing.JFrame { 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GestionHorariosFORM.class.getName());
     private final ControlNavegacion control;
 
+    /**
+    * Constructor del formulario
+    * de gestión de horarios.
+    * 
+    * Inicializa los componentes
+    * y carga los cursos
+    * registrados del sistema.
+    * 
+    * @param control Controlador
+    * de navegación del sistema.
+    */
     public GestionHorariosFORM(ControlNavegacion control) {
         this.control = control;
         initComponents();
@@ -43,12 +62,27 @@ public class GestionHorariosFORM extends javax.swing.JFrame {
         cargarCursos();
     }
 
+    /**
+    * Constructor vacío
+    * del formulario
+    * de gestión de horarios.
+    * 
+    * Inicializa únicamente
+    * los componentes gráficos.
+    */
     public GestionHorariosFORM() {
         initComponents();
         this.control = null;
     }
 
-    // ── Carga cursos en grid ──────────────────────────────────────────────
+    /**
+    * Carga los cursos
+    * registrados en formato grid.
+    * 
+    * Si no existen cursos,
+    * muestra un mensaje
+    * informativo.
+    */
     private void cargarCursos() {
         jPanel1.removeAll();
         jPanel1.setLayout(new java.awt.GridLayout(0, 3, 16, 16));
@@ -71,7 +105,20 @@ public class GestionHorariosFORM extends javax.swing.JFrame {
         jPanel1.repaint();
     }
 
-    // Cuadro de cada curso
+    /**
+    * Crea una tarjeta visual
+    * para representar
+    * un curso.
+    * 
+    * Incluye imagen,
+    * nombre y botón
+    * de selección.
+    * 
+    * @param curso Curso
+    * a representar.
+    * @return Tarjeta visual
+    * del curso.
+    */
     private JPanel crearCardCurso(CursoDTO curso) {
         JPanel card = new JPanel();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
@@ -138,7 +185,18 @@ public class GestionHorariosFORM extends javax.swing.JFrame {
         return card;
     }
 
-    // Horarios del curso seleccionado
+    /**
+    * Abre los horarios
+    * correspondientes
+    * al curso seleccionado.
+    * 
+    * Permite visualizar
+    * los horarios registrados
+    * y administrar acciones.
+    * 
+    * @param curso Curso
+    * seleccionado.
+    */
     private void abrirHorariosCurso(CursoDTO curso) {
         lblSeleccionaUnCurso.setText("Horarios: " + curso.getNombre().toUpperCase());
 
@@ -198,7 +256,22 @@ public class GestionHorariosFORM extends javax.swing.JFrame {
         jPanel1.repaint();
     }
 
-    // Fila de cada horario
+    /**
+    * Crea una fila visual
+    * para representar
+    * un horario.
+    * 
+    * Incluye información
+    * de días, horas
+    * y botones de acciones.
+    * 
+    * @param horario Horario
+    * a representar.
+    * @param curso Curso
+    * relacionado.
+    * @return Panel visual
+    * del horario.
+    */
     private JPanel crearFilaHorario(HorarioDTO horario, CursoDTO curso) {
         JPanel fila = new JPanel(new BorderLayout(10, 0));
         fila.setBackground(new Color(50, 50, 50));
@@ -292,7 +365,17 @@ public class GestionHorariosFORM extends javax.swing.JFrame {
         return fila;
     }
 
-    // boton rojo 
+    /**
+    * Crea un botón rojo
+    * personalizado
+    * para el formulario.
+    * 
+    * @param texto Texto
+    * del botón.
+    * @param ancho Ancho
+    * del botón.
+    * @return Botón configurado.
+    */ 
     private JButton crearBotonRojo(String texto, int ancho) {
         JButton btn = new JButton(texto);
         btn.setBackground(new Color(225, 6, 0));
@@ -405,6 +488,16 @@ public class GestionHorariosFORM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón volver.
+    * 
+    * Regresa al menú
+    * principal del administrador.
+    * 
+    * @param evt Evento generado
+    * por el botón volver.
+    */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         control.navegarMenuAdmin();
     }//GEN-LAST:event_btnVolverActionPerformed

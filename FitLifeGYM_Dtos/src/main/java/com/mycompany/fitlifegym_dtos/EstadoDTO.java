@@ -5,9 +5,19 @@
 package com.mycompany.fitlifegym_dtos;
 
 /**
- *
- * @author Diego
+ * Enum que representa los posibles estados
+ * utilizados dentro del sistema.
+ * 
+ * @author Luis
  */
 public enum EstadoDTO {
-    ACTIVO, INACTIVO
+    /**
+     * Indica que el elemento se encuentra activo.
+     */
+    ACTIVO,
+    
+    /**
+     * Indica que el elemento se encuentra inactivo.
+     */
+    INACTIVO
 }

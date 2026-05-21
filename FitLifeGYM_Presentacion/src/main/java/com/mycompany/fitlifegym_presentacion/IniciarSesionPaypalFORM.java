@@ -4,14 +4,20 @@
  */
 package com.mycompany.fitlifegym_presentacion;
 
-import com.mycompany.fitlifegym_dtos.ClienteLogueadoDTO;
 import com.mycompany.fitlifegym_dtos.NuevoClienteDTO;
 import com.mycompany.fitlifegym_dtos.TipoMembresiaDTO;
 import com.mycompany.fitlifegym_negocio.NegocioException;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Formulario encargado
+ * del inicio de sesión
+ * mediante PayPal.
+ * 
+ * Permite validar las credenciales
+ * de PayPal y procesar
+ * el pago de la membresía.
+ * 
  * @author Jaime
  */
 public class IniciarSesionPaypalFORM extends javax.swing.JFrame {
@@ -20,6 +26,21 @@ public class IniciarSesionPaypalFORM extends javax.swing.JFrame {
     private final NuevoClienteDTO cliente;
     private final TipoMembresiaDTO membresia;
 
+    /**
+    * Constructor del formulario
+    * de inicio de sesión PayPal.
+    * 
+    * Inicializa los componentes
+    * y configura los datos
+    * del cliente y membresía.
+    * 
+    * @param control Controlador
+    * de navegación del sistema.
+    * @param membresia Membresía
+    * seleccionada.
+    * @param cliente Cliente
+    * registrado.
+    */
     public IniciarSesionPaypalFORM(ControlNavegacion control, TipoMembresiaDTO membresia, NuevoClienteDTO cliente) {
         this.control = control;
         this.membresia = membresia;
@@ -217,6 +238,19 @@ public class IniciarSesionPaypalFORM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * iniciar sesión.
+    * 
+    * Procesa el pago
+    * mediante PayPal
+    * y activa la membresía
+    * del cliente.
+    * 
+    * @param evt Evento generado
+    * por el botón iniciar sesión.
+    */
     private void btnTransferenciaRealizadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferenciaRealizadaActionPerformed
        String correo = txtCorreoPaypal.getText();
         String contrasenia = new String(txtContrasenia.getPassword());
@@ -232,6 +266,14 @@ public class IniciarSesionPaypalFORM extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnTransferenciaRealizadaActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al interactuar con
+    * el campo correo PayPal.
+    * 
+    * @param evt Evento generado
+    * por el campo correo.
+    */
     private void txtCorreoPaypalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoPaypalActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCorreoPaypalActionPerformed

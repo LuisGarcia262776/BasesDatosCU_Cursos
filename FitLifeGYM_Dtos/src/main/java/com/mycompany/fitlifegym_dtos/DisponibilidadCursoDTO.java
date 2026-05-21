@@ -5,9 +5,24 @@
 package com.mycompany.fitlifegym_dtos;
 
 /**
- *
+ * Enum que representa los posibles estados de disponibilidad
+ * de un curso dentro del sistema.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public enum DisponibilidadCursoDTO {
-    DISPONIBLE, NO_DISPONIBLE, SIN_HORARIOS
+    /**
+     * El curso se encuentra disponible para inscripciones.
+     */
+    DISPONIBLE,
+    
+    /**
+     * El curso no se encuentra disponible.
+     */
+    NO_DISPONIBLE,
+    
+    /**
+     * El curso no cuenta con horarios registrados.
+     */
+    SIN_HORARIOS
 }

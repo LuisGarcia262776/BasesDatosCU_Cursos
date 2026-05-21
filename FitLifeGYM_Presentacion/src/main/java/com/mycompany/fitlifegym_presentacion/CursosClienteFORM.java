@@ -22,7 +22,14 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 /**
- *
+ * Formulario encargado
+ * de mostrar los cursos
+ * disponibles para el cliente.
+ * 
+ * Permite visualizar la información
+ * de los cursos y realizar
+ * inscripciones.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public class CursosClienteFORM extends javax.swing.JFrame {
@@ -32,8 +39,16 @@ public class CursosClienteFORM extends javax.swing.JFrame {
     
 
     /**
-     * Creates new form CursosClienteFORM
-     */
+    * Constructor del formulario
+    * de cursos del cliente.
+    * 
+    * Inicializa los componentes
+    * y carga los cursos
+    * disponibles del sistema.
+    * 
+    * @param control Controlador
+    * de navegación del sistema.
+    */
     public CursosClienteFORM(ControlNavegacion control) {
         this.control = control;
         initComponents();
@@ -43,6 +58,15 @@ public class CursosClienteFORM extends javax.swing.JFrame {
         cargarCursos();
     }
     
+    /**
+    * Carga todos los cursos
+    * disponibles dentro
+    * del panel principal.
+    * 
+    * Si no existen cursos,
+    * muestra un mensaje
+    * informativo.
+    */
     private void cargarCursos() {
         jPanel1.removeAll();
 
@@ -62,6 +86,20 @@ public class CursosClienteFORM extends javax.swing.JFrame {
         jPanel1.repaint();
     }
     
+    /**
+    * Crea una tarjeta visual
+    * para mostrar la información
+    * de un curso.
+    * 
+    * Incluye imagen,
+    * descripción y botón
+    * de inscripción.
+    * 
+    * @param curso Curso
+    * a mostrar.
+    * @return Panel con la tarjeta
+    * del curso.
+    */
     private JPanel crearTarjetaCurso(CursoDTO curso) {
         JPanel card = new JPanel();
         card.setBackground(new Color(30,30,30));
@@ -220,6 +258,16 @@ public class CursosClienteFORM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón volver.
+    * 
+    * Regresa a la pantalla
+    * de bienvenida del cliente.
+    * 
+    * @param evt Evento generado
+    * por el botón volver.
+    */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         control.navegarBienvenida(control.getClienteActual());
     }//GEN-LAST:event_jButton1ActionPerformed

@@ -4,14 +4,21 @@
  */
 package com.mycompany.fitlifegym_presentacion;
 
-import com.mycompany.fitlifegym_dtos.ClienteLogueadoDTO;
 import com.mycompany.fitlifegym_dtos.NuevoClienteDTO;
 import com.mycompany.fitlifegym_dtos.TipoMembresiaDTO;
 import com.mycompany.fitlifegym_negocio.NegocioException;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Formulario encargado
+ * de procesar pagos
+ * mediante tarjeta bancaria.
+ * 
+ * Permite capturar
+ * la información de la tarjeta
+ * y realizar el pago
+ * de la membresía.
+ * 
  * @author Jaime
  */
 public class TarjetaFORM extends javax.swing.JFrame {
@@ -20,6 +27,22 @@ public class TarjetaFORM extends javax.swing.JFrame {
     private final TipoMembresiaDTO membresia;
     private final NuevoClienteDTO cliente;
 
+    /**
+    * Constructor del formulario
+    * de pago con tarjeta.
+    * 
+    * Inicializa los componentes,
+    * configura la ventana
+    * y establece los datos
+    * del cliente y membresía.
+    * 
+    * @param control Controlador
+    * de navegación del sistema.
+    * @param membresia Membresía
+    * seleccionada.
+    * @param cliente Cliente
+    * registrado.
+    */
     public TarjetaFORM(ControlNavegacion control, TipoMembresiaDTO membresia, NuevoClienteDTO cliente) {
         this.control = control;
         this.membresia = membresia;
@@ -267,22 +290,71 @@ public class TarjetaFORM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Evento ejecutado
+    * al interactuar con
+    * el campo nombre
+    * del titular.
+    * 
+    * @param evt Evento generado
+    * por el campo.
+    */
     private void txtNombreTitularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreTitularActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreTitularActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al interactuar con
+    * el campo fecha
+    * de vencimiento.
+    * 
+    * @param evt Evento generado
+    * por el campo.
+    */
     private void txtFechaVencimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaVencimientoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFechaVencimientoActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al interactuar con
+    * el campo número
+    * de tarjeta.
+    * 
+    * @param evt Evento generado
+    * por el campo.
+    */
     private void txtNumeroTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumeroTarjetaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNumeroTarjetaActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al interactuar con
+    * el campo CVV.
+    * 
+    * @param evt Evento generado
+    * por el campo.
+    */
     private void txtCVVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCVVActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCVVActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * pagar ahora.
+    * 
+    * Valida los datos
+    * de la tarjeta,
+    * procesa el pago
+    * y activa la membresía
+    * del cliente.
+    * 
+    * @param evt Evento generado
+    * por el botón pagar.
+    */
     private void btnPagarAhoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarAhoraActionPerformed
         String nombreTitular = txtNombreTitular.getText().trim();
         String numero = txtNumeroTarjeta.getText().trim();
@@ -299,6 +371,12 @@ public class TarjetaFORM extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnPagarAhoraActionPerformed
 
+    /**
+    * Configura como no editables
+    * los campos de texto
+    * utilizados únicamente
+    * como etiquetas visuales.
+    */
     public void setearEditablesFalsos() {
         textCVVFALSE.setEditable(false);
         txtvencimientoFALSE.setEditable(false);

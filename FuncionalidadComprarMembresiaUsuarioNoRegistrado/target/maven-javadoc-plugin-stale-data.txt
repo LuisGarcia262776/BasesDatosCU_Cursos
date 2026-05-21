@@ -1,0 +1,51 @@
+-J-Duser.language=
+-J-Duser.country=
+@options
+@packages
+--no-fonts
+-classpath
+'C:/Users/PC GAMER MASTER RACE/.m2/repository/org/netbeans/external/AbsoluteLayout/RELEASE280/AbsoluteLayout-RELEASE280.jar;C:/Users/PC GAMER MASTER RACE/.m2/repository/com/mycompany/FitLifeGYM_Negocio/1.0-SNAPSHOT/FitLifeGYM_Negocio-1.0-SNAPSHOT.jar;C:/Users/PC GAMER MASTER RACE/.m2/repository/com/mycompany/FitLifeGYM_Persistencia/1.0-SNAPSHOT/FitLifeGYM_Persistencia-1.0-SNAPSHOT.jar;C:/Users/PC GAMER MASTER RACE/.m2/repository/org/mongodb/mongodb-driver-sync/5.1.0/mongodb-driver-sync-5.1.0.jar;C:/Users/PC GAMER MASTER RACE/.m2/repository/org/mongodb/mongodb-driver-core/5.1.0/mongodb-driver-core-5.1.0.jar;C:/Users/PC GAMER MASTER RACE/.m2/repository/org/mongodb/bson/5.1.0/bson-5.1.0.jar;C:/Users/PC GAMER MASTER RACE/.m2/repository/com/mycompany/FitLifeGYM_Dtos/1.0-SNAPSHOT/FitLifeGYM_Dtos-1.0-SNAPSHOT.jar'
+-encoding
+'UTF-8'
+-protected
+--release
+21
+-sourcepath
+'C:/Users/PC GAMER MASTER RACE/Documents/GitHub/BasesDatosCU_Cursos/FuncionalidadComprarMembresiaUsuarioNoRegistrado/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2026. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/PC GAMER MASTER RACE/Documents/GitHub/BasesDatosCU_Cursos/FuncionalidadComprarMembresiaUsuarioNoRegistrado/target/reports/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'FuncionalidadComprarMembresiaUsuarioNoRegistrado 1.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'FuncionalidadComprarMembresiaUsuarioNoRegistrado 1.0-SNAPSHOT API'
+com.mycompany.funcionalidadcomprarmembresiausuarionoregistrado
+C:\Users\PC GAMER MASTER RACE\.m2\repository\org\netbeans\external\AbsoluteLayout\RELEASE280\AbsoluteLayout-RELEASE280.jar = 1776729437125
+C:\Users\PC GAMER MASTER RACE\.m2\repository\com\mycompany\FitLifeGYM_Negocio\1.0-SNAPSHOT\FitLifeGYM_Negocio-1.0-SNAPSHOT.jar = 1779357975551
+C:\Users\PC GAMER MASTER RACE\.m2\repository\com\mycompany\FitLifeGYM_Persistencia\1.0-SNAPSHOT\FitLifeGYM_Persistencia-1.0-SNAPSHOT.jar = 1779357974517
+C:\Users\PC GAMER MASTER RACE\.m2\repository\org\mongodb\mongodb-driver-sync\5.1.0\mongodb-driver-sync-5.1.0.jar = 1778473852460
+C:\Users\PC GAMER MASTER RACE\.m2\repository\org\mongodb\mongodb-driver-core\5.1.0\mongodb-driver-core-5.1.0.jar = 1778473852642
+C:\Users\PC GAMER MASTER RACE\.m2\repository\org\mongodb\bson\5.1.0\bson-5.1.0.jar = 1778473852715
+C:\Users\PC GAMER MASTER RACE\.m2\repository\com\mycompany\FitLifeGYM_Dtos\1.0-SNAPSHOT\FitLifeGYM_Dtos-1.0-SNAPSHOT.jar = 1779357974979
+C:\Users\PC GAMER MASTER RACE\Documents\GitHub\BasesDatosCU_Cursos\FuncionalidadComprarMembresiaUsuarioNoRegistrado\src\main\java = 1778472206088
+C:\Users\PC GAMER MASTER RACE\Documents\GitHub\BasesDatosCU_Cursos\FuncionalidadComprarMembresiaUsuarioNoRegistrado\target\reports\apidocs\allclasses-index.html = 1779357992017
+C:\Users\PC GAMER MASTER RACE\Documents\GitHub\BasesDatosCU_Cursos\FuncionalidadComprarMembresiaUsuarioNoRegistrado\target\reports\apidocs\allpackages-index.html = 1779357992022
+C:\Users\PC GAMER MASTER RACE\Documents\GitHub\BasesDatosCU_Cursos\FuncionalidadComprarMembresiaUsuarioNoRegistrado\target\reports\apidocs\element-list = 1779357991947
+C:\Users\PC GAMER MASTER RACE\Documents\GitHub\BasesDatosCU_Cursos\FuncionalidadComprarMembresiaUsuarioNoRegistrado\target\reports\apidocs\help-doc.html = 1779357992056
+C:\Users\PC GAMER MASTER RACE\Documents\GitHub\BasesDatosCU_Cursos\FuncionalidadComprarMembresiaUsuarioNoRegistrado\target\reports\apidocs\index-all.html = 1779357992045
+C:\Users\PC GAMER MASTER RACE\Documents\GitHub\BasesDatosCU_Cursos\FuncionalidadComprarMembresiaUsuarioNoRegistrado\target\reports\apidocs\index.html = 1779357992051
+C:\Users\PC GAMER MASTER RACE\Documents\GitHub\BasesDatosCU_Cursos\FuncionalidadComprarMembresiaUsuarioNoRegistrado\target\reports\apidocs\member-search-index.js = 1779357992032
+C:\Users\PC GAMER MASTER RACE\Documents\GitHub\BasesDatosCU_Cursos\FuncionalidadComprarMembresiaUsuarioNoRegistrado\target\reports\apidocs\module-search-index.js = 1779357992025
+C:\Users\PC GAMER MASTER RACE\Documents\GitHub\BasesDatosCU_Cursos\FuncionalidadComprarMembresiaUsuarioNoRegistrado\target\reports\apidocs\overview-tree.html = 1779357992000
+C:\Users\PC GAMER MASTER RACE\Documents\GitHub\BasesDatosCU_Cursos\FuncionalidadComprarMembresiaUsuarioNoRegistrado\target\reports\apidocs\package-search-index.js = 1779357992028
+C:\Users\PC GAMER MASTER RACE\Documents\GitHub\BasesDatosCU_Cursos\FuncionalidadComprarMembresiaUsuarioNoRegistrado\target\reports\apidocs\search.html = 1779357992048
+C:\Users\PC GAMER MASTER RACE\Documents\GitHub\BasesDatosCU_Cursos\FuncionalidadComprarMembresiaUsuarioNoRegistrado\target\reports\apidocs\tag-search-index.js = 1779357992034
+C:\Users\PC GAMER MASTER RACE\Documents\GitHub\BasesDatosCU_Cursos\FuncionalidadComprarMembresiaUsuarioNoRegistrado\target\reports\apidocs\type-search-index.js = 1779357992030

@@ -11,13 +11,33 @@ import java.time.format.DateTimeParseException;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Formulario encargado
+ * del registro de nuevos
+ * clientes en el sistema.
+ * 
+ * Permite capturar
+ * la información personal
+ * y validar los datos
+ * antes de continuar
+ * con la suscripción.
+ * 
  * @author Diego
  */
 public class RegistrarseFORM extends javax.swing.JFrame {
 
     private final ControlNavegacion control;
-
+    
+    /**
+    * Constructor del formulario
+    * de registro.
+    * 
+    * Inicializa los componentes,
+    * configura la ventana
+    * y centra el formulario.
+    * 
+    * @param control Controlador
+    * de navegación del sistema.
+    */
     public RegistrarseFORM(ControlNavegacion control) {
         this.control = control;
         initComponents();
@@ -279,6 +299,18 @@ public class RegistrarseFORM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón siguiente.
+    * 
+    * Obtiene los datos capturados,
+    * valida la información
+    * y navega a la pantalla
+    * de beneficios.
+    * 
+    * @param evt Evento generado
+    * por el botón siguiente.
+    */
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
         String nombre = txtNombreCompleto.getText().trim();
         String apellidos = txtApellidos.getText().trim();
@@ -302,38 +334,117 @@ public class RegistrarseFORM extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * iniciar sesión.
+    * 
+    * Navega al formulario
+    * de inicio de sesión.
+    * 
+    * @param evt Evento generado
+    * por el botón iniciar sesión.
+    */
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
         control.navegarIniciarSesion();
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al interactuar con
+    * el campo apellidos.
+    * 
+    * @param evt Evento generado
+    * por el campo.
+    */
     private void txtApellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtApellidosActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al interactuar con
+    * el campo teléfono.
+    * 
+    * @param evt Evento generado
+    * por el campo.
+    */
     private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTelefonoActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al interactuar con
+    * el campo nombre completo.
+    * 
+    * @param evt Evento generado
+    * por el campo.
+    */
     private void txtNombreCompletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreCompletoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreCompletoActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al interactuar con
+    * el campo fecha
+    * de nacimiento.
+    * 
+    * @param evt Evento generado
+    * por el campo.
+    */
     private void txtFechaNacimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaNacimientoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFechaNacimientoActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al interactuar con
+    * el campo PIN.
+    * 
+    * @param evt Evento generado
+    * por el campo.
+    */
     private void txtPINActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPINActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPINActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al interactuar con
+    * el campo contraseña.
+    * 
+    * @param evt Evento generado
+    * por el campo.
+    */
     private void txtContraseniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContraseniaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtContraseniaActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * volver atrás.
+    * 
+    * Regresa al menú
+    * principal del sistema.
+    * 
+    * @param evt Evento generado
+    * por el botón volver.
+    */
     private void btnVolverAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverAtrasActionPerformed
         control.navegarMenuPrincipal();
     }//GEN-LAST:event_btnVolverAtrasActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al interactuar con
+    * el campo correo electrónico.
+    * 
+    * @param evt Evento generado
+    * por el campo.
+    */
     private void txtCorreoElectronicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoElectronicoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCorreoElectronicoActionPerformed

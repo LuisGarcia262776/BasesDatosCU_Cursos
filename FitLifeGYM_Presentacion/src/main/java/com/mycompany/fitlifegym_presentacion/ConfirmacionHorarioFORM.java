@@ -7,7 +7,14 @@ package com.mycompany.fitlifegym_presentacion;
 import com.mycompany.fitlifegym_dtos.HorarioDTO;
 
 /**
- *
+ * Formulario encargado
+ * de confirmar el guardado
+ * de un horario dentro del sistema.
+ * 
+ * Permite validar la acción
+ * antes de registrar
+ * el horario definitivamente.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public class ConfirmacionHorarioFORM extends javax.swing.JFrame {
@@ -16,6 +23,19 @@ public class ConfirmacionHorarioFORM extends javax.swing.JFrame {
     private final ControlNavegacion control;
     private final HorarioDTO horarioDTO;
 
+    /**
+    * Constructor del formulario
+    * de confirmación de horario.
+    * 
+    * Inicializa los componentes
+    * y recibe el horario
+    * a guardar.
+    * 
+    * @param control Controlador
+    * de navegación del sistema.
+    * @param horarioDTO Horario
+    * a confirmar.
+    */
     public ConfirmacionHorarioFORM(ControlNavegacion control, HorarioDTO horarioDTO) {
         this.control    = control;
         this.horarioDTO = horarioDTO;
@@ -121,6 +141,17 @@ public class ConfirmacionHorarioFORM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón sí.
+    * 
+    * Guarda el horario
+    * y navega a la pantalla
+    * de éxito.
+    * 
+    * @param evt Evento generado
+    * por el botón sí.
+    */
     private void btnSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiActionPerformed
         // Guarda el horario y navega a exito
         HorarioDTO guardado = control.agregarHorario(horarioDTO);
@@ -129,6 +160,17 @@ public class ConfirmacionHorarioFORM extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSiActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón no.
+    * 
+    * Cancela la operación
+    * y regresa al menú
+    * del administrador.
+    * 
+    * @param evt Evento generado
+    * por el botón no.
+    */
     private void btnNOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNOActionPerformed
         control.navegarMenuAdmin();
     }//GEN-LAST:event_btnNOActionPerformed

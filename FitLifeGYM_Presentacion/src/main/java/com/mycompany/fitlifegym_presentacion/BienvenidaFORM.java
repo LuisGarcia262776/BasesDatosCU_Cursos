@@ -11,18 +11,34 @@ import com.mycompany.fitlifegym_dtos.TipoMembresiaDTO;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Formulario de bienvenida
+ * mostrado al cliente
+ * después de iniciar sesión.
+ * 
+ * Permite visualizar información
+ * básica del cliente y acceder
+ * a las funcionalidades principales.
+ * 
  * @author Diego
  */
-//aqui el plan es que si no se lleno el textfiel con la membresia
-//el boton no se pueda utilizar y si le da click ahi ponga
-//esta funcion solo esta en el plan oro, actualizalo
-//o algo asi
 public class BienvenidaFORM extends javax.swing.JFrame {
 
     private ControlNavegacion control;
     private ClienteLogueadoDTO cliente;
 
+    /**
+    * Constructor del formulario
+    * de bienvenida.
+    * 
+    * Inicializa los componentes
+    * y muestra la información
+    * del cliente logueado.
+    * 
+    * @param control Controlador
+    * de navegación del sistema.
+    * @param cliente Cliente
+    * actualmente logueado.
+    */
     public BienvenidaFORM(ControlNavegacion control, ClienteLogueadoDTO cliente) {
         this.control = control;
         this.cliente = cliente;
@@ -34,6 +50,14 @@ public class BienvenidaFORM extends javax.swing.JFrame {
 
     }
 
+    /**
+    * Muestra los datos
+    * del cliente logueado
+    * dentro del formulario.
+    * 
+    * Visualiza el nombre
+    * y la membresía activa.
+    */
     private void mostrarDatosCliente() {
         if (cliente != null) {
             String nombre = cliente.getNombreCompleto();
@@ -164,6 +188,18 @@ public class BienvenidaFORM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * de beneficios.
+    * 
+    * Verifica el estado
+    * de la membresía
+    * del cliente.
+    * 
+    * @param evt Evento generado
+    * por el botón beneficios.
+    */
     private void btnBeneficiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBeneficiosActionPerformed
         ClienteLogueadoDTO cliente = control.getClienteActual();
 
@@ -179,6 +215,17 @@ public class BienvenidaFORM extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBeneficiosActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * de cursos.
+    * 
+    * Navega a la pantalla
+    * de cursos disponibles.
+    * 
+    * @param evt Evento generado
+    * por el botón cursos.
+    */
     private void btnCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCursosActionPerformed
         control.navegarCursosCliente();
     }//GEN-LAST:event_btnCursosActionPerformed

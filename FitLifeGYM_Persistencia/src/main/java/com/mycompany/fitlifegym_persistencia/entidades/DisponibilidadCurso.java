@@ -5,9 +5,32 @@
 package com.mycompany.fitlifegym_persistencia.entidades;
 
 /**
- *
+ * Enumeración que representa
+ * la disponibilidad de un curso
+ * dentro del sistema.
+ * 
+ * Define los posibles estados
+ * en los que puede encontrarse
+ * un curso.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public enum DisponibilidadCurso {
-    DISPONIBLE, NO_DISPONIBLE, SIN_HORARIOS
+    /**
+     * Indica que el curso
+     * se encuentra disponible.
+     */
+    DISPONIBLE,
+    
+    /**
+     * Indica que el curso
+     * no se encuentra disponible.
+     */
+    NO_DISPONIBLE,
+    
+    /**
+     * Indica que el curso
+     * no cuenta con horarios asignados.
+     */
+    SIN_HORARIOS
 }

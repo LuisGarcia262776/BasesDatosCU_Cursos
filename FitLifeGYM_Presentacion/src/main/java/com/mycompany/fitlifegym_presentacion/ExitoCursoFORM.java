@@ -11,7 +11,14 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 
 /**
- *
+ * Formulario encargado
+ * de mostrar el mensaje
+ * de éxito al guardar un curso.
+ * 
+ * Permite informar al usuario
+ * que el curso fue registrado
+ * correctamente en el sistema.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public class ExitoCursoFORM extends javax.swing.JFrame {
@@ -20,6 +27,19 @@ public class ExitoCursoFORM extends javax.swing.JFrame {
     private final ControlNavegacion control;
     private final CursoDTO curso;
 
+    /**
+    * Constructor del formulario
+    * de éxito de curso.
+    * 
+    * Inicializa los componentes
+    * y carga la animación
+    * de confirmación.
+    * 
+    * @param control Controlador
+    * de navegación del sistema.
+    * @param curso Curso
+    * guardado correctamente.
+    */
     public ExitoCursoFORM(ControlNavegacion control, CursoDTO curso) {
         this.control = control;
         this.curso = curso;
@@ -28,6 +48,15 @@ public class ExitoCursoFORM extends javax.swing.JFrame {
         cargarPalomita();
     }
 
+    /**
+    * Carga la imagen
+    * de confirmación
+    * dentro del formulario.
+    * 
+    * Si no encuentra la imagen,
+    * muestra una palomita
+    * generada por texto.
+    */
     private void cargarPalomita() {
         try {
             URL url = getClass().getResource("/palomita.png");
@@ -149,6 +178,17 @@ public class ExitoCursoFORM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * volver al menú.
+    * 
+    * Regresa al menú
+    * principal del administrador.
+    * 
+    * @param evt Evento generado
+    * por el botón volver.
+    */
     private void btnVolverAlMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverAlMenuActionPerformed
         control.navegarMenuAdmin();
     }//GEN-LAST:event_btnVolverAlMenuActionPerformed

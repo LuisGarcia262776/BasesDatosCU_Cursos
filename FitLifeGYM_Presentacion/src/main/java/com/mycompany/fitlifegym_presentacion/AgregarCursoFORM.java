@@ -8,12 +8,10 @@ import com.mycompany.fitlifegym_dtos.CursoDTO;
 import com.mycompany.fitlifegym_dtos.DisponibilidadCursoDTO;
 import com.mycompany.fitlifegym_dtos.ImagenDTO;
 import com.mycompany.fitlifegym_presentacion.guardarImagen.GurdadorImagenCarpeta;
-import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -21,25 +19,53 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
- *
+ * Formulario encargado
+ * de agregar nuevos cursos
+ * dentro del sistema.
+ * 
+ * Permite capturar la información
+ * necesaria para registrar
+ * un nuevo curso.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public class AgregarCursoFORM extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AgregarCursoFORM.class.getName());
 
-    // ── Agrega estos dos campos ────────────────────────────────────────────
+    // Agrega estos dos campos
     private final ControlNavegacion control;
     private String rutaImagenSeleccionada = "";
 
-    // ── Reemplaza el constructor vacío por este ───────────────────────────
+    /**
+    * Constructor del formulario
+    * para agregar cursos.
+    * 
+    * Inicializa los componentes
+    * y el controlador de navegación.
+    * 
+    * @param control Controlador
+    * de navegación del sistema.
+    */
     public AgregarCursoFORM(ControlNavegacion control) {
         this.control = control;
         initComponents();
         this.setLocationRelativeTo(null);
     }
     
-    //Guarda la imagen en la carpeta imagenesCursos
+    /**
+    * Guarda una imagen
+    * dentro de la carpeta
+    * imagenesCursos.
+    * 
+    * @param archivo Archivo
+    * de imagen seleccionado.
+    * @return Ruta absoluta
+    * de la imagen guardada.
+    * @throws java.io.IOException
+    * Si ocurre un error
+    * al copiar la imagen.
+    */
     private String guardarImagenEnCarpeta(java.io.File archivo) throws java.io.IOException {
         // Ruta absoluta a la carpeta del repositorio
         String raiz = System.getProperty("user.dir").replace("FitLifeGYM_Presentacion", "");
@@ -235,6 +261,17 @@ public class AgregarCursoFORM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Evento ejecutado al presionar
+    * el botón guardar.
+    * 
+    * Valida los datos capturados
+    * y navega a la pantalla
+    * de confirmación del curso.
+    * 
+    * @param evt Evento generado
+    * por el botón guardar.
+    */
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         if (txtNombreDelCurso.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "El nombre es obligatorio.");
@@ -261,6 +298,16 @@ public class AgregarCursoFORM extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    /**
+    * Evento ejecutado al presionar
+    * el botón cancelar.
+    * 
+    * Regresa al menú
+    * del administrador.
+    * 
+    * @param evt Evento generado
+    * por el botón cancelar.
+    */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         control.navegarMenuAdmin();
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -273,6 +320,17 @@ public class AgregarCursoFORM extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDescripcionActionPerformed
 
+    /**
+    * Evento ejecutado al seleccionar
+    * una imagen para el curso.
+    * 
+    * Permite elegir una imagen
+    * desde el explorador de archivos
+    * y mostrar una vista previa.
+    * 
+    * @param evt Evento generado
+    * por el botón seleccionar imagen.
+    */
     private void btnSeleccionarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImagenActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter(new FileNameExtensionFilter("Imágenes", "jpg", "jpeg", "png"));
@@ -288,6 +346,13 @@ public class AgregarCursoFORM extends javax.swing.JFrame {
         }
     }
 
+    /**
+    * Muestra una vista previa
+    * de la imagen seleccionada.
+    * 
+    * @param ruta Ruta
+    * de la imagen a mostrar.
+    */
     private void mostrarPreview(String ruta) {
         ImageIcon icon = GurdadorImagenCarpeta.cargarImagen(ruta, lblPreviwe.getWidth(), lblPreviwe.getHeight());
         if (icon != null) {

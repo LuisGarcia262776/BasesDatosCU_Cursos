@@ -13,17 +13,37 @@ import com.mycompany.fitlifegym_persistencia_Fachada.PersistenciaFachada;
 import java.util.List;
 
 /**
- *
+ * Clase de negocio encargada de gestionar
+ * las operaciones relacionadas con los horarios.
+ * 
+ * Permite registrar, actualizar, eliminar
+ * y consultar horarios mediante la capa de persistencia.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public class HorarioBO implements IHorarioBO{
-    
+    /**
+     * Fachada utilizada para acceder a la capa de persistencia.
+     */
     private final IPersistenciaFachada fachada;
 
+    /**
+     * Constructor que inicializa la fachada
+     * de persistencia.
+     */
     public HorarioBO() {
         this.fachada = new PersistenciaFachada();
     }
 
+    /**
+     * Obtiene todos los horarios asociados
+     * a un curso específico.
+     * 
+     * @param idCurso ID del curso.
+     * @return Lista de horarios del curso.
+     * @throws NegocioException Se lanza cuando el ID
+     * es inválido o ocurre un error en persistencia.
+     */
     @Override
     public List<HorarioDTO> obtenerPorCurso(String idCurso) throws NegocioException {
         try {
@@ -34,22 +54,39 @@ public class HorarioBO implements IHorarioBO{
             List<Horario> horarios = fachada.obtenerHorarioDAO().obtenerPorCurso(idCurso);
 
             return DtosAEntidadesAdapter.adaptarListaHorarios(horarios);
+            
         } catch (PersistenciaException ex) {
             throw new NegocioException("Error al obtener horarios.",ex);
         }
     }
 
+    /**
+     * Obtiene todos los horarios registrados.
+     * 
+     * @return Lista de horarios.
+     * @throws NegocioException Se lanza cuando ocurre
+     * un error al consultar horarios.
+     */
     @Override
     public List<HorarioDTO> obtenerTodos() throws NegocioException {
         try {
             List<Horario> horarios = fachada.obtenerHorarioDAO().obtenerTodos();
 
             return DtosAEntidadesAdapter.adaptarListaHorarios(horarios);
+            
         } catch (PersistenciaException ex) {
             throw new NegocioException("Error al obtener horarios.",ex);
         }
     }
 
+    /**
+     * Obtiene un horario mediante su ID.
+     * 
+     * @param idHorario ID del horario.
+     * @return DTO con la información del horario.
+     * @throws NegocioException Se lanza cuando el ID
+     * es inválido o ocurre un error en persistencia.
+     */
     @Override
     public HorarioDTO obtenerPorId(String idHorario) throws NegocioException {
         try {
@@ -60,11 +97,20 @@ public class HorarioBO implements IHorarioBO{
             Horario horario = fachada.obtenerHorarioDAO().obtenerPorId(idHorario);
 
             return DtosAEntidadesAdapter.adaptarHorario(horario);
+            
         } catch (PersistenciaException ex) {
             throw new NegocioException("Error al obtener horario.",ex);
         }       
     }
 
+    /**
+     * Guarda un nuevo horario dentro del sistema.
+     * 
+     * @param horarioDTO DTO con la información del horario.
+     * @return DTO del horario guardado.
+     * @throws NegocioException Se lanza cuando los datos
+     * son inválidos o ocurre un error en persistencia.
+     */
     @Override
     public HorarioDTO guardar(HorarioDTO horarioDTO) throws NegocioException {
         try {
@@ -75,11 +121,20 @@ public class HorarioBO implements IHorarioBO{
             Horario horarioGuardado = fachada.obtenerHorarioDAO().guardar(horario);
 
             return DtosAEntidadesAdapter.adaptarHorario(horarioGuardado);
+            
         } catch (PersistenciaException ex) {
             throw new NegocioException("Error al guardar horario.",ex);
         }
     }
 
+    /**
+     * Actualiza la información de un horario existente.
+     * 
+     * @param horarioDTO DTO con la información actualizada.
+     * @return DTO del horario actualizado.
+     * @throws NegocioException Se lanza cuando los datos
+     * son inválidos o ocurre un error en persistencia.
+     */
     @Override
     public HorarioDTO actualizar(HorarioDTO horarioDTO) throws NegocioException {
         try {
@@ -90,11 +145,20 @@ public class HorarioBO implements IHorarioBO{
             Horario horarioActualizado = fachada.obtenerHorarioDAO().actualizar(horario);
 
             return DtosAEntidadesAdapter.adaptarHorario(horarioActualizado);
+            
         } catch (PersistenciaException ex) {
             throw new NegocioException("Error al actualizar horario.",ex);
         }
     }
 
+    /**
+     * Elimina un horario mediante su ID.
+     * 
+     * @param idHorario ID del horario.
+     * @return true si el horario fue eliminado correctamente.
+     * @throws NegocioException Se lanza cuando el ID
+     * es inválido o ocurre un error en persistencia.
+     */
     @Override
     public boolean eliminar(String idHorario) throws NegocioException {
         try {
@@ -109,7 +173,16 @@ public class HorarioBO implements IHorarioBO{
         }
     }
     
+    /**
+     * Valida la información de un horario antes
+     * de guardarlo o actualizarlo.
+     * 
+     * @param horarioDTO DTO del horario a validar.
+     * @throws NegocioException Se lanza cuando
+     * los datos del horario son inválidos.
+     */
     private void validarHorario(HorarioDTO horarioDTO) throws NegocioException {
+        
         if (horarioDTO == null) {
             throw new NegocioException("El horario no puede ser null");
         }

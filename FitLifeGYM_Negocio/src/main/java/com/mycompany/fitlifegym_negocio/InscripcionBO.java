@@ -14,28 +14,56 @@ import com.mycompany.fitlifegym_persistencia_Fachada.PersistenciaFachada;
 import java.util.List;
 
 /**
- *
+ * Clase de negocio encargada de gestionar
+ * las operaciones relacionadas con las inscripciones.
+ * 
+ * Permite registrar, actualizar, consultar
+ * y contar inscripciones mediante la capa
+ * de persistencia.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public class InscripcionBO implements IInscripcionBO{
-    
+    /**
+     * Fachada utilizada para acceder a la capa de persistencia.
+     */
     private final IPersistenciaFachada fachada;
 
+    /**
+     * Constructor que inicializa la fachada
+     * de persistencia.
+     */
     public InscripcionBO() {
         this.fachada = new PersistenciaFachada();
     }
 
+    /**
+     * Obtiene todas las inscripciones registradas.
+     * 
+     * @return Lista de inscripciones.
+     * @throws NegocioException Se lanza cuando ocurre
+     * un error al consultar las inscripciones.
+     */
     @Override
     public List<InscripcionDTO> obtenerTodas() throws NegocioException {
         try {
             List<Inscripcion> inscripciones = fachada.obtenerInscripcionDAO().obtenerTodas();
 
             return DtosAEntidadesAdapter.adaptarListaInscripciones(inscripciones);
+            
         } catch (PersistenciaException ex) {
             throw new NegocioException("Error al obtener inscripciones.",ex);
         }
     }
 
+    /**
+     * Obtiene una inscripción mediante su ID.
+     * 
+     * @param idInscripcion ID de la inscripción.
+     * @return DTO con la información de la inscripción.
+     * @throws NegocioException Se lanza cuando el ID
+     * es inválido o ocurre un error en persistencia.
+     */
     @Override
     public InscripcionDTO obtenerPorId(String idInscripcion) throws NegocioException {
         try {
@@ -46,17 +74,27 @@ public class InscripcionBO implements IInscripcionBO{
             Inscripcion inscripcion = fachada.obtenerInscripcionDAO().obtenerPorId(idInscripcion);
 
             return DtosAEntidadesAdapter.adaptarInscripcion(inscripcion);
+            
         } catch (PersistenciaException ex) {
             throw new NegocioException("Error al obtener inscripción.",ex);
         }
     }
 
+    /**
+     * Guarda una nueva inscripción dentro del sistema.
+     * 
+     * @param inscripcionDTO DTO con la información de la inscripción.
+     * @return DTO de la inscripción guardada.
+     * @throws NegocioException Se lanza cuando los datos
+     * son inválidos o el horario ya no tiene cupo.
+     */
     @Override
     public InscripcionDTO guardar(InscripcionDTO inscripcionDTO) throws NegocioException {
         try {
             validarInscripcion(inscripcionDTO);
 
             Horario horario = fachada.obtenerHorarioDAO().obtenerPorId(inscripcionDTO.getIdHorario());
+            
             if (horario == null) {
                 throw new NegocioException("El horario no existe");
             }
@@ -70,11 +108,20 @@ public class InscripcionBO implements IInscripcionBO{
             Inscripcion guardada = fachada.obtenerInscripcionDAO().guardar(inscripcion);
 
             return DtosAEntidadesAdapter.adaptarInscripcion(guardada);
+            
         } catch (PersistenciaException ex) {
             throw new NegocioException("Error al guardar inscripción.",ex);
         }
     }
 
+    /**
+     * Actualiza la información de una inscripción.
+     * 
+     * @param inscripcionDTO DTO con la información actualizada.
+     * @return DTO de la inscripción actualizada.
+     * @throws NegocioException Se lanza cuando los datos
+     * son inválidos o ocurre un error en persistencia.
+     */
     @Override
     public InscripcionDTO actualizar(InscripcionDTO inscripcionDTO) throws NegocioException {
         try {
@@ -85,20 +132,37 @@ public class InscripcionBO implements IInscripcionBO{
             Inscripcion actualizada = fachada.obtenerInscripcionDAO().actualizar(inscripcion);
 
             return DtosAEntidadesAdapter.adaptarInscripcion(actualizada);
+            
         } catch (PersistenciaException ex) {
             throw new NegocioException("Error al actualizar inscripción.",ex);
         }
     }
 
+    /**
+     * Cuenta el total de inscripciones registradas.
+     * 
+     * @return Total de inscripciones.
+     * @throws NegocioException Se lanza cuando ocurre
+     * un error en persistencia.
+     */
     @Override
     public Integer contarTotales() throws NegocioException {
         try {
             return fachada.obtenerInscripcionDAO().contarTotales();
+            
         } catch (PersistenciaException ex) {
             throw new NegocioException("Error al contar inscripciones.",ex);
         }
     }
 
+    /**
+     * Cuenta las inscripciones asociadas a un horario.
+     * 
+     * @param idHorario ID del horario.
+     * @return Total de inscripciones del horario.
+     * @throws NegocioException Se lanza cuando el ID
+     * es inválido o ocurre un error en persistencia.
+     */
     @Override
     public Integer contarPorHorario(String idHorario) throws NegocioException {
         try {
@@ -107,11 +171,21 @@ public class InscripcionBO implements IInscripcionBO{
             }
 
             return fachada.obtenerInscripcionDAO().contarPorHorario(idHorario);
+            
         } catch (PersistenciaException ex) {
             throw new NegocioException("Error al contar inscripciones.",ex);
         }
     }
 
+    /**
+     * Obtiene las inscripciones activas
+     * asociadas a un horario.
+     * 
+     * @param idHorario ID del horario.
+     * @return Lista de inscripciones activas.
+     * @throws NegocioException Se lanza cuando el ID
+     * es inválido o ocurre un error en persistencia.
+     */
     @Override
     public List<InscripcionDTO> obtenerActivasPorHorario(String idHorario) throws NegocioException {
         try {
@@ -122,11 +196,21 @@ public class InscripcionBO implements IInscripcionBO{
             List<Inscripcion> inscripciones = fachada.obtenerInscripcionDAO().obtenerActivasPorHorario(idHorario);
 
             return DtosAEntidadesAdapter.adaptarListaInscripciones(inscripciones);
+            
         } catch (PersistenciaException ex) {
             throw new NegocioException("Error al obtener inscripciones.",ex);
         }
     }
 
+    /**
+     * Obtiene todas las inscripciones
+     * asociadas a un cliente.
+     * 
+     * @param idCliente ID del cliente.
+     * @return Lista de inscripciones del cliente.
+     * @throws NegocioException Se lanza cuando el ID
+     * es inválido o ocurre un error en persistencia.
+     */
     @Override
     public List<InscripcionDTO> obtenerPorCliente(String idCliente) throws NegocioException {
         try {
@@ -137,11 +221,20 @@ public class InscripcionBO implements IInscripcionBO{
             List<Inscripcion> inscripciones = fachada.obtenerInscripcionDAO().obtenerPorCliente(idCliente);
 
             return DtosAEntidadesAdapter.adaptarListaInscripciones(inscripciones);
+            
         } catch (PersistenciaException ex) {
             throw new NegocioException("Error al obtener inscripciones.",ex);
         }
     }
     
+    /**
+     * Valida la información de una inscripción
+     * antes de guardarla o actualizarla.
+     * 
+     * @param inscripcionDTO DTO de la inscripción a validar.
+     * @throws NegocioException Se lanza cuando
+     * los datos son inválidos.
+     */
     private void validarInscripcion(InscripcionDTO inscripcionDTO) throws NegocioException {
 
         if (inscripcionDTO == null) {

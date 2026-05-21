@@ -23,22 +23,59 @@ import org.bson.types.ObjectId;
 
 /**
  *
+ * Clase DAO encargada de gestionar
+ * las operaciones de persistencia
+ * relacionadas con los cursos.
+ * 
+ * Permite registrar, consultar,
+ * actualizar y eliminar cursos
+ * dentro de la base de datos MongoDB.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public class CursoDAO implements ICursoDAO {
+    /**
+     * Logger utilizado para registrar
+     * eventos y errores del DAO.
+     */
     private static final Logger LOGGER = Logger.getLogger(CursoDAO.class.getName());
+    
+    /**
+     * Nombre de la colección
+     * de cursos en MongoDB.
+     */
     private static final String NOMBRE_COLECCION = "cursos";
     
+    /**
+     * Obtiene la base de datos configurada
+     * para el sistema.
+     * 
+     * @param cliente Cliente de MongoDB.
+     * @return Base de datos utilizada por el sistema.
+     */
     private MongoDatabase obtenerBaseDatos(MongoClient cliente) {
         MongoDatabase empresaBD = cliente.getDatabase(ManejadorConexiones.BASE_DATOS).withCodecRegistry(obtenerCodecs());    
         return empresaBD;
     }
 
+    /**
+     * Obtiene la colección de cursos.
+     * 
+     * @param baseDatos Base de datos utilizada.
+     * @return Colección de cursos.
+     */
     private MongoCollection<Curso> obtenerColeccion(MongoDatabase baseDatos) {
         MongoCollection<Curso> coleccionTrabajadores = baseDatos.getCollection(NOMBRE_COLECCION, Curso.class);
         return coleccionTrabajadores;
     }
 
+    /**
+     * Obtiene todos los cursos registrados.
+     * 
+     * @return Lista de cursos.
+     * @throws PersistenciaException Se lanza cuando ocurre
+     * un error durante la consulta.
+     */
     @Override
     public List<Curso> obtenerTodos() throws PersistenciaException {
         try (MongoClient cliente = ManejadorConexiones.crearConexion()) {
@@ -60,6 +97,15 @@ public class CursoDAO implements ICursoDAO {
         
     }
 
+    /**
+     * Obtiene un curso mediante su ID.
+     * 
+     * @param idCurso ID del curso.
+     * @return Curso encontrado o null
+     * si no existe.
+     * @throws PersistenciaException Se lanza cuando ocurre
+     * un error durante la consulta.
+     */
     @Override
     public Curso obtenerPorId(String idCurso) throws PersistenciaException {
         try (MongoClient cliente = ManejadorConexiones.crearConexion()) {
@@ -73,12 +119,22 @@ public class CursoDAO implements ICursoDAO {
             Curso curso = coleccion.find(filtro).first();
 
             return curso;
+            
         } catch (MongoException ex) {
             LOGGER.severe(ex.getMessage());
             throw new PersistenciaException("No se pudo consultar el curso: " + idCurso);
         }
     }
 
+    /**
+     * Guarda un nuevo curso
+     * dentro de la base de datos.
+     * 
+     * @param curso Curso a guardar.
+     * @return Curso guardado.
+     * @throws PersistenciaException Se lanza cuando ocurre
+     * un error durante el guardado.
+     */
     @Override
     public Curso guardar(Curso curso) throws PersistenciaException {
         try (MongoClient cliente = ManejadorConexiones.crearConexion()) {
@@ -88,11 +144,13 @@ public class CursoDAO implements ICursoDAO {
             MongoCollection<Curso> coleccion = this.obtenerColeccion(empresaBD);
             
             InsertOneResult resultado = coleccion.insertOne(curso);
+            
             if (!resultado.wasAcknowledged()) {
                 throw new PersistenciaException("No se pudo guardar el curso");
             }
             
             return curso;
+            
         } catch (MongoException ex) {
             LOGGER.severe(ex.getMessage());
             throw new PersistenciaException("No se pudo guardar el curso");
@@ -100,6 +158,15 @@ public class CursoDAO implements ICursoDAO {
 
     }
 
+    /**
+     * Actualiza la información
+     * de un curso existente.
+     * 
+     * @param curso Curso con información actualizada.
+     * @return Curso actualizado.
+     * @throws PersistenciaException Se lanza cuando ocurre
+     * un error durante la actualización.
+     */
     @Override
     public Curso actualizar(Curso curso) throws PersistenciaException {
         try (MongoClient cliente = ManejadorConexiones.crearConexion()) {
@@ -124,6 +191,14 @@ public class CursoDAO implements ICursoDAO {
         }
     }
 
+    /**
+     * Elimina un curso mediante su ID.
+     * 
+     * @param idCurso ID del curso.
+     * @return true si el curso fue eliminado correctamente.
+     * @throws PersistenciaException Se lanza cuando ocurre
+     * un error durante la eliminación.
+     */
     @Override
     public boolean eliminar(String idCurso) throws PersistenciaException {
         try (MongoClient cliente = ManejadorConexiones.crearConexion()) {

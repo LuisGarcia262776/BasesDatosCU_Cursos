@@ -13,14 +13,34 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Formulario encargado
+ * de mostrar los beneficios
+ * de las membresías disponibles.
+ * 
+ * Permite visualizar los beneficios
+ * de cada tipo de membresía
+ * y realizar la suscripción.
+ * 
  * @author Diego
  */
 public class BeneficiosFORM extends javax.swing.JFrame {
     private final ControlNavegacion control;
     private NuevoClienteDTO cliente;
     private List<NuevaMembresiaDTO> membresiasDisponibles;
-
+    
+    /**
+    * Constructor del formulario
+    * de beneficios.
+    * 
+    * Inicializa los componentes
+    * y carga las membresías
+    * disponibles del sistema.
+    * 
+    * @param control Controlador
+    * de navegación del sistema.
+    * @param cliente Cliente
+    * que realizará la suscripción.
+    */
     public BeneficiosFORM(ControlNavegacion control,NuevoClienteDTO cliente) {
         this.control = control;
         this.cliente = cliente;
@@ -242,34 +262,104 @@ public class BeneficiosFORM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón precio.
+    * 
+    * @param evt Evento generado
+    * por el botón precio.
+    */
     private void btnPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrecioActionPerformed
 
     }//GEN-LAST:event_btnPrecioActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al interactuar con
+    * el checkbox de cursos.
+    * 
+    * @param evt Evento generado
+    * por el checkbox.
+    */
     private void checkBoxCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxCursosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_checkBoxCursosActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al interactuar con
+    * el checkbox de música.
+    * 
+    * @param evt Evento generado
+    * por el checkbox.
+    */
     private void checkBoxMusicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxMusicaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_checkBoxMusicaActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al interactuar con
+    * el checkbox de progreso físico.
+    * 
+    * @param evt Evento generado
+    * por el checkbox.
+    */
     private void checkBoxFisicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxFisicoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_checkBoxFisicoActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al interactuar con
+    * el checkbox de instalaciones.
+    * 
+    * @param evt Evento generado
+    * por el checkbox.
+    */
     private void checkBoxInstalacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxInstalacionesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_checkBoxInstalacionesActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al interactuar con
+    * el checkbox de nutrición.
+    * 
+    * @param evt Evento generado
+    * por el checkbox.
+    */
     private void checkBoxNutricionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxNutricionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_checkBoxNutricionActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al cambiar la membresía
+    * seleccionada.
+    * 
+    * Actualiza los beneficios
+    * mostrados en pantalla.
+    * 
+    * @param evt Evento generado
+    * por el ComboBox.
+    */
     private void ComboBoxMembresiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxMembresiaActionPerformed
         this.actualizarBeneficios();
     }//GEN-LAST:event_ComboBoxMembresiaActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * suscribirse.
+    * 
+    * Asigna la membresía
+    * seleccionada al cliente
+    * y navega al método de pago.
+    * 
+    * @param evt Evento generado
+    * por el botón suscribirse.
+    */
     private void btnSuscribirseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuscribirseActionPerformed
         try {
             String membresiaSeleccionada = (String) ComboBoxMembresia.getSelectedItem();
@@ -285,6 +375,11 @@ public class BeneficiosFORM extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSuscribirseActionPerformed
 
+    /**
+    * Actualiza los beneficios
+    * mostrados dependiendo
+    * de la membresía seleccionada.
+    */
     private void actualizarBeneficios() {
         String membresia = (String) ComboBoxMembresia.getSelectedItem();
         if (membresia == null) {
@@ -316,6 +411,11 @@ public class BeneficiosFORM extends javax.swing.JFrame {
         }
     }
 
+    /**
+    * Carga las membresías
+    * disponibles dentro
+    * del ComboBox.
+    */
     private void cargarMembresias() {
         try {
             membresiasDisponibles =control.consultarMembresias();
@@ -332,6 +432,15 @@ public class BeneficiosFORM extends javax.swing.JFrame {
         }
     }
 
+    /**
+    * Busca una membresía
+    * por su nombre.
+    * 
+    * @param nombre Nombre
+    * de la membresía.
+    * @return Membresía encontrada
+    * o null si no existe.
+    */
     private NuevaMembresiaDTO buscarMembresiaPorNombre(String nombre) {
         try {
             TipoMembresiaDTO tipo = control.seleccionarMembresia(nombre);
@@ -342,6 +451,11 @@ public class BeneficiosFORM extends javax.swing.JFrame {
         }
     }
 
+    /**
+    * Deshabilita la edición
+    * de los checkbox
+    * de beneficios.
+    */
     private void setearEditablesFalsosCheckBox() {
         checkBoxCursos.setEnabled(false);
         checkBoxFisico.setEnabled(false);

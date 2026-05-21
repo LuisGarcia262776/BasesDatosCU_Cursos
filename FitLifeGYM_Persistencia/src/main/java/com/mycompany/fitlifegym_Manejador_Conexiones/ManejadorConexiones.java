@@ -14,23 +14,52 @@ import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
 /**
- *
+ * Clase encargada de gestionar
+ * las conexiones con la base de datos MongoDB.
+ * 
+ * Proporciona métodos para crear conexiones
+ * y configurar los codecs necesarios
+ * para trabajar con entidades POJO.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public class ManejadorConexiones {
+    /**
+     * Cadena de conexión utilizada
+     * para conectarse a MongoDB.
+     */
     public static final String CADENA_CONEXION = "mongodb://localhost:27017";
+    
+    /**
+     * Nombre de la base de datos
+     * utilizada por el sistema.
+     */
     public static final String BASE_DATOS = "fitlifegym";
 
+    /**
+     * Crea una conexión con MongoDB.
+     * 
+     * @return Cliente de conexión MongoDB.
+     */
     public static MongoClient crearConexion() {
         MongoClient client = MongoClients.create(CADENA_CONEXION);
         return client;
     }
 
+    /**
+     * Obtiene el registro de codecs
+     * necesario para trabajar con POJOs.
+     * 
+     * @return Registro de codecs configurado.
+     */
     public static CodecRegistry obtenerCodecs() {
+        
         // Esto nos genera un Proveedor de codecs
         CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
+        
         // Generar un registro de codecs(default + pojo)
         CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
+        
         return pojoCodecRegistry;
     }
 }

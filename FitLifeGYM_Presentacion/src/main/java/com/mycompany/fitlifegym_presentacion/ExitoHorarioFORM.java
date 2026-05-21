@@ -4,17 +4,21 @@
  */
 package com.mycompany.fitlifegym_presentacion;
 
-import com.mycompany.fitlifegym_presentacion.guardarImagen.GurdadorImagenCarpeta;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.MediaTracker;
 import java.net.URL;
 import javax.swing.ImageIcon;
-import static javax.swing.SwingUtilities.invokeLater;
 
 /**
- *
+ * Formulario encargado
+ * de mostrar el mensaje
+ * de éxito al guardar un horario.
+ * 
+ * Permite informar al usuario
+ * que el horario fue registrado
+ * correctamente en el sistema.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public class ExitoHorarioFORM extends javax.swing.JFrame {
@@ -22,6 +26,17 @@ public class ExitoHorarioFORM extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ExitoHorarioFORM.class.getName());
     private final ControlNavegacion control;
 
+    /**
+    * Constructor del formulario
+    * de éxito de horario.
+    * 
+    * Inicializa los componentes
+    * y carga la animación
+    * de confirmación.
+    * 
+    * @param control Controlador
+    * de navegación del sistema.
+    */
     public ExitoHorarioFORM(ControlNavegacion control) {
         this.control = control;
         initComponents();
@@ -29,6 +44,15 @@ public class ExitoHorarioFORM extends javax.swing.JFrame {
         cargarPalomita();
     }
 
+    /**
+    * Carga la imagen
+    * de confirmación
+    * dentro del formulario.
+    * 
+    * Si no encuentra la imagen,
+    * muestra una palomita
+    * generada por texto.
+    */
     private void cargarPalomita() {
         try {
             //Palomita hardcodeada desde resources
@@ -159,6 +183,17 @@ public class ExitoHorarioFORM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * volver al menú.
+    * 
+    * Regresa al menú
+    * principal del administrador.
+    * 
+    * @param evt Evento generado
+    * por el botón volver.
+    */
     private void btnVolverAlMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverAlMenuActionPerformed
         control.navegarMenuAdmin();
     }//GEN-LAST:event_btnVolverAlMenuActionPerformed

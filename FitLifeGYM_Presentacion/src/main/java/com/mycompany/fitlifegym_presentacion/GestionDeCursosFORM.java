@@ -13,7 +13,6 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Image;
 import java.util.List;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -24,7 +23,15 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 /**
- *
+ * Formulario encargado
+ * de gestionar los cursos
+ * registrados del sistema.
+ * 
+ * Permite visualizar,
+ * editar, eliminar
+ * y acceder a los horarios
+ * de cada curso.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public class GestionDeCursosFORM extends javax.swing.JFrame {
@@ -32,6 +39,18 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
 
     private final ControlNavegacion control;
 
+    /**
+    * Constructor del formulario
+    * de gestión de cursos.
+    * 
+    * Inicializa los componentes,
+    * configura el panel
+    * y carga los cursos
+    * registrados.
+    * 
+    * @param control Controlador
+    * de navegación del sistema.
+    */
     public GestionDeCursosFORM(ControlNavegacion control) {
         this.control = control;
         initComponents();
@@ -42,6 +61,15 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
     }
 
     // CARGA DINAMICA
+    /**
+    * Carga dinámicamente
+    * todos los cursos
+    * registrados del sistema.
+    * 
+    * Si no existen cursos,
+    * muestra un mensaje
+    * informativo.
+    */
     public void cargarCursos() {
         JPanel.removeAll();
         List<CursoDTO> cursos = control.obtenerCursos();
@@ -63,6 +91,20 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
         JPanel.repaint();
     }
 
+    /**
+    * Crea una fila visual
+    * para representar
+    * un curso.
+    * 
+    * Incluye imagen,
+    * nombre y botones
+    * de acciones.
+    * 
+    * @param curso Curso
+    * a representar.
+    * @return Panel visual
+    * del curso.
+    */
     private JPanel crearFilaCurso(CursoDTO curso) {
         JPanel fila = new JPanel(new BorderLayout(10, 0));
         fila.setBackground(new Color(18, 18, 18));
@@ -129,6 +171,16 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
         return fila;
     }
 
+    /**
+    * Crea un botón
+    * personalizado
+    * para las acciones
+    * del formulario.
+    * 
+    * @param texto Texto
+    * del botón.
+    * @return Botón configurado.
+    */
     private JButton crearBoton(String texto) {
         JButton btn = new JButton(texto);
         btn.setBackground(new Color(225, 6, 0));
@@ -255,10 +307,31 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón
+    * agregar curso.
+    * 
+    * Navega al formulario
+    * de registro de cursos.
+    * 
+    * @param evt Evento generado
+    * por el botón agregar curso.
+    */
     private void btnAgregarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCursoActionPerformed
         control.navegarAgregarCurso();
     }//GEN-LAST:event_btnAgregarCursoActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón volver.
+    * 
+    * Regresa al menú
+    * principal del administrador.
+    * 
+    * @param evt Evento generado
+    * por el botón volver.
+    */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
        control.navegarMenuAdmin();
     }//GEN-LAST:event_btnVolverActionPerformed

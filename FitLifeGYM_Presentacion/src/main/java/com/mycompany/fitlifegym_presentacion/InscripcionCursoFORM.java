@@ -15,7 +15,6 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -27,7 +26,15 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 /**
- *
+ * Formulario encargado
+ * de gestionar la inscripción
+ * de clientes a los cursos.
+ * 
+ * Permite visualizar
+ * la información del curso
+ * y seleccionar horarios
+ * disponibles.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public class InscripcionCursoFORM extends javax.swing.JFrame {
@@ -36,6 +43,20 @@ public class InscripcionCursoFORM extends javax.swing.JFrame {
     private final ControlNavegacion control;
     private final CursoDTO curso;
 
+    /**
+    * Constructor del formulario
+    * de inscripción a cursos.
+    * 
+    * Inicializa los componentes,
+    * carga la información
+    * del curso y muestra
+    * los horarios disponibles.
+    * 
+    * @param control Controlador
+    * de navegación del sistema.
+    * @param curso Curso
+    * seleccionado.
+    */
     public InscripcionCursoFORM(ControlNavegacion control, CursoDTO curso) {
         this.control = control;
         this.curso = curso;
@@ -58,8 +79,14 @@ public class InscripcionCursoFORM extends javax.swing.JFrame {
         });
     }
     
-    
-    
+    /**
+    * Carga la información
+    * del curso seleccionado.
+    * 
+    * Muestra el nombre
+    * y la imagen asociada
+    * al curso.
+    */
     private void cargarCurso() {
         txtCurso.setText(curso.getNombre());
 
@@ -75,6 +102,14 @@ public class InscripcionCursoFORM extends javax.swing.JFrame {
         }
     }
     
+    /**
+    * Carga los horarios
+    * disponibles del curso.
+    * 
+    * Genera dinámicamente
+    * las tarjetas visuales
+    * de horarios.
+    */
     private void cargarHorarios() {
         jPanel1.removeAll();
         jPanel1.setLayout(new GridLayout(0, 3, 16, 16));
@@ -95,6 +130,20 @@ public class InscripcionCursoFORM extends javax.swing.JFrame {
         jPanel1.repaint();
     }
     
+    /**
+    * Crea una tarjeta visual
+    * para representar
+    * un horario.
+    * 
+    * Incluye días,
+    * horario y botón
+    * de inscripción.
+    * 
+    * @param horario Horario
+    * a representar.
+    * @return Panel visual
+    * del horario.
+    */
     private JPanel crearCardHorario(HorarioDTO horario) {
         JPanel card = new JPanel();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
@@ -294,10 +343,28 @@ public class InscripcionCursoFORM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Evento ejecutado
+    * al interactuar con
+    * el campo curso.
+    * 
+    * @param evt Evento generado
+    * por el campo curso.
+    */
     private void txtCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCursoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCursoActionPerformed
 
+    /**
+    * Evento ejecutado
+    * al presionar el botón volver.
+    * 
+    * Regresa a la pantalla
+    * de bienvenida del cliente.
+    * 
+    * @param evt Evento generado
+    * por el botón volver.
+    */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         control.navegarBienvenida(control.getClienteActual());
     }//GEN-LAST:event_btnVolverActionPerformed

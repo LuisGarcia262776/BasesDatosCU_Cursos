@@ -11,17 +11,31 @@ import com.mycompany.fitlifegym_negocio.NegocioException;
 import java.util.List;
 
 /**
- *
+ * Clase que implementa la funcionalidad relacionada con el registro
+ * de nuevos usuarios y validación de métodos de pago dentro del sistema.
+ * 
  * @author Luis
  */
 public class FuncionalidadRegistroUsuario implements IFuncionalidadRegistrarUsuario {
-    
+    /**
+     * BO encargado de la gestión de clientes.
+     */
     private final IClientesBO clientesBO;
 
+    /**
+     * Constructor que inicializa las dependencias necesarias
+     * para la funcionalidad.
+     */
     public FuncionalidadRegistroUsuario() {
         this.clientesBO = new ClientesBO();
     }
 
+    /**
+     * Registra un nuevo usuario en el sistema.
+     * 
+     * @param clienteDTO DTO con la información del cliente.
+     * @throws NegocioException Si los datos son inválidos o ocurre un error.
+     */
     @Override
     public void registrarUsuario(NuevoClienteDTO clienteDTO) throws NegocioException {
         validarDatosUsuario(clienteDTO);
@@ -29,11 +43,23 @@ public class FuncionalidadRegistroUsuario implements IFuncionalidadRegistrarUsua
         clientesBO.registrarCliente(clienteDTO);    
     }
 
+    /**
+     * Obtiene todos los clientes registrados.
+     * 
+     * @return Lista de clientes registrados.
+     * @throws NegocioException Si ocurre un error durante la consulta.
+     */
     @Override
     public List<NuevoClienteDTO> obtenerTodas() throws NegocioException {
         return clientesBO.obtenerTodas();
     }
 
+    /**
+     * Valida los datos de un usuario antes de registrarlo.
+     * 
+     * @param clienteDTO DTO con la información del cliente.
+     * @throws NegocioException Si algún dato es inválido.
+     */
     @Override
     public void validarDatosUsuario(NuevoClienteDTO clienteDTO) throws NegocioException {
         if(clienteDTO == null){
@@ -89,6 +115,15 @@ public class FuncionalidadRegistroUsuario implements IFuncionalidadRegistrarUsua
         }
     }
 
+    /**
+     * Valida los datos de una tarjeta bancaria.
+     * 
+     * @param cvv CVV de la tarjeta.
+     * @param numeroTarjeta Número de la tarjeta.
+     * @param fechaVencimiento Fecha de vencimiento.
+     * @param nombreTitular Nombre del titular de la tarjeta.
+     * @throws NegocioException Si algún dato es inválido.
+     */
     @Override
     public void validarTarjeta(String cvv, String numeroTarjeta, String fechaVencimiento, String nombreTitular) throws NegocioException {
         if (cvv == null || cvv.isBlank()) {
@@ -116,6 +151,13 @@ public class FuncionalidadRegistroUsuario implements IFuncionalidadRegistrarUsua
         }
     }
 
+    /**
+     * Valida las credenciales de una cuenta PayPal.
+     * 
+     * @param correo Correo asociado a la cuenta PayPal.
+     * @param contrasenia Contraseña de la cuenta PayPal.
+     * @throws NegocioException Si los datos son inválidos.
+     */
     @Override
     public void validarPaypal(String correo, String contrasenia) throws NegocioException {
         if (correo == null || correo.isBlank()) {

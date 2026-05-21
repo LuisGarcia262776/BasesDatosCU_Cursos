@@ -19,19 +19,40 @@ import java.util.Date;
 import java.util.List;
 
 /**
- *
+ * Clase de negocio encargada de gestionar
+ * la generación de reportes dentro del sistema.
+ * 
+ * Permite validar filtros y generar reportes
+ * basados en cursos y horarios registrados.
+ * 
  * @author PC GAMER MASTER RACE
  */
 public class ReporteBO implements IReporteBO {
-    
+    /**
+     * Fachada utilizada para acceder a la capa de persistencia.
+     */
     private final IPersistenciaFachada fachada;
 
+    /**
+     * Constructor que inicializa la fachada
+     * de persistencia.
+     */
     public ReporteBO() {
         this.fachada = new PersistenciaFachada();
     }
 
+    /**
+     * Obtiene y valida los datos necesarios
+     * para generar un reporte.
+     * 
+     * @param datosReporteDTO DTO con los filtros del reporte.
+     * @return DTO validado con los datos del reporte.
+     * @throws NegocioException Se lanza cuando
+     * los filtros son inválidos.
+     */
     @Override
     public DatosReporteDTO obtenerDatosReporte(DatosReporteDTO datosReporteDTO) throws NegocioException {
+        
         if (!validarFiltros(datosReporteDTO)) {
             throw new NegocioException("Filtros inválidos");
         }
@@ -39,45 +60,82 @@ public class ReporteBO implements IReporteBO {
         return datosReporteDTO;
     }
 
+    /**
+     * Genera un reporte utilizando los filtros proporcionados.
+     * 
+     * @param datosReporteDTO DTO con los filtros del reporte.
+     * @return DTO con la información del reporte generado.
+     * @throws NegocioException Se lanza cuando los filtros
+     * son inválidos o ocurre un error en persistencia.
+     */
     @Override
     public ReporteDTO generarReporte(DatosReporteDTO datosReporteDTO) throws NegocioException {
         try {
+            
             if (!validarFiltros(datosReporteDTO)) {
                 throw new NegocioException("Filtros inválidos");
             }
 
             List<Curso> cursosEntidad = fachada.obtenerCursoDAO().obtenerTodos();
+            
             List<CursoDTO> cursosDTO = new ArrayList<>();
+            
             List<HorarioDTO> horariosDTO = new ArrayList<>();
 
             for (Curso curso : cursosEntidad) {
-                // Filtrar por idCurso 
-                if (datosReporteDTO.getCurso() != null && !datosReporteDTO.getCurso().isBlank() && !curso.getIdCurso().equals(datosReporteDTO.getCurso())) {
+
+                // Filtrar por idCurso
+                if (datosReporteDTO.getCurso() != null
+                        && !datosReporteDTO.getCurso().isBlank()
+                        && !curso.getIdCurso().equals(datosReporteDTO.getCurso())) {
                     continue;
                 }
-                List<Horario> horariosEntidad = fachada.obtenerHorarioDAO().obtenerPorCurso(curso.getIdCurso());
+
+                List<Horario> horariosEntidad =
+                        fachada.obtenerHorarioDAO().obtenerPorCurso(curso.getIdCurso());
+
                 for (Horario horario : horariosEntidad) {
-                    // Filtrar por cantidadMin
-                    if (datosReporteDTO.getCantidadMin() > 0 && horario.getCupoActual() < datosReporteDTO.getCantidadMin()) {
+
+                    // Filtrar por cantidad mínima
+                    if (datosReporteDTO.getCantidadMin() > 0
+                            && horario.getCupoActual() < datosReporteDTO.getCantidadMin()) {
                         continue;
                     }
 
-                    // Si pasa los filtros lo agrega 
-                    CursoDTO cursoDTO = DtosAEntidadesAdapter.adaptarCurso(curso);
-                    HorarioDTO horarioDTO = DtosAEntidadesAdapter.adaptarHorario(horario);
+                    // Agregar datos al reporte
+                    CursoDTO cursoDTO =
+                            DtosAEntidadesAdapter.adaptarCurso(curso);
+
+                    HorarioDTO horarioDTO =
+                            DtosAEntidadesAdapter.adaptarHorario(horario);
+
                     cursosDTO.add(cursoDTO);
                     horariosDTO.add(horarioDTO);
                 }
             }
-            return new ReporteDTO(new Date(), cursosDTO, horariosDTO);
+
+            return new ReporteDTO(
+                    new Date(),
+                    cursosDTO,
+                    horariosDTO);
 
         } catch (PersistenciaException ex) {
             throw new NegocioException("Error al generar reporte.", ex);
         }
     }
 
+    /**
+     * Valida los filtros utilizados
+     * para generar un reporte.
+     * 
+     * @param datosReporteDTO DTO con los filtros del reporte.
+     * @return true si los filtros son válidos.
+     * @throws NegocioException Se lanza cuando ocurre
+     * un error durante la validación.
+     */
     @Override
     public boolean validarFiltros(DatosReporteDTO datosReporteDTO) throws NegocioException {
+        
         if (datosReporteDTO == null) {
             return false;
         }
