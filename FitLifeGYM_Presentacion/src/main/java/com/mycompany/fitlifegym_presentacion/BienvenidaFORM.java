@@ -214,10 +214,6 @@ public class BienvenidaFORM extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnNutricionActionPerformed
 
-    private void btnAmbienteMusicalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAmbienteMusicalActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAmbienteMusicalActionPerformed
-
     private void btnProgresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProgresoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnProgresoActionPerformed
@@ -246,6 +242,10 @@ public class BienvenidaFORM extends javax.swing.JFrame {
         frame.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnCursosActionPerformed
+
+    private void btnAmbienteMusicalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAmbienteMusicalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAmbienteMusicalActionPerformed
 
     private void configiracionPorMembresia() {
         if (cliente == null || cliente.getMembresiaActiva()== null) {

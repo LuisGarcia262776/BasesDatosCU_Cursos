@@ -36,21 +36,23 @@ import javax.swing.JOptionPane;
  * @author Diego
  */
 public class ControlNavegacion {
-
+    
     private JFrame frameActual;
     private ClienteLogueadoDTO clienteActual;
+    private boolean esAdministrador = false;
 
-    // Funcionalidades existentes 
+    // Subsistemas
     private final IFuncionalidadRegistrarUsuario funcionalidadRegistro;
     private final IFuncionalidadIniciarSesionRenovarMembresia funcionalidadSesion;
     private final ICU_Cursos cuCursos;
 
     public ControlNavegacion() {
         this.funcionalidadRegistro = new FuncionalidadRegistroUsuario();
-        this.funcionalidadSesion = new FuncionalidadIniciarSesionRenovarMembresia();
-        this.cuCursos = new CU_Cursos(); 
+        this.funcionalidadSesion   = new FuncionalidadIniciarSesionRenovarMembresia();
+        this.cuCursos = new CU_Cursos();
     }
 
+    // Cierra el frame anterior y abre el nuevo 
     private void mostrarPantalla(JFrame nuevoFrame) {
         if (this.frameActual != null) {
             this.frameActual.dispose();
@@ -60,93 +62,176 @@ public class ControlNavegacion {
         this.frameActual.setVisible(true);
     }
 
-    private void mostrarDialogo(JDialog nuevoDialogo) {
-        nuevoDialogo.setResizable(false);
-        nuevoDialogo.setLocationRelativeTo(this.frameActual);
-        nuevoDialogo.setVisible(true);
-    }
-
-    // NAVEGACIÓN — proyecto base 
-
+    // NAVEGACIÓN — CU Base
     public void navegarMenuPrincipal() {
         mostrarPantalla(new MainFitLifeFORM(this));
     }
 
-    public void navegarBeneficios(NuevoClienteDTO cliente) {
-        mostrarPantalla(new BeneficiosFORM(this, cliente));
+    public void navegarIniciarSesion() {
+        mostrarPantalla(new IniciarSesionFORM(this));
+    }
+
+    public void navegarRegistrarse() {
+        mostrarPantalla(new RegistrarseFORM(this));
     }
 
     public void navegarBienvenida(ClienteLogueadoDTO cliente) {
         mostrarPantalla(new BienvenidaFORM(this, cliente));
     }
 
+    public void navegarBeneficios(NuevoClienteDTO cliente) {
+        mostrarPantalla(new BeneficiosFORM(this, cliente));
+    }
+
     public void navegarMetodosPago(TipoMembresiaDTO membresia, NuevoClienteDTO cliente) {
         mostrarPantalla(new SuscribirseFORM(this, membresia, cliente));
     }
 
-    public void navegarRegistrarse() {
-        mostrarDialogo(new RegistrarseFORM(this.frameActual, true, this));
-    }
-
-    public void navegarIniciarSesion() {
-        mostrarDialogo(new IniciarSesionFORM(this.frameActual, true, this));
-    }
-
-    public void navegarTransferenciaMetodo(TipoMembresiaDTO membresia, NuevoClienteDTO cliente) {
-        mostrarDialogo(new TransferenciaFORM(this.frameActual, true, this, membresia, cliente));
-    }
-
     public void navegarTarjetaMetodo(TipoMembresiaDTO membresia, NuevoClienteDTO cliente) {
-        mostrarDialogo(new TarjetaFORM(this.frameActual, true, this, membresia, cliente));
+        mostrarPantalla(new TarjetaFORM(this, membresia, cliente));
     }
 
     public void navegarIniciarSesionPaypal(TipoMembresiaDTO membresia, NuevoClienteDTO cliente) {
-        mostrarDialogo(new IniciarSesionPaypalFORM(this.frameActual, true, this, membresia, cliente));
+        mostrarPantalla(new IniciarSesionPaypalFORM(this, membresia, cliente));
     }
 
-    // NAVEGACIÓN — CU Cursos 
-    public void navegarGestionCursos() {
+    public void navegarTransferenciaMetodo(TipoMembresiaDTO membresia, NuevoClienteDTO cliente) {
+        mostrarPantalla(new TransferenciaFORM(this, membresia, cliente));
+    }
+
+    // NAVEGACION — Admin
+    public void navegarMenuAdmin() {
         mostrarPantalla(new MenuCursosAdminFORM(this));
+    }
+
+    public void navegarGestionCursos() {
+        mostrarPantalla(new GestionDeCursosFORM(this));
     }
 
     public void navegarAgregarCurso() {
         mostrarPantalla(new AgregarCursoFORM(this));
     }
-    
-    public void navegarAgregarHorario(CursoDTO curso) {
-        mostrarPantalla(new AgregarHorarioFORM(this, curso)); 
-    }
-    
-    public void navegarEditarHorario(HorarioDTO horario, CursoDTO curso) {
-        mostrarPantalla(new EditarHorarioFORM(this, curso));
-    }
-    
-    public void navegarVerHorario(HorarioDTO horario) {
-        String dias = horario.getDias() != null
-                ? horario.getDias().toString() : "Sin días";
-        String inicio = horario.getHoraInicio() != null
-                ? horario.getHoraInicio().toString() : "--:--";
-        String fin = horario.getHoraFin() != null
-                ? horario.getHoraFin().toString() : "--:--";
-        String cupo = (horario.getCupoActual() != null ? horario.getCupoActual() : 0)
-                + "/" + (horario.getCupoMax() != null ? horario.getCupoMax() : 0);
-        mostrarExito("Días: " + dias
-                + "\nInicio: " + inicio
-                + "\nFin: " + fin
-                + "\nCupo: " + cupo);
-    }
 
     public void navegarGestionHorarios(CursoDTO curso) {
         mostrarPantalla(new GestionHorariosFORM(this));
     }
-    
+
+    public void navegarAgregarHorario(CursoDTO curso) {
+        mostrarPantalla(new AgregarHorarioFORM(this, curso));
+    }
+
+    public void navegarEditarHorario(HorarioDTO horario, CursoDTO curso) {
+        mostrarPantalla(new EditarHorarioFORM(this, curso));
+    }
+
+    public void navegarVerHorario(HorarioDTO horario) {
+        String mensaje = "Días: " + horario.getDias() + "\nInicio: " + horario.getHoraInicio() + "\nFin: " + horario.getHoraFin() + "\nCupo: " + horario.getCupoActual() + "/" + horario.getCupoMax();
+        mostrarExito(mensaje);
+    }
+
     public void navegarReportes() {
         mostrarPantalla(new GenerarReportesCursosFORM(this));
     }
 
-    
+    // SESION
+    public ClienteLogueadoDTO iniciarSesion(String pin, String contrasenia) throws NegocioException {
+        this.esAdministrador = false;
+        LoginDTO loginDTO = new LoginDTO(pin, contrasenia);
+        this.clienteActual = funcionalidadSesion.iniciarSesion(loginDTO);
+        return this.clienteActual;
+    }
 
-    // ACCIONES — Cursos
+    public void iniciarSesionAdministrador(String pin, String contrasenia) throws NegocioException {
+        funcionalidadSesion.iniciarSesionAdmin(pin, contrasenia);
+        this.esAdministrador = true;
+        navegarMenuAdmin();
+    }
+
+    public void cerrarSesion() {
+        this.clienteActual = null;
+        this.esAdministrador = false;
+        navegarMenuPrincipal();
+    }
+
+    public boolean esAdministrador() {
+        return esAdministrador;
+    }
+
+    public ClienteLogueadoDTO getClienteActual() {
+        return clienteActual;
+    }
+
+    public JFrame getFrameActual() {
+        return frameActual;
+    }
+
+    // MEMBRESIAS
+    public TipoMembresiaDTO seleccionarMembresia(String tipo) {
+        switch (tipo) {
+            case "ORO": return TipoMembresiaDTO.ORO;
+            case "PLATA": return TipoMembresiaDTO.PLATA;
+            default: return TipoMembresiaDTO.BRONCE;
+        }
+    }
+
+    public NuevoClienteDTO asignarMembresiaCliente(NuevoClienteDTO cliente, TipoMembresiaDTO membresia) throws NegocioException {
+        NuevaMembresiaDTO membresiaDTO = funcionalidadSesion.buscarMembresiaPorTipo(membresia);
+        LocalDate hoy = LocalDate.now();
+        NuevaMembresiaCompradaDTO comprada = new NuevaMembresiaCompradaDTO(membresiaDTO, hoy, hoy.plusMonths(1), membresiaDTO.getPrecio(), EstadoDTO.ACTIVO);
+        return new NuevoClienteDTO(cliente.getNombre(), cliente.getApellidos(), cliente.getCorreo(), cliente.getTelefono(), cliente.getContrasenia(), cliente.getFechaNacimiento(), cliente.getPin(), comprada);
+    }
+
+    public List<NuevaMembresiaDTO> consultarMembresias() throws NegocioException {
+        return funcionalidadSesion.consultarMembresias();
+    }
+
+    public NuevaMembresiaDTO buscarMembresiaPorTipo(TipoMembresiaDTO tipo) throws NegocioException {
+        return funcionalidadSesion.buscarMembresiaPorTipo(tipo);
+    }
+
+    public void renovarMembresia(TipoMembresiaDTO tipoDTO) throws NegocioException {
+        if (this.clienteActual == null) {
+            throw new NegocioException("No hay cliente logueado.");
+        }
+        RenovarMembresiaDTO dto = new RenovarMembresiaDTO(clienteActual.getIdCliente(), tipoDTO);
+        funcionalidadSesion.renovarMembresia(dto);
+    }
+
+    // CLIENTES
+    public void registrarCliente(NuevoClienteDTO clienteDTO) throws NegocioException {
+        funcionalidadRegistro.validarDatosUsuario(clienteDTO);
+    }
+
+    public List<NuevoClienteDTO> consultarClientes() throws NegocioException {
+        return funcionalidadRegistro.obtenerTodas();
+    }
+
+    // PAGOS
+    public void procesarPagoTarjeta(NuevoClienteDTO cliente, String numeroTarjeta, String cvv, String fechaVencimiento, String nombreTitular) throws NegocioException {
+        funcionalidadRegistro.validarTarjeta(cvv, numeroTarjeta, fechaVencimiento, nombreTitular);
+        registrarNuevoCliente(cliente);
+    }
+
+    public void procesarPagoPaypal(NuevoClienteDTO cliente, String correo, String contrasenia) throws NegocioException {
+        funcionalidadRegistro.validarPaypal(correo, contrasenia);
+        registrarNuevoCliente(cliente);
+    }
+
+    public void procesarPagoTransferencia(NuevoClienteDTO cliente) throws NegocioException {
+        registrarNuevoCliente(cliente);
+    }
+
+    private void registrarNuevoCliente(NuevoClienteDTO cliente) throws NegocioException {
+        if (cliente == null) {
+            throw new NegocioException("No hay datos del cliente.");
+        }
+        if (cliente.getMembresiaComprada() == null) {
+            throw new NegocioException("No se seleccionó membresía.");
+        }
+        funcionalidadRegistro.registrarUsuario(cliente);
+    }
+
+    // CURSOS
     public List<CursoDTO> obtenerCursos() {
         try {
             return cuCursos.listarCursos();
@@ -182,18 +267,8 @@ public class ControlNavegacion {
             return false;
         }
     }
-    
-    // ACCIONES — Reportes
-    public ReporteDTO generarReporte(DatosReporteDTO filtros) {
-        try {
-            return cuCursos.generarReporte(filtros);
-        } catch (NegocioException ex) {
-            mostrarError(ex.getMessage());
-            return null;
-        }
-    }
 
-    // ACCIONES — Horarios
+    // HORARIOS
     public List<HorarioDTO> obtenerHorariosPorCurso(String idCurso) {
         try {
             return cuCursos.listarHorariosPorCurso(idCurso);
@@ -230,7 +305,7 @@ public class ControlNavegacion {
         }
     }
 
-    // ACCIONES — Inscripciones
+    // INSCRIPCIONES
     public List<InscripcionDTO> obtenerInscripciones() {
         try {
             return cuCursos.listarInscripciones();
@@ -249,80 +324,17 @@ public class ControlNavegacion {
         }
     }
 
-    // MEMBRESÍAS
-    public TipoMembresiaDTO seleccionarMembresia(String tipo) {
-        switch (tipo) {
-            case "ORO":   return TipoMembresiaDTO.ORO;
-            case "PLATA": return TipoMembresiaDTO.PLATA;
-            default:      return TipoMembresiaDTO.BRONCE;
+    // REPORTES
+    public ReporteDTO generarReporte(DatosReporteDTO filtros) {
+        try {
+            return cuCursos.generarReporte(filtros);
+        } catch (NegocioException ex) {
+            mostrarError(ex.getMessage());
+            return null;
         }
     }
 
-    public NuevoClienteDTO asignarMembresiaCliente(NuevoClienteDTO cliente, TipoMembresiaDTO membresia) throws NegocioException {
-        NuevaMembresiaDTO membresiaDTO = funcionalidadSesion.buscarMembresiaPorTipo(membresia);
-        LocalDate hoy = LocalDate.now();
-        NuevaMembresiaCompradaDTO membresiaCompradaDTO = new NuevaMembresiaCompradaDTO(membresiaDTO, hoy, hoy.plusMonths(1), membresiaDTO.getPrecio(), EstadoDTO.ACTIVO);
-        return new NuevoClienteDTO(cliente.getNombre(), cliente.getApellidos(), cliente.getCorreo(), cliente.getTelefono(), cliente.getContrasenia(), cliente.getFechaNacimiento(), cliente.getPin(), membresiaCompradaDTO);
-    }
-    
-    // CLIENTES 
-    public void registrarCliente(NuevoClienteDTO clienteDTO) throws NegocioException {
-        funcionalidadRegistro.validarDatosUsuario(clienteDTO);
-    }
-
-    public List<NuevoClienteDTO> consultarClientes() throws NegocioException {
-        return funcionalidadRegistro.obtenerTodas();
-    }
-
-    // PAGOS 
-    public void procesarPagoTarjeta(NuevoClienteDTO cliente, String numeroTarjeta,
-            String cvv, String fechaVencimiento, String nombreTitular) throws NegocioException {
-        funcionalidadRegistro.validarTarjeta(cvv, numeroTarjeta, fechaVencimiento, nombreTitular);
-        registrarNuevoCliente(cliente);
-    }
-
-    public void procesarPagoPaypal(NuevoClienteDTO cliente, String correo,
-            String contrasenia) throws NegocioException {
-        funcionalidadRegistro.validarPaypal(correo, contrasenia);
-        registrarNuevoCliente(cliente);
-    }
-
-    public void procesarPagoTransferencia(NuevoClienteDTO cliente) throws NegocioException {
-        registrarNuevoCliente(cliente);
-    }
-
-    private void registrarNuevoCliente(NuevoClienteDTO cliente) throws NegocioException {
-        if (cliente == null) throw new NegocioException("No hay datos del cliente.");
-        if (cliente.getMembresiaComprada() == null) throw new NegocioException("No se seleccionó membresía.");
-        funcionalidadRegistro.registrarUsuario(cliente);
-    }
-
-    // LOGIN 
-    public ClienteLogueadoDTO iniciarSesion(String pin, String contrasenia) throws NegocioException {
-        LoginDTO loginDTO = new LoginDTO(pin, contrasenia);
-        this.clienteActual = funcionalidadSesion.iniciarSesion(loginDTO);
-        return this.clienteActual;
-    }
-
-    public ClienteLogueadoDTO getClienteActual() {
-        return clienteActual;
-    }
-
-    public List<NuevaMembresiaDTO> consultarMembresias() throws NegocioException {
-        return funcionalidadSesion.consultarMembresias();
-    }
-
-    public NuevaMembresiaDTO buscarMembresiaPorTipo(TipoMembresiaDTO tipo) throws NegocioException {
-        return funcionalidadSesion.buscarMembresiaPorTipo(tipo);
-    }
-
-    public void renovarMembresia(TipoMembresiaDTO tipoDTO) throws NegocioException {
-        if (this.clienteActual == null) throw new NegocioException("No hay cliente logueado.");
-        RenovarMembresiaDTO dto = new RenovarMembresiaDTO(clienteActual.getIdCliente(), tipoDTO);
-        funcionalidadSesion.renovarMembresia(dto);
-    }
-
-    // HELPER — Mensajes de error centralizados
+    // MENSAJES
     public void mostrarError(String mensaje) {
         JOptionPane.showMessageDialog(frameActual, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
     }
@@ -332,12 +344,8 @@ public class ControlNavegacion {
     }
 
     public boolean mostrarConfirmacion(String mensaje) {
-        return JOptionPane.showConfirmDialog(frameActual, mensaje, "Confirmar",
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+        return JOptionPane.showConfirmDialog(frameActual, mensaje, "Confirmar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
     }
-
-    public JFrame getFrameActual() {
-        return frameActual;
-    }
+    
 
 }

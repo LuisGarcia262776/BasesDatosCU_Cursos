@@ -47,26 +47,32 @@ public class ReporteBO implements IReporteBO {
             }
 
             List<Curso> cursosEntidad = fachada.obtenerCursoDAO().obtenerTodos();
-
             List<CursoDTO> cursosDTO = new ArrayList<>();
-
             List<HorarioDTO> horariosDTO = new ArrayList<>();
 
             for (Curso curso : cursosEntidad) {
-                CursoDTO cursoDTO = DtosAEntidadesAdapter.adaptarCurso(curso);
-
-                cursosDTO.add(cursoDTO);
-
+                // Filtrar por idCurso 
+                if (datosReporteDTO.getCurso() != null && !datosReporteDTO.getCurso().isBlank() && !curso.getIdCurso().equals(datosReporteDTO.getCurso())) {
+                    continue;
+                }
                 List<Horario> horariosEntidad = fachada.obtenerHorarioDAO().obtenerPorCurso(curso.getIdCurso());
+                for (Horario horario : horariosEntidad) {
+                    // Filtrar por cantidadMin
+                    if (datosReporteDTO.getCantidadMin() > 0 && horario.getCupoActual() < datosReporteDTO.getCantidadMin()) {
+                        continue;
+                    }
 
-                List<HorarioDTO> horariosCurso = DtosAEntidadesAdapter.adaptarListaHorarios(horariosEntidad);
-
-                horariosDTO.addAll(horariosCurso);
+                    // Si pasa los filtros lo agrega 
+                    CursoDTO cursoDTO = DtosAEntidadesAdapter.adaptarCurso(curso);
+                    HorarioDTO horarioDTO = DtosAEntidadesAdapter.adaptarHorario(horario);
+                    cursosDTO.add(cursoDTO);
+                    horariosDTO.add(horarioDTO);
+                }
             }
-
             return new ReporteDTO(new Date(), cursosDTO, horariosDTO);
+
         } catch (PersistenciaException ex) {
-            throw new NegocioException("Error al generar reporte.",ex);
+            throw new NegocioException("Error al generar reporte.", ex);
         }
     }
 

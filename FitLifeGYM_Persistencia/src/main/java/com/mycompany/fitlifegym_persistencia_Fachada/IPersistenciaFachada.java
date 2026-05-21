@@ -4,6 +4,7 @@
  */
 package com.mycompany.fitlifegym_persistencia_Fachada;
 
+import com.mycompany.fitlifegym_DAO.IAdministradorDAO;
 import com.mycompany.fitlifegym_DAO.IClientesDAO;
 import com.mycompany.fitlifegym_DAO.ICursoDAO;
 import com.mycompany.fitlifegym_DAO.IHorarioDAO;
@@ -21,5 +22,7 @@ public interface IPersistenciaFachada {
     public abstract IHorarioDAO obtenerHorarioDAO();
 
     public abstract IInscripcionDAO obtenerInscripcionDAO();
+    
+    public abstract IAdministradorDAO obtenerAdministradorDAO();
     
 }

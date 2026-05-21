@@ -14,6 +14,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -30,17 +32,21 @@ import javax.swing.SwingConstants;
  */
 public class GestionHorariosFORM extends javax.swing.JFrame { 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GestionHorariosFORM.class.getName());
-
     private final ControlNavegacion control;
 
     public GestionHorariosFORM(ControlNavegacion control) {
         this.control = control;
         initComponents();
         jPanel1.setBackground(new Color(18, 18, 18));
-        cargarCursos(); 
+        cargarCursos();
     }
 
-    // Carga cursos 
+    public GestionHorariosFORM() {
+        initComponents();
+        this.control = null;
+    }
+
+    // ── Carga cursos en grid ──────────────────────────────────────────────
     private void cargarCursos() {
         jPanel1.removeAll();
         jPanel1.setLayout(new java.awt.GridLayout(0, 3, 16, 16));
@@ -58,11 +64,12 @@ public class GestionHorariosFORM extends javax.swing.JFrame {
                 jPanel1.add(crearCardCurso(curso));
             }
         }
+
         jPanel1.revalidate();
         jPanel1.repaint();
     }
 
-    // cada curso 
+    // Cuadro de cada curso
     private JPanel crearCardCurso(CursoDTO curso) {
         JPanel card = new JPanel();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
@@ -70,7 +77,7 @@ public class GestionHorariosFORM extends javax.swing.JFrame {
         card.setBorder(BorderFactory.createLineBorder(new Color(225, 6, 0), 2));
         card.setPreferredSize(new Dimension(170, 230));
 
-        // Imagen 
+        // Image
         JLabel lblImagen = new JLabel();
         lblImagen.setPreferredSize(new Dimension(166, 130));
         lblImagen.setMinimumSize(new Dimension(166, 130));
@@ -100,24 +107,27 @@ public class GestionHorariosFORM extends javax.swing.JFrame {
             lblImagen.setForeground(Color.GRAY);
         }
 
-        // Nombre 
-        JLabel lblNombre = new JLabel(curso.getNombre() != null ? curso.getNombre().toUpperCase(): "SIN NOMBRE");
+        // ── Nombre ────────────────────────────────────────────────────────
+        String nombreCurso = "SIN NOMBRE";
+        if (curso.getNombre() != null) {
+            nombreCurso = curso.getNombre().toUpperCase();
+        }
+
+        JLabel lblNombre = new JLabel(nombreCurso);
         lblNombre.setForeground(new Color(242, 242, 242));
         lblNombre.setFont(new Font("Segoe UI", Font.BOLD, 13));
         lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
         lblNombre.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Botón Seleccionar 
-        JButton btnSeleccionar = new JButton("Seleccionar");
-        btnSeleccionar.setBackground(new Color(225, 6, 0));
-        btnSeleccionar.setForeground(Color.WHITE);
-        btnSeleccionar.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        btnSeleccionar.setFocusPainted(false);
-        btnSeleccionar.setBorderPainted(false);
-        btnSeleccionar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        // ── Botón Seleccionar ─────────────────────────────────────────────
+        JButton btnSeleccionar = crearBotonRojo("Seleccionar", 140);
         btnSeleccionar.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btnSeleccionar.setMaximumSize(new Dimension(140, 34));
-        btnSeleccionar.addActionListener(e -> abrirHorariosCurso(curso));
+        btnSeleccionar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                abrirHorariosCurso(curso);
+            }
+        });
 
         JPanel panelBtn = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         panelBtn.setBackground(new Color(18, 18, 18));
@@ -133,7 +143,7 @@ public class GestionHorariosFORM extends javax.swing.JFrame {
         return card;
     }
 
-    // horarios del curso seleccionado 
+    // Horarios del curso seleccionado
     private void abrirHorariosCurso(CursoDTO curso) {
         lblSeleccionaUnCurso.setText("Horarios: " + curso.getNombre().toUpperCase());
 
@@ -160,16 +170,23 @@ public class GestionHorariosFORM extends javax.swing.JFrame {
             }
         }
 
-        // Panel de botones abajo
+        // Boton Agregar Horario 
         JButton btnAgregar = crearBotonRojo("+ Agregar Horario", 200);
-        btnAgregar.addActionListener(e -> {
-            control.navegarAgregarHorario(curso);
+        btnAgregar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                control.navegarAgregarHorario(curso);
+            }
         });
 
+        // Boton Volver
         JButton btnVolver = crearBotonRojo("Volver", 130);
-        btnVolver.addActionListener(e -> {
-            lblSeleccionaUnCurso.setText("Selecciona un Curso:");
-            cargarCursos();
+        btnVolver.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                lblSeleccionaUnCurso.setText("Selecciona un Curso:");
+                cargarCursos();
+            }
         });
 
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.LEFT, 12, 8));
@@ -186,52 +203,68 @@ public class GestionHorariosFORM extends javax.swing.JFrame {
         jPanel1.repaint();
     }
 
-    // Fila de cada horario ──────────────────────────────────────────────
+    // Fila de cada horario
     private JPanel crearFilaHorario(HorarioDTO horario, CursoDTO curso) {
         JPanel fila = new JPanel(new BorderLayout(10, 0));
-        fila.setBackground(new Color(50, 50, 50));  
+        fila.setBackground(new Color(50, 50, 50));
         fila.setMaximumSize(new Dimension(Integer.MAX_VALUE, 55));
         fila.setBorder(BorderFactory.createEmptyBorder(4, 12, 4, 12));
 
-        // Texto del horario 
+        // Dias abreviados
         String dias = "";
         if (horario.getDias() != null && !horario.getDias().isEmpty()) {
-            // Convierte la lista a abreviaciones: LUNES→LU, MIERCOLES→MI, etc.
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < horario.getDias().size(); i++) {
                 String d = horario.getDias().get(i).toString();
                 sb.append(d.length() >= 2 ? d.substring(0, 2) : d);
-                if (i < horario.getDias().size() - 1) sb.append("-");
+                if (i < horario.getDias().size() - 1) {
+                    sb.append("-");
+                }
             }
             dias = sb.toString();
         }
 
-        String inicio = horario.getHoraInicio() != null ? horario.getHoraInicio().toString() : "--:--";
-        String fin = horario.getHoraFin() != null ? horario.getHoraFin().toString() : "--:--";
+        String inicio = "--:--";
+        if (horario.getHoraInicio() != null) {
+            inicio = horario.getHoraInicio().toString();
+        }
+
+        String fin = "--:--";
+        if (horario.getHoraFin() != null) {
+            fin = horario.getHoraFin().toString();
+        }
 
         JLabel lblInfo = new JLabel(dias + "  " + inicio + " - " + fin);
         lblInfo.setForeground(new Color(242, 242, 242));
         lblInfo.setFont(new Font("Segoe UI", Font.BOLD, 14));
 
-        // Botones Editar / Eliminar / Ver 
+        // Botones
         JButton btnEditar = crearBotonRojo("Editar", 90);
         JButton btnEliminar = crearBotonRojo("Eliminar", 90);
         JButton btnVer = crearBotonRojo("Ver", 70);
 
-        btnEditar.addActionListener(e -> {
-            control.navegarEditarHorario(horario, curso);
-        });
-
-        btnEliminar.addActionListener(e -> {
-            if (control.mostrarConfirmacion(
-                    "¿Eliminar este horario?")) {
-                control.eliminarHorario(horario.getIdHorario());
-                abrirHorariosCurso(curso);
+        btnEditar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                control.navegarEditarHorario(horario, curso);
             }
         });
 
-        btnVer.addActionListener(e -> {
-             control.navegarVerHorario(horario);
+        btnEliminar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (control.mostrarConfirmacion("¿Eliminar este horario?")) {
+                    control.eliminarHorario(horario.getIdHorario());
+                    abrirHorariosCurso(curso);
+                }
+            }
+        });
+
+        btnVer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                control.navegarVerHorario(horario);
+            }
         });
 
         JPanel panelBtns = new JPanel(new FlowLayout(FlowLayout.RIGHT, 6, 8));
@@ -245,7 +278,7 @@ public class GestionHorariosFORM extends javax.swing.JFrame {
         return fila;
     }
 
-    // ── Helper botón rojo ─────────────────────────────────────────────────
+    // boton rojo 
     private JButton crearBotonRojo(String texto, int ancho) {
         JButton btn = new JButton(texto);
         btn.setBackground(new Color(225, 6, 0));
@@ -257,21 +290,9 @@ public class GestionHorariosFORM extends javax.swing.JFrame {
         btn.setPreferredSize(new Dimension(ancho, 32));
         return btn;
     }
+    
+    
 
-
-    /**
-     * Creates new form GestionHorariosFORM
-     */
-    public GestionHorariosFORM() {
-        initComponents();
-        this.control = null;
-    }
-
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -371,8 +392,7 @@ public class GestionHorariosFORM extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        control.navegarGestionCursos();
-        dispose();
+
     }//GEN-LAST:event_btnVolverActionPerformed
 
     

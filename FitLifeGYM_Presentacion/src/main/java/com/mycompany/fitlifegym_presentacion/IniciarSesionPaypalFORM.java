@@ -14,18 +14,19 @@ import javax.swing.JOptionPane;
  *
  * @author Jaime
  */
-public class IniciarSesionPaypalFORM extends javax.swing.JDialog {
+public class IniciarSesionPaypalFORM extends javax.swing.JFrame {
 
-    private ControlNavegacion control;
-    private NuevoClienteDTO cliente;
-    private TipoMembresiaDTO membresia;
-       
-    public IniciarSesionPaypalFORM(java.awt.Frame parent, boolean modal, ControlNavegacion control, TipoMembresiaDTO membresia, NuevoClienteDTO cliente) {
-        super(parent, modal);
+    private final ControlNavegacion control;
+    private final NuevoClienteDTO cliente;
+    private final TipoMembresiaDTO membresia;
+
+    public IniciarSesionPaypalFORM(ControlNavegacion control, TipoMembresiaDTO membresia, NuevoClienteDTO cliente) {
         this.control = control;
         this.membresia = membresia;
         this.cliente = cliente;
         initComponents();
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -218,20 +219,13 @@ public class IniciarSesionPaypalFORM extends javax.swing.JDialog {
 
     private void btnTransferenciaRealizadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferenciaRealizadaActionPerformed
        String correo = txtCorreoPaypal.getText();
-       String contrasenia = txtContrasenia.getText();
+        String contrasenia = new String(txtContrasenia.getPassword());
 
         try {
-            // Asignar la membresia al cliente en memoria
             control.asignarMembresiaCliente(this.cliente, this.membresia);
-
-            // Procesar el pago registra en "BD"
             control.procesarPagoPaypal(cliente, correo, contrasenia);
-
             JOptionPane.showMessageDialog(this, "Pago con PayPal exitoso. Membresía activada.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-
-            this.dispose();
             control.navegarMenuPrincipal();
-
         } catch (NegocioException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }

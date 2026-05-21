@@ -14,19 +14,15 @@ import javax.swing.JOptionPane;
  *
  * @author Diego
  */
-public class RegistrarseFORM extends javax.swing.JDialog {
+public class RegistrarseFORM extends javax.swing.JFrame {
 
-    private ControlNavegacion control;
+    private final ControlNavegacion control;
 
-    /**
-     * Creates new form RegistrarseFORM
-     */
-    public RegistrarseFORM(java.awt.Frame parent, boolean modal, ControlNavegacion control) {
-        super(parent, modal);
+    public RegistrarseFORM(ControlNavegacion control) {
         this.control = control;
+        initComponents();
         this.setResizable(false);
         this.setLocationRelativeTo(null);
-        initComponents();
     }
 
     /**
@@ -293,10 +289,9 @@ public class RegistrarseFORM extends javax.swing.JDialog {
         String pin = txtPIN.getText();
 
         try {
-            LocalDate fechaNacimiento =LocalDate.parse(fechaString);
-            NuevoClienteDTO clienteRegistrar =new NuevoClienteDTO(nombre, apellidos, correo, telefono, contrasenia, fechaNacimiento, pin);
+            LocalDate fechaNacimiento = LocalDate.parse(fechaString);
+            NuevoClienteDTO clienteRegistrar = new NuevoClienteDTO(nombre, apellidos, correo, telefono, contrasenia, fechaNacimiento, pin);
             control.navegarBeneficios(clienteRegistrar);
-            dispose();
         } catch (DateTimeParseException ex) {
             JOptionPane.showMessageDialog(this, "La fecha debe tener formato AAAA-MM-DD");
         } catch (Exception ex) {
@@ -306,7 +301,6 @@ public class RegistrarseFORM extends javax.swing.JDialog {
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
         control.navegarIniciarSesion();
-        dispose();
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     private void txtApellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidosActionPerformed
@@ -334,7 +328,7 @@ public class RegistrarseFORM extends javax.swing.JDialog {
     }//GEN-LAST:event_txtContraseniaActionPerformed
 
     private void btnVolverAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverAtrasActionPerformed
-        dispose();
+        control.navegarMenuPrincipal();
     }//GEN-LAST:event_btnVolverAtrasActionPerformed
 
     private void txtCorreoElectronicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoElectronicoActionPerformed

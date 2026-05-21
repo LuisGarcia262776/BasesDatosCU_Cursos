@@ -4,6 +4,7 @@
  */
 package com.mycompany.funcionalidadiniciarsesionrenovarmembresia;
 
+import com.mycompany.fitlifegym_dtos.AdministradorLogueadoDTO;
 import com.mycompany.fitlifegym_dtos.ClienteLogueadoDTO;
 import com.mycompany.fitlifegym_dtos.LoginDTO;
 import com.mycompany.fitlifegym_dtos.NuevaMembresiaDTO;
@@ -20,6 +21,8 @@ import java.util.List;
 public interface IFuncionalidadIniciarSesionRenovarMembresia {
     
     public abstract ClienteLogueadoDTO iniciarSesion(LoginDTO login) throws NegocioException;
+    
+    public abstract AdministradorLogueadoDTO iniciarSesionAdmin(String pin, String contrasenia)throws NegocioException;
 
     public abstract List<NuevaMembresiaDTO> consultarMembresias() throws NegocioException;
 

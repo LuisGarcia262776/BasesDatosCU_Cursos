@@ -14,19 +14,19 @@ import javax.swing.JOptionPane;
  *
  * @author Jaime
  */
-public class TransferenciaFORM extends javax.swing.JDialog {
+public class TransferenciaFORM extends javax.swing.JFrame {
 
-    private ControlNavegacion control;
+    private final ControlNavegacion control;
     private NuevoClienteDTO cliente;
-    private TipoMembresiaDTO membresia;
-    
-    public TransferenciaFORM(java.awt.Frame parent, boolean modal, ControlNavegacion control, TipoMembresiaDTO membresia, NuevoClienteDTO cliente) {
-        super(parent, modal);
+    private final TipoMembresiaDTO membresia;
+
+    public TransferenciaFORM(ControlNavegacion control, TipoMembresiaDTO membresia, NuevoClienteDTO cliente) {
         this.control = control;
         this.membresia = membresia;
         this.cliente = cliente;
-        this.setLocationRelativeTo(null);
         initComponents();
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
         cargarMonto();
     }
 
@@ -39,7 +39,6 @@ public class TransferenciaFORM extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -210,14 +209,11 @@ public class TransferenciaFORM extends javax.swing.JDialog {
     private void btnTransferenciaRealizadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferenciaRealizadaActionPerformed
         try {
             this.cliente = control.asignarMembresiaCliente(this.cliente, this.membresia);
-            
             control.procesarPagoTransferencia(this.cliente);
-            
             JOptionPane.showMessageDialog(this, "¡Transferencia recibida! Membresía activada.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            this.dispose();
             control.navegarMenuPrincipal();
         } catch (NegocioException ex) {
-            JOptionPane.showMessageDialog(this,ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnTransferenciaRealizadaActionPerformed
 

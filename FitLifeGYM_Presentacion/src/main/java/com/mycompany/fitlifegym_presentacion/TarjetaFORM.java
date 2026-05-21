@@ -14,19 +14,19 @@ import javax.swing.JOptionPane;
  *
  * @author Jaime
  */
-public class TarjetaFORM extends javax.swing.JDialog {
+public class TarjetaFORM extends javax.swing.JFrame {
 
-    private ControlNavegacion control;
-    private TipoMembresiaDTO membresia;
-    private NuevoClienteDTO cliente;
+    private final ControlNavegacion control;
+    private final TipoMembresiaDTO membresia;
+    private final NuevoClienteDTO cliente;
 
-    public TarjetaFORM(java.awt.Frame parent, boolean modal, ControlNavegacion control, TipoMembresiaDTO membresia, NuevoClienteDTO cliente) {
-        super(parent, modal);
+    public TarjetaFORM(ControlNavegacion control, TipoMembresiaDTO membresia, NuevoClienteDTO cliente) {
         this.control = control;
         this.membresia = membresia;
-        this.cliente = cliente; 
+        this.cliente = cliente;
         initComponents();
         setearEditablesFalsos();
+        this.setResizable(false);
         this.setLocationRelativeTo(null);
     }
 
@@ -289,24 +289,14 @@ public class TarjetaFORM extends javax.swing.JDialog {
         String ccv = txtCVV.getText().trim();
         String fecha = txtFechaVencimiento.getText().trim();
 
-        
         try {
-            // Asignar la membresia al cliente (en memoria por lo pronto)
             control.asignarMembresiaCliente(this.cliente, this.membresia);
-
-            // Procesar pago registra cliente + membresía en BD
             control.procesarPagoTarjeta(this.cliente, numero, ccv, fecha, nombreTitular);
-
             JOptionPane.showMessageDialog(this, "El pago se ha realizado correctamente.", "Pago Correctamente", JOptionPane.INFORMATION_MESSAGE);
-
-            //Solo navegar si todo salio bien
-            this.dispose();
             control.navegarMenuPrincipal();
-
         } catch (NegocioException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-
     }//GEN-LAST:event_btnPagarAhoraActionPerformed
 
     public void setearEditablesFalsos() {

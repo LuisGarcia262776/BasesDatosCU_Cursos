@@ -35,26 +35,18 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
     public GestionDeCursosFORM(ControlNavegacion control) {
         this.control = control;
         initComponents();
-
-        // ← Quitar el separador que el arrastrador metió dentro del JPanel
+        
         JPanel.remove(jSeparator3);
-
-        // ← Forzar Y_AXIS para que las filas vayan hacia abajo
         JPanel.setLayout(new BoxLayout(JPanel, BoxLayout.Y_AXIS));
         JPanel.setBackground(new Color(18, 18, 18));
 
         cargarCursos();
     }
 
-    // ══════════════════════════════════════════════════════
-    // CARGA DINÁMICA
-    // ══════════════════════════════════════════════════════
-
+    // CARGA DINAMICA
     public void cargarCursos() {
         JPanel.removeAll();
-
         List<CursoDTO> cursos = control.obtenerCursos();
-
         if (cursos == null || cursos.isEmpty()) {
             JLabel lblVacio = new JLabel("No hay cursos registrados.");
             lblVacio.setForeground(Color.LIGHT_GRAY);
@@ -69,7 +61,6 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
                 JPanel.add(Box.createVerticalStrut(6));
             }
         }
-
         JPanel.revalidate();
         JPanel.repaint();
     }
@@ -78,10 +69,9 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
         JPanel fila = new JPanel(new BorderLayout(10, 0));
         fila.setBackground(new Color(18, 18, 18));
         fila.setMaximumSize(new Dimension(Integer.MAX_VALUE, 82));
-        fila.setBorder(javax.swing.BorderFactory.createMatteBorder(
-                0, 0, 1, 0, new Color(225, 6, 0)));
+        fila.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(225, 6, 0)));
 
-        // ── Imagen ────────────────────────────────────────
+        // Imagen 
         JLabel lblImagen = new JLabel();
         lblImagen.setPreferredSize(new Dimension(82, 72));
         lblImagen.setMinimumSize(new Dimension(82, 72));
@@ -94,15 +84,13 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
                 String ruta = curso.getImagen().getRuta();
                 ImageIcon icon;
 
-                // ← Detecta si es URL o ruta local
                 if (ruta.startsWith("http://") || ruta.startsWith("https://")) {
                     icon = new ImageIcon(new java.net.URL(ruta));
                 } else {
                     icon = new ImageIcon(ruta);
                 }
 
-                Image scaled = icon.getImage()
-                        .getScaledInstance(82, 72, Image.SCALE_SMOOTH);
+                Image scaled = icon.getImage().getScaledInstance(82, 72, Image.SCALE_SMOOTH);
                 lblImagen.setIcon(new ImageIcon(scaled));
             } catch (Exception e) {
                 lblImagen.setText("img");
@@ -113,32 +101,28 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
             lblImagen.setForeground(Color.GRAY);
         }
 
-        // ── Nombre ────────────────────────────────────────
-        JLabel lblNombre = new JLabel(
-                curso.getNombre() != null
-                        ? curso.getNombre().toUpperCase()
-                        : "SIN NOMBRE");
+        // Nombre
+        JLabel lblNombre = new JLabel(curso.getNombre() != null ? curso.getNombre().toUpperCase(): "SIN NOMBRE");
         lblNombre.setForeground(new Color(242, 242, 242));
         lblNombre.setFont(new Font("Segoe UI", Font.BOLD, 13));
-
+        
         JPanel panelIzq = new JPanel(new BorderLayout());
         panelIzq.setBackground(new Color(18, 18, 18));
         panelIzq.add(lblImagen, BorderLayout.CENTER);
         panelIzq.add(lblNombre, BorderLayout.SOUTH);
         panelIzq.setPreferredSize(new Dimension(130, 82));
 
-        // ── Botones ───────────────────────────────────────
-        JButton btnEditar   = crearBoton("Editar");
+        // Botones
+        JButton btnEditar = crearBoton("Editar");
         JButton btnEliminar = crearBoton("Eliminar");
-        JButton btnVer      = crearBoton("Ver");
+        JButton btnVer = crearBoton("Ver");
 
         btnEditar.addActionListener(e -> {
             control.editarCurso(curso);
             cargarCursos();
         });
         btnEliminar.addActionListener(e -> {
-            if (control.mostrarConfirmacion(
-                    "¿Eliminar el curso \"" + curso.getNombre() + "\"?")) {
+            if (control.mostrarConfirmacion("¿Eliminar el curso \"" + curso.getNombre() + "\"?")) {
                 control.eliminarCurso(curso.getIdCurso());
                 cargarCursos();
             }
@@ -151,7 +135,7 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
         panelBotones.add(btnEliminar);
         panelBotones.add(btnVer);
 
-        fila.add(panelIzq,     BorderLayout.WEST);
+        fila.add(panelIzq, BorderLayout.WEST);
         fila.add(panelBotones, BorderLayout.CENTER);
         return fila;
     }
@@ -167,10 +151,6 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
         btn.setPreferredSize(new Dimension(100, 32));
         return btn;
     }
-
-    // ══════════════════════════════════════════════════════
-    // initComponents — UN SOLO (el del arrastrador)
-    // ══════════════════════════════════════════════════════
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -183,7 +163,7 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
         JPanel = new javax.swing.JPanel();
         jSeparator3 = new javax.swing.JSeparator();
         btnAgregarCurso = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnVolver = new javax.swing.JButton();
 
         jSeparator1.setBackground(new java.awt.Color(225, 6, 0));
         jSeparator1.setForeground(new java.awt.Color(225, 6, 0));
@@ -219,11 +199,11 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
         btnAgregarCurso.setText("+ AgregarCurso");
         btnAgregarCurso.addActionListener(this::btnAgregarCursoActionPerformed);
 
-        jButton1.setBackground(new java.awt.Color(245, 0, 0));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Volver");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        btnVolver.setBackground(new java.awt.Color(245, 0, 0));
+        btnVolver.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        btnVolver.setForeground(new java.awt.Color(255, 255, 255));
+        btnVolver.setText("Volver");
+        btnVolver.addActionListener(this::btnVolverActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -249,7 +229,7 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btnAgregarCurso)
                                 .addGap(360, 360, 360)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -266,7 +246,7 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregarCurso)
-                    .addComponent(jButton1))
+                    .addComponent(btnVolver))
                 .addContainerGap())
         );
 
@@ -285,23 +265,19 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCursoActionPerformed
-        AgregarCursoFORM frame = new AgregarCursoFORM(control);
-        frame.setVisible(true);
-        dispose();
+        control.agregarCurso(cursoDTO);
     }//GEN-LAST:event_btnAgregarCursoActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       MenuCursosAdminFORM frame = new MenuCursosAdminFORM(control);
-       frame.setVisible(true);
-       dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+       control.navegarMenuAdmin();
+    }//GEN-LAST:event_btnVolverActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel JPanel;
     private javax.swing.JScrollPane JscrollPane;
     private javax.swing.JButton btnAgregarCurso;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;

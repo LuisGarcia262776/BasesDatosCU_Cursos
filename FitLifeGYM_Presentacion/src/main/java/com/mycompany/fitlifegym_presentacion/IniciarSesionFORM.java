@@ -13,18 +13,19 @@ import javax.swing.JOptionPane;
  *
  * @author Diego
  */
-public class IniciarSesionFORM extends javax.swing.JDialog {
+public class IniciarSesionFORM extends javax.swing.JFrame {
 
     private static final Logger LOGGER = Logger.getLogger(IniciarSesionFORM.class.getName());
-    
-    private ControlNavegacion control;
+    private final ControlNavegacion control;
 
-    public IniciarSesionFORM(java.awt.Frame parent, boolean modal, ControlNavegacion control) {
-        super(parent, modal);
+    public IniciarSesionFORM(ControlNavegacion control) {
         this.control = control;
-        this.setResizable(false);
         initComponents();
+        this.setResizable(false);
         this.setLocationRelativeTo(null);
+        cmbTipo.removeAllItems();
+        cmbTipo.addItem("Cliente");
+        cmbTipo.addItem("Administrador");
     }
 
     /**
@@ -46,6 +47,7 @@ public class IniciarSesionFORM extends javax.swing.JDialog {
         btnIniciarSesion = new javax.swing.JButton();
         lblContrasenia = new javax.swing.JLabel();
         jPasswordField1 = new javax.swing.JPasswordField();
+        cmbTipo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -95,27 +97,34 @@ public class IniciarSesionFORM extends javax.swing.JDialog {
 
         jPasswordField1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
+        cmbTipo.setBackground(new java.awt.Color(18, 18, 18));
+        cmbTipo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        cmbTipo.setForeground(new java.awt.Color(255, 255, 255));
+        cmbTipo.addActionListener(this::cmbTipoActionPerformed);
+
         javax.swing.GroupLayout jPanelLayout = new javax.swing.GroupLayout(jPanel);
         jPanel.setLayout(jPanelLayout);
         jPanelLayout.setHorizontalGroup(
             jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelLayout.createSequentialGroup()
-                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jSeparator1))
-                    .addGroup(jPanelLayout.createSequentialGroup()
-                        .addComponent(btnVolverAtras)
-                        .addGap(201, 201, 201)
-                        .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 223, Short.MAX_VALUE)))
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(lblContrasenia)
                 .addGap(265, 265, 265))
+            .addGroup(jPanelLayout.createSequentialGroup()
+                .addGap(296, 296, 296)
+                .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jSeparator1)
+                .addContainerGap())
+            .addGroup(jPanelLayout.createSequentialGroup()
+                .addComponent(btnVolverAtras)
+                .addGap(201, 201, 201)
+                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(220, Short.MAX_VALUE)
                 .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnQuejasSugerencias, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelLayout.createSequentialGroup()
@@ -125,11 +134,10 @@ public class IniciarSesionFORM extends javax.swing.JDialog {
                         .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtNIP, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(215, 215, 215))))
-            .addGroup(jPanelLayout.createSequentialGroup()
-                .addGap(296, 296, 296)
-                .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(215, 215, 215))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelLayout.createSequentialGroup()
+                        .addComponent(cmbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         jPanelLayout.setVerticalGroup(
             jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,9 +145,11 @@ public class IniciarSesionFORM extends javax.swing.JDialog {
                 .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnVolverAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
                 .addComponent(lblNIP)
                 .addGap(18, 18, 18)
                 .addComponent(txtNIP, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -177,7 +187,7 @@ public class IniciarSesionFORM extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNIPActionPerformed
 
     private void btnVolverAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverAtrasActionPerformed
-        dispose();
+        control.navegarMenuPrincipal();
     }//GEN-LAST:event_btnVolverAtrasActionPerformed
 
     private void btnQuejasSugerenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuejasSugerenciasActionPerformed
@@ -187,16 +197,23 @@ public class IniciarSesionFORM extends javax.swing.JDialog {
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
         String pin = txtNIP.getText().trim();
         String contrasenia = new String(jPasswordField1.getPassword()).trim();
+        String tipoUsuario = cmbTipo.getSelectedItem().toString();
 
         try {
-            ClienteLogueadoDTO cliente = control.iniciarSesion(pin, contrasenia);
-            dispose();
-            control.navegarBienvenida(cliente);
-            dispose();
+            if (tipoUsuario.equals("Cliente")) {
+                ClienteLogueadoDTO cliente = control.iniciarSesion(pin, contrasenia);
+                control.navegarBienvenida(cliente);
+            } else {
+                control.iniciarSesionAdministrador(pin, contrasenia);
+            }
         } catch (NegocioException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
+
+    private void cmbTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoActionPerformed
+
+    }//GEN-LAST:event_cmbTipoActionPerformed
 
     
 
@@ -204,6 +221,7 @@ public class IniciarSesionFORM extends javax.swing.JDialog {
     private javax.swing.JButton btnIniciarSesion;
     private javax.swing.JButton btnQuejasSugerencias;
     private javax.swing.JButton btnVolverAtras;
+    private javax.swing.JComboBox<String> cmbTipo;
     private javax.swing.JPanel jPanel;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JSeparator jSeparator1;

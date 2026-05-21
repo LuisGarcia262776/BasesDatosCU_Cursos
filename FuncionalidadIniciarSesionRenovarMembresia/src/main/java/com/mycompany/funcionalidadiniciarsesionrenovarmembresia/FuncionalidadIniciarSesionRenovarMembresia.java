@@ -4,11 +4,14 @@
  */
 package com.mycompany.funcionalidadiniciarsesionrenovarmembresia;
 
+import com.mycompany.fitlifegym_dtos.AdministradorLogueadoDTO;
 import com.mycompany.fitlifegym_dtos.ClienteLogueadoDTO;
 import com.mycompany.fitlifegym_dtos.LoginDTO;
 import com.mycompany.fitlifegym_dtos.NuevaMembresiaDTO;
 import com.mycompany.fitlifegym_dtos.RenovarMembresiaDTO;
 import com.mycompany.fitlifegym_dtos.TipoMembresiaDTO;
+import com.mycompany.fitlifegym_negocio.AdministradorBO;
+import com.mycompany.fitlifegym_negocio.IAdministradorBO;
 import com.mycompany.fitlifegym_negocio.ILoginBO;
 import com.mycompany.fitlifegym_negocio.IMembresiaBO;
 import com.mycompany.fitlifegym_negocio.IRenovarMembresiaBO;
@@ -28,113 +31,95 @@ public class FuncionalidadIniciarSesionRenovarMembresia implements IFuncionalida
     private final IMembresiaBO membresiaBO;
 
     private final IRenovarMembresiaBO renovarMembresiaBO;
+    
+    private final IAdministradorBO adminBO;
 
     public FuncionalidadIniciarSesionRenovarMembresia() {
         this.loginBO = new LoginBO();
         this.membresiaBO = new MembresiaBO();
         this.renovarMembresiaBO = new RenovarMembresiaBO();
+        this.adminBO = new AdministradorBO();
     }
 
     @Override
-    public ClienteLogueadoDTO iniciarSesion(
-            LoginDTO login)
-            throws NegocioException {
-
+    public ClienteLogueadoDTO iniciarSesion(LoginDTO login) throws NegocioException {
         if (login == null) {
-
-            throw new NegocioException(
-                    "Los datos no pueden ser null.");
+            throw new NegocioException("Los datos no pueden ser null.");
         }
-
-        if (login.getPin() == null
-                || login.getPin().isBlank()) {
-
-            throw new NegocioException(
-                    "El PIN es obligatorio.");
-        }
-
-        if (login.getContrasenia() == null
-                || login.getContrasenia().isBlank()) {
-
-            throw new NegocioException(
-                    "La contraseña es obligatoria.");
-        }
-
+        validarPin(login.getPin());
+        validarContrasenia(login.getContrasenia());
         return loginBO.iniciarSesion(login);
     }
 
     @Override
-    public List<NuevaMembresiaDTO> consultarMembresias()
-            throws NegocioException {
+    public List<NuevaMembresiaDTO> consultarMembresias() throws NegocioException {
+        List<NuevaMembresiaDTO> membresias = membresiaBO.obtenerTodas();
 
-        List<NuevaMembresiaDTO> membresias =
-                membresiaBO.obtenerTodas();
-
-        if (membresias == null
-                || membresias.isEmpty()) {
-
-            throw new NegocioException(
-                    "No hay membresías disponibles.");
+        if (membresias == null || membresias.isEmpty()) {
+            throw new NegocioException("No hay membresías disponibles.");
         }
-
         return membresias;
     }
 
     @Override
-    public void renovarMembresia(
-            RenovarMembresiaDTO dto)
-            throws NegocioException {
-
+    public void renovarMembresia(RenovarMembresiaDTO dto) throws NegocioException {
         if (dto == null) {
-
-            throw new NegocioException(
-                    "Los datos no pueden ser null.");
+            throw new NegocioException("Los datos no pueden ser null.");
         }
 
-        if (dto.getIdCliente() == null
-                || dto.getIdCliente().isBlank()) {
+        if (dto.getIdCliente() == null || dto.getIdCliente().isBlank()) {
 
-            throw new NegocioException(
-                    "El idCliente es obligatorio.");
+            throw new NegocioException("El idCliente es obligatorio.");
         }
-
         if (dto.getTipoMembresia() == null) {
-
-            throw new NegocioException(
-                    "Debe seleccionar una membresía.");
+            throw new NegocioException("Debe seleccionar una membresía.");
         }
-
-        renovarMembresiaBO
-                .renovarMembresia(dto);
+        renovarMembresiaBO.renovarMembresia(dto);
     }
 
     @Override
-    public NuevaMembresiaDTO buscarMembresiaPorTipo(
-            TipoMembresiaDTO tipo)
-            throws NegocioException {
-
+    public NuevaMembresiaDTO buscarMembresiaPorTipo(TipoMembresiaDTO tipo)throws NegocioException {
         if (tipo == null) {
-
-            throw new NegocioException(
-                    "El tipo no puede ser null.");
+            throw new NegocioException("El tipo no puede ser null.");
         }
-
-        List<NuevaMembresiaDTO> membresias =
-                membresiaBO.obtenerTodas();
-
-        for (NuevaMembresiaDTO membresia
-                : membresias) {
-
-            if (membresia.getTipoMembresia()
-                    == tipo) {
-
+        List<NuevaMembresiaDTO> membresias =membresiaBO.obtenerTodas();
+        for (NuevaMembresiaDTO membresia: membresias) {
+            if (membresia.getTipoMembresia()== tipo) {
                 return membresia;
             }
         }
-
-        throw new NegocioException(
-                "No se encontró la membresía.");
+        throw new NegocioException("No se encontró la membresía.");
     }
+
+    @Override
+    public AdministradorLogueadoDTO iniciarSesionAdmin(String pin, String contrasenia) throws NegocioException {
+        validarPin(pin);
+        validarContrasenia(contrasenia);
+        return adminBO.iniciarSesion(pin, contrasenia);
+        
+    }
+    
+    private void validarPin(String pin) throws NegocioException {
+        if (pin == null || pin.isBlank()) {
+            throw new NegocioException("El PIN es obligatorio.");
+        }
+        if (!pin.matches("[0-9]+")) {
+            throw new NegocioException("El PIN solo puede contener números.");
+        }
+    }
+
+    private void validarContrasenia(String contrasenia) throws NegocioException {
+        if (contrasenia == null || contrasenia.isBlank()) {
+            throw new NegocioException("La contraseña es obligatoria.");
+        }
+        if (!contrasenia.matches("[a-zA-Z0-9]+")) {
+            throw new NegocioException("La contraseña solo puede contener letras y números.");
+        }
+    }
+
+    
+    
+    
     
     
     

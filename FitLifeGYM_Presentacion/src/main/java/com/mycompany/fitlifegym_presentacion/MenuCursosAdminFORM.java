@@ -8,6 +8,7 @@ import com.mycompany.fitlifegym_dtos.CursoDTO;
 import com.mycompany.fitlifegym_dtos.HorarioDTO;
 import com.mycompany.fitlifegym_dtos.InscripcionDTO;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.util.List;
 
 /**
@@ -17,39 +18,45 @@ import java.util.List;
 public class MenuCursosAdminFORM extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MenuCursosAdminFORM.class.getName());
-    private ControlNavegacion control;
-    /**
-     * Creates new form MenuCursosAdmin
-     */
+    private final ControlNavegacion control;
+
     public MenuCursosAdminFORM(ControlNavegacion control) {
         this.control = control;
         initComponents();
-        cargarEstadisticas(); // ← agrega esta línea
+        ajustarTamañoTextFields();
+        cargarEstadisticas();
     }
-    
+
+    private void ajustarTamañoTextFields() {
+        java.awt.Dimension tamaño = new Dimension(80, 40);
+        txtCursosActivos.setPreferredSize(tamaño);
+        txtInscripcionesTotales.setPreferredSize(tamaño);
+        txtHorariosActivos.setPreferredSize(tamaño);
+    }
+
+    // Cargamos estadísticas desde MongoDB 
     private void cargarEstadisticas() {
-        // No editables
         txtCursosActivos.setEditable(false);
         txtCursosActivos.setBackground(new Color(40, 40, 40));
-
         txtHorariosActivos.setEditable(false);
         txtHorariosActivos.setBackground(new Color(40, 40, 40));
-
         txtInscripcionesTotales.setEditable(false);
         txtInscripcionesTotales.setBackground(new Color(40, 40, 40));
 
-        // Cargar datos desde MongoDB 
+        // Sacamos los Cursos activos
         try {
-            // Cursos activos
             List<CursoDTO> cursos = control.obtenerCursos();
-            int totalCursos = cursos != null ? cursos.size() : 0;
+            int totalCursos = 0;
+            if (cursos != null) {
+                totalCursos = cursos.size();
+            }
             txtCursosActivos.setText(String.valueOf(totalCursos));
         } catch (Exception e) {
             txtCursosActivos.setText("0");
         }
 
+        // Sacamos los Horarios activos
         try {
-            // Horarios activos suma todos los horarios de todos los cursos
             List<CursoDTO> cursos = control.obtenerCursos();
             int totalHorarios = 0;
             if (cursos != null) {
@@ -61,15 +68,14 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
                 }
             }
             txtHorariosActivos.setText(String.valueOf(totalHorarios));
-
         } catch (Exception e) {
             txtHorariosActivos.setText("0");
         }
 
+        // Sacamos las Inscripciones totales
         try {
             List<InscripcionDTO> inscripciones = control.obtenerInscripciones();
             int totalInscripciones = 0;
-            
             if (inscripciones != null) {
                 totalInscripciones = inscripciones.size();
             }
@@ -108,14 +114,15 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
         btnGestionCursos1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         btnREPORTES = new javax.swing.JButton();
-        btnCerrarSesion = new javax.swing.JButton();
         btnGestionHorarios2 = new javax.swing.JButton();
+        btnCerrarSesion = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel2.setBackground(new java.awt.Color(18, 18, 18));
+        jPanel2.setPreferredSize(new java.awt.Dimension(1201, 843));
 
         lblTitulo.setBackground(new java.awt.Color(255, 255, 255));
         lblTitulo.setFont(new java.awt.Font("Arial", 3, 70)); // NOI18N
@@ -200,10 +207,10 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(299, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(47, 47, 47)
                 .addComponent(btnREPORTES, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(82, 82, 82))
+                .addContainerGap(334, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,17 +220,17 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
-        btnCerrarSesion.setBackground(new java.awt.Color(255, 0, 0));
-        btnCerrarSesion.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        btnCerrarSesion.setForeground(new java.awt.Color(255, 255, 255));
-        btnCerrarSesion.setText("Cerrar Sesion");
-        btnCerrarSesion.addActionListener(this::btnCerrarSesionActionPerformed);
-
         btnGestionHorarios2.setBackground(new java.awt.Color(99, 99, 99));
         btnGestionHorarios2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnGestionHorarios2.setForeground(new java.awt.Color(255, 255, 255));
         btnGestionHorarios2.setText("GESTION HORARIOS");
         btnGestionHorarios2.addActionListener(this::btnGestionHorarios2ActionPerformed);
+
+        btnCerrarSesion.setBackground(new java.awt.Color(255, 0, 0));
+        btnCerrarSesion.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        btnCerrarSesion.setForeground(new java.awt.Color(255, 255, 255));
+        btnCerrarSesion.setText("Cerrar Sesion");
+        btnCerrarSesion.addActionListener(this::btnCerrarSesionActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -232,11 +239,33 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblEstadisticasGenerales))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(lblCursosActivos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtCursosActivos, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57)
+                        .addComponent(lblInscripcionesTotales)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtInscripcionesTotales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
+                        .addComponent(lblHorariosActivos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtHorariosActivos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(260, 260, 260)
+                        .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 742, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(97, 97, 97)
                         .addComponent(btnGestionCursos1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(210, 210, 210)
+                        .addGap(120, 120, 120)
                         .addComponent(btnGestionHorarios2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(96, 96, 96)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -244,11 +273,9 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel1)
                         .addGap(586, 586, 586)
-                        .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 1254, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnCerrarSesion))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,31 +283,8 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
                         .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 742, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(192, 192, 192))))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(lblEstadisticasGenerales))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(16, 16, 16)
-                                .addComponent(lblCursosActivos)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtCursosActivos, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(57, 57, 57)
-                                .addComponent(lblInscripcionesTotales)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtInscripcionesTotales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(35, 35, 35)
-                                .addComponent(lblHorariosActivos)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtHorariosActivos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(btnCerrarSesion)
+                        .addGap(341, 341, 341))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -305,18 +309,18 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(74, 74, 74)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnGestionCursos1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnGestionHorarios2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(65, 65, 65)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnGestionHorarios2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnGestionCursos1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(65, 65, 65)
                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(btnCerrarSesion))
         );
 
@@ -324,11 +328,14 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1333, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
         );
 
         pack();
@@ -339,15 +346,11 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
     }//GEN-LAST:event_txtInscripcionesTotalesActionPerformed
 
     private void btnGestionCursos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionCursos1ActionPerformed
-        GestionDeCursosFORM prueba = new GestionDeCursosFORM(control);
-        prueba.setVisible(true);
-        dispose();
+        control.navegarGestionCursos();
     }//GEN-LAST:event_btnGestionCursos1ActionPerformed
 
     private void btnREPORTESActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnREPORTESActionPerformed
-        GenerarReportesCursosFORM frame = new GenerarReportesCursosFORM(control);
-        frame.setVisible(true);
-        dispose();
+        control.navegarReportes();
     }//GEN-LAST:event_btnREPORTESActionPerformed
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
@@ -355,9 +358,7 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     private void btnGestionHorarios2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionHorarios2ActionPerformed
-        GestionHorariosFORM frame = new GestionHorariosFORM(control);
-        frame.setVisible(true);
-        dispose();
+        control.navegarGestionHorarios(null);
     }//GEN-LAST:event_btnGestionHorarios2ActionPerformed
 
     private void txtCursosActivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCursosActivosActionPerformed
