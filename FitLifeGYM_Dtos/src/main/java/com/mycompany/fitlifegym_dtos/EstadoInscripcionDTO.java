@@ -9,5 +9,5 @@ package com.mycompany.fitlifegym_dtos;
  * @author PC GAMER MASTER RACE
  */
 public enum EstadoInscripcionDTO {
-    ACTIVA, CANCELADA, YA_INSCRITO, NO_INSCRITO
+    ACTIVO, CANCELADA, YA_INSCRITO, NO_INSCRITO
 }

@@ -283,7 +283,7 @@ public class AgregarHorarioFORM extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        dispose();
+        control.navegarMenuAdmin();
     }//GEN-LAST:event_btnCancelarActionPerformed
     
     // Convierte 9:00 + AM/PM a LocalTime 

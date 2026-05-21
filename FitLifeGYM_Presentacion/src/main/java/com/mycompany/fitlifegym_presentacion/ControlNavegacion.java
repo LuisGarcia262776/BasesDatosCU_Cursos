@@ -98,6 +98,15 @@ public class ControlNavegacion {
     public void navegarTransferenciaMetodo(TipoMembresiaDTO membresia, NuevoClienteDTO cliente) {
         mostrarPantalla(new TransferenciaFORM(this, membresia, cliente));
     }
+    
+    public void navegarCursosCliente(){
+        mostrarPantalla(new CursosClienteFORM(this));
+    }
+    
+    public void navegarInscripcionCurso(CursoDTO curso) {
+        mostrarPantalla(new InscripcionCursoFORM(this, curso));
+    }
+
 
     // NAVEGACION — Admin
     public void navegarMenuAdmin() {
@@ -111,6 +120,10 @@ public class ControlNavegacion {
     public void navegarAgregarCurso() {
         mostrarPantalla(new AgregarCursoFORM(this));
     }
+    
+    public void navegarEditarCurso(CursoDTO cursoDTO) {
+        mostrarPantalla(new EditarCursosFORM(this, cursoDTO));
+}
 
     public void navegarGestionHorarios(CursoDTO curso) {
         mostrarPantalla(new GestionHorariosFORM(this));

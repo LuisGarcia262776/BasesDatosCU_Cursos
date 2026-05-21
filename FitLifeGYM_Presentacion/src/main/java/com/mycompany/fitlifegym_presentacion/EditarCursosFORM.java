@@ -9,6 +9,12 @@ import com.mycompany.fitlifegym_dtos.DisponibilidadCursoDTO;
 import com.mycompany.fitlifegym_dtos.ImagenDTO;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -47,6 +53,7 @@ public class EditarCursosFORM extends javax.swing.JFrame {
     }
 
     // Muestra preview de imagen
+    // Preview imagen
     private void mostrarPreview(String ruta) {
         try {
             ImageIcon icon;
@@ -55,13 +62,29 @@ public class EditarCursosFORM extends javax.swing.JFrame {
             } else {
                 icon = new ImageIcon(ruta);
             }
+
             Image scaled = icon.getImage().getScaledInstance(lblPreviwe.getWidth(), lblPreviwe.getHeight(), Image.SCALE_SMOOTH);
+
             lblPreviwe.setIcon(new ImageIcon(scaled));
             lblPreviwe.setText("");
         } catch (Exception e) {
             lblPreviwe.setText("Error al cargar imagen");
             lblPreviwe.setIcon(null);
         }
+    }
+    
+    // Guarda imagen en carpeta
+    private String guardarImagenEnCarpeta(File archivo) throws IOException {
+        File carpeta = new File("imagenesCursos");
+        if (!carpeta.exists()) {
+            carpeta.mkdirs();
+        }
+
+        String nombre = System.currentTimeMillis() + "_" + archivo.getName();
+        Path destino = Paths.get(carpeta.getPath(), nombre);
+        Files.copy(archivo.toPath(), destino, StandardCopyOption.REPLACE_EXISTING);
+
+        return destino.toString();
     }
 
     
@@ -241,10 +264,17 @@ public class EditarCursosFORM extends javax.swing.JFrame {
     private void btnSeleccionarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImagenActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter(new FileNameExtensionFilter("Imágenes", "jpg", "jpeg", "png"));
+
         int resultado = fileChooser.showOpenDialog(this);
+
         if (resultado == JFileChooser.APPROVE_OPTION) {
-            rutaImagenSeleccionada = fileChooser.getSelectedFile().getAbsolutePath();
-            mostrarPreview(rutaImagenSeleccionada);
+            File archivo = fileChooser.getSelectedFile();
+            try {
+                rutaImagenSeleccionada = guardarImagenEnCarpeta(archivo);
+                mostrarPreview(rutaImagenSeleccionada);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Error al guardar imagen.");
+            }
         }
     }//GEN-LAST:event_btnSeleccionarImagenActionPerformed
 
@@ -258,36 +288,36 @@ public class EditarCursosFORM extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         if (txtNombreDelCurso.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "El nombre es obligatorio.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "El nombre es obligatorio.");
             return;
         }
+
         if (txtDescripcion.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "La descripción es obligatoria.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "La descripción es obligatoria.");
             return;
         }
+
         if (txtCupoMinimo.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "El cupo mínimo es obligatorio.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "El cupo mínimo es obligatorio.");
             return;
         }
 
         try {
-            // Imagen
             ImagenDTO imagenDTO = cursoOriginal.getImagen();
             if (!rutaImagenSeleccionada.isEmpty()) {
                 imagenDTO = new ImagenDTO(rutaImagenSeleccionada);
             }
 
-            // Construir DTO con el id original 
             CursoDTO cursoEditado = new CursoDTO(cursoOriginal.getIdCurso(), txtNombreDelCurso.getText().trim(), imagenDTO, txtDescripcion.getText().trim(), Integer.parseInt(txtCupoMinimo.getText().trim()), DisponibilidadCursoDTO.DISPONIBLE);
 
             CursoDTO guardado = control.editarCurso(cursoEditado);
+
             if (guardado != null) {
-                JOptionPane.showMessageDialog(this, "¡Curso editado correctamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "¡Curso editado correctamente!");
                 control.navegarGestionCursos();
             }
-
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El cupo mínimo debe ser un número entero.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "El cupo mínimo debe ser número.");
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 

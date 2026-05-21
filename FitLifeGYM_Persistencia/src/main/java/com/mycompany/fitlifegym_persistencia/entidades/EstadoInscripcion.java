@@ -9,5 +9,5 @@ package com.mycompany.fitlifegym_persistencia.entidades;
  * @author PC GAMER MASTER RACE
  */
 public enum EstadoInscripcion {
-    ACTIVA, CANCELADA, YA_INSCRITO, NO_INSCRITO
+    ACTIVO, CANCELADA, YA_INSCRITO, NO_INSCRITO
 }

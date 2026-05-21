@@ -24,7 +24,7 @@ public class InscripcionDTO {
         this.idCliente = idCliente;
         this.idHorario = idHorario;
         this.fechaRegistro = LocalDateTime.now();
-        this.estado = EstadoInscripcionDTO.ACTIVA;
+        this.estado = EstadoInscripcionDTO.ACTIVO;
     }
 
     public InscripcionDTO(String idInscripcion, String idCliente, String idHorario, LocalDateTime fechaRegistro, EstadoInscripcionDTO estado) {

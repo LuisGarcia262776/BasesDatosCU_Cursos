@@ -27,8 +27,7 @@ import javax.swing.SwingConstants;
  * @author PC GAMER MASTER RACE
  */
 public class GestionDeCursosFORM extends javax.swing.JFrame {
-    private static final java.util.logging.Logger logger =
-            java.util.logging.Logger.getLogger(GestionDeCursosFORM.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GestionDeCursosFORM.class.getName());
 
     private final ControlNavegacion control;
 
@@ -118,7 +117,7 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
         JButton btnVer = crearBoton("Ver");
 
         btnEditar.addActionListener(e -> {
-            control.editarCurso(curso);
+            control.navegarEditarCurso(curso);
             cargarCursos();
         });
         btnEliminar.addActionListener(e -> {
@@ -161,6 +160,7 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         JscrollPane = new javax.swing.JScrollPane();
         JPanel = new javax.swing.JPanel();
+        jSeparator4 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         btnAgregarCurso = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
@@ -189,6 +189,7 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
 
         JPanel.setBackground(new java.awt.Color(18, 18, 18));
         JPanel.setLayout(new javax.swing.BoxLayout(JPanel, javax.swing.BoxLayout.LINE_AXIS));
+        JPanel.add(jSeparator4);
         JPanel.add(jSeparator3);
 
         JscrollPane.setViewportView(JPanel);
@@ -265,7 +266,7 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCursoActionPerformed
-        control.agregarCurso(cursoDTO);
+        control.navegarAgregarCurso();
     }//GEN-LAST:event_btnAgregarCursoActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
@@ -283,6 +284,7 @@ public class GestionDeCursosFORM extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
     private javax.swing.JLabel lblGestionDeCursos;
     // End of variables declaration//GEN-END:variables
 }

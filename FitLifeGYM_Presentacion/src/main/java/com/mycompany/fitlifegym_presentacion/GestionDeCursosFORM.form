@@ -166,6 +166,8 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
               <SubComponents>
+                <Component class="javax.swing.JSeparator" name="jSeparator4">
+                </Component>
                 <Component class="javax.swing.JSeparator" name="jSeparator3">
                 </Component>
               </SubComponents>

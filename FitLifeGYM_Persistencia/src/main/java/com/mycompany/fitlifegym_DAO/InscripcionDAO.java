@@ -143,7 +143,7 @@ public class InscripcionDAO implements IInscripcionDAO {
 
             MongoCollection<Inscripcion> coleccion = this.obtenerColeccion(empresaBD);
 
-            Document filtro = new Document().append("idHorario", new ObjectId(idHorario)).append("estado", EstadoInscripcion.ACTIVA.name());
+            Document filtro = new Document().append("idHorario", new ObjectId(idHorario)).append("estado", EstadoInscripcion.ACTIVO.name());
 
             return (int) coleccion.countDocuments(filtro);
         }catch (MongoException ex) {
@@ -162,7 +162,7 @@ public class InscripcionDAO implements IInscripcionDAO {
 
             Document filtro = new Document()
                     .append("idHorario", new ObjectId(idHorario))
-                    .append("estado", EstadoInscripcion.ACTIVA.name());
+                    .append("estado", EstadoInscripcion.ACTIVO.name());
 
             List<Inscripcion> inscripciones = new LinkedList<>();
 

@@ -8,6 +8,12 @@ import com.mycompany.fitlifegym_dtos.CursoDTO;
 import com.mycompany.fitlifegym_dtos.DisponibilidadCursoDTO;
 import com.mycompany.fitlifegym_dtos.ImagenDTO;
 import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -214,37 +220,39 @@ public class AgregarCursoFORM extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         if (txtNombreDelCurso.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "El nombre es obligatorio.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "El nombre es obligatorio.");
             return;
         }
+
         if (txtDescripcion.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "La descripción es obligatoria.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "La descripción es obligatoria.");
             return;
         }
+
         if (txtCupoMinimo.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "El cupo mínimo es obligatorio.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "El cupo mínimo es obligatorio.");
             return;
         }
+
         try {
             ImagenDTO imagenDTO = null;
             if (!rutaImagenSeleccionada.isEmpty()) {
                 imagenDTO = new ImagenDTO(rutaImagenSeleccionada);
             }
-
-            CursoDTO cursoDTO = new CursoDTO(txtNombreDelCurso.getText().trim(), imagenDTO, txtDescripcion.getText().trim(), Integer.parseInt(txtCupoMinimo.getText().trim()), DisponibilidadCursoDTO.DISPONIBLE);
-            
+            CursoDTO cursoDTO = new CursoDTO(txtNombreDelCurso.getText().trim(), imagenDTO, txtDescripcion.getText().trim(),Integer.parseInt(txtCupoMinimo.getText().trim()),DisponibilidadCursoDTO.DISPONIBLE);
             CursoDTO guardado = control.agregarCurso(cursoDTO);
+
             if (guardado != null) {
-                JOptionPane.showMessageDialog(this, "¡Curso agregado correctamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                dispose();
+                JOptionPane.showMessageDialog(this, "Curso agregado correctamente.");
+                control.navegarMenuAdmin();
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El cupo mínimo debe ser un número entero.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "El cupo mínimo debe ser número.");
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        dispose();
+        control.navegarMenuAdmin();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtCupoMinimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCupoMinimoActionPerformed
@@ -257,19 +265,39 @@ public class AgregarCursoFORM extends javax.swing.JFrame {
 
     private void btnSeleccionarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImagenActionPerformed
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Imágenes", "jpg", "jpeg", "png"));
 
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Imágenes", "jpg", "jpeg", "png", "gif", "bmp"));
         int resultado = fileChooser.showOpenDialog(this);
-        if (resultado == javax.swing.JFileChooser.APPROVE_OPTION) {
-            java.io.File archivo = fileChooser.getSelectedFile();
-            rutaImagenSeleccionada = archivo.getAbsolutePath();
-            mostrarPreview(rutaImagenSeleccionada);
+
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            File archivo = fileChooser.getSelectedFile();
+            try {
+                rutaImagenSeleccionada = guardarImagenEnCarpeta(archivo);
+                mostrarPreview(rutaImagenSeleccionada);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Error al guardar imagen.");
+            }
         }
     }
+
+    private String guardarImagenEnCarpeta(File archivo) throws IOException {
+        File carpeta = new File("imagenesCursos");
+        if (!carpeta.exists()) {
+            carpeta.mkdirs();
+        }
+
+        String nombre = System.currentTimeMillis() + "_" + archivo.getName();
+        Path destino = Paths.get(carpeta.getPath(), nombre);
+        Files.copy(archivo.toPath(), destino, StandardCopyOption.REPLACE_EXISTING);
+        return destino.toString();
+    }
+
     private void mostrarPreview(String ruta) {
         try {
             ImageIcon icon = new ImageIcon(ruta);
+
             Image scaled = icon.getImage().getScaledInstance(lblPreviwe.getWidth(), lblPreviwe.getHeight(), Image.SCALE_SMOOTH);
+
             lblPreviwe.setIcon(new ImageIcon(scaled));
             lblPreviwe.setText("");
         } catch (Exception e) {

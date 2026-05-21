@@ -10,6 +10,7 @@ import com.mycompany.fitlifegym_dtos.InscripcionDTO;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -81,6 +82,8 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
             }
             txtInscripcionesTotales.setText(String.valueOf(totalInscripciones));
         } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this,e.getMessage());
             txtInscripcionesTotales.setText("0");
         }
     }
@@ -284,7 +287,7 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
                         .addGap(24, 24, 24))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(btnCerrarSesion)
-                        .addGap(341, 341, 341))))
+                        .addGap(331, 331, 331))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -354,7 +357,7 @@ public class MenuCursosAdminFORM extends javax.swing.JFrame {
     }//GEN-LAST:event_btnREPORTESActionPerformed
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
-        // TODO add your handling code here:
+        control.navegarIniciarSesion();
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     private void btnGestionHorarios2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionHorarios2ActionPerformed

@@ -238,9 +238,7 @@ public class BienvenidaFORM extends javax.swing.JFrame {
     }//GEN-LAST:event_btnQuejaSugerenciaActionPerformed
 
     private void btnCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCursosActionPerformed
-        MenuCursosAdminFORM frame = new MenuCursosAdminFORM(control);
-        frame.setVisible(true);
-        dispose();
+        control.navegarCursosCliente();
     }//GEN-LAST:event_btnCursosActionPerformed
 
     private void btnAmbienteMusicalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAmbienteMusicalActionPerformed
